@@ -37,10 +37,17 @@ public class Controller {
 		return cenarios;
 	}
 
-	boolean encerrarCenario(String ocorreuOunao) {
+	//public boolean encerrarCenario(String ocorreuOunao) {
 
-		return ocorreuOuNao;
+		//return ocorreuOuNao;
+	//}
+	
+	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
+		if(this.colecaoCenarios.containsKey(cenario)) {
+			this.colecaoCenarios.get(cenario).setApostadores(apostador, valor, previsao);
+		}
 	}
+
 
 	public void fecharAposta(int cenario, boolean ocorreu) {
 
