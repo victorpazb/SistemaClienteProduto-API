@@ -4,14 +4,22 @@ public class Cenario {
 	private String descricao;
 	private String aconteceu;
 	private String finalizado = "Nao finalizado";
-	private int id = 0;
+	private static int id;
+	private int count;
 	private ArrayList<Aposta> colecaoApostades;
 
+	
+	
+	
 	public Cenario(String descricao) {
 		this.descricao = descricao;
 		this.colecaoApostades = new ArrayList<>();
-		this.id += 1;
+		this.id = geradorDeId();
 		
+		
+	}
+	public static int geradorDeId() {
+		return // travado nessse gerador do id...
 	}
 	
 	public ArrayList getApostadores() {
@@ -36,7 +44,7 @@ public class Cenario {
 		this.finalizado = finalizadoOuNao;
 	}
 	
-	public String apostasDoCenrio() {
+	public String exibirApostasDoCenrio() {
 		String apostas = "";
 		for(int i = 0; i < this.colecaoApostades.size(); i++) {
 			apostas += this.colecaoApostades.get(i).toString() + "\n";

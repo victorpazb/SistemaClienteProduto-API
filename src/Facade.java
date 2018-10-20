@@ -21,6 +21,10 @@ public class Facade {
 	public String exibirCenario(int cenario) {
 		return controle.exibirCenario(cenario);
 	}
+	
+	public String exibirCenarios() {
+		return controle.exibirCenarios();
+	}
 
 	boolean encerrarCenario() {
 		boolean ocorreuOuNao = false;
