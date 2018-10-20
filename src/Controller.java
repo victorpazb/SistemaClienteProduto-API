@@ -4,7 +4,7 @@ public class Controller {
 	
 	Caixa novoCaixa;
 	Cenario novoCenario;
-    HashMap<String, Cenario> colecaoCenarios;
+    HashMap<Integer, Cenario> colecaoCenarios;
 	
 	public Controller() {
 		colecaoCenarios = new HashMap<>();
@@ -20,8 +20,13 @@ public class Controller {
 	
 	public int cadastrarCenario(String descricao) {
 		novoCenario = new Cenario(descricao);
-		this.colecaoCenarios.put(descricao, novoCenario);
-		return this.colecaoCenarios.get(descricao).getId();
+		this.colecaoCenarios.put(novoCenario.getId(), novoCenario);
+		return this.novoCenario.getId();
+	}
+	
+	public String exibirCenario(int cenario) {
+		return this.colecaoCenarios.get(cenario).toString();
+		
 	}
 
 	boolean encerrarCenario(String ocorreuOunao) {

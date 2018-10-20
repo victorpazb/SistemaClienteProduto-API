@@ -2,6 +2,8 @@
 public class Facade {
 
 	
+	Controller controle = new Controller();
+	
 	
 	public void inicializa(int caixa, double taxa) {
 		
@@ -12,7 +14,12 @@ public class Facade {
 	}
 	
 	public int cadastrarCenario(String descricao) {
+		return controle.cadastrarCenario(descricao);
 		
+	}
+	
+	public String exibirCenario(int cenario) {
+		return controle.exibirCenario(cenario);
 	}
 
 	boolean encerrarCenario() {
