@@ -1,15 +1,15 @@
 import java.util.HashMap;
 
 public class Controller {
-	
+
 	Caixa novoCaixa;
 	Cenario novoCenario;
-    HashMap<Integer, Cenario> colecaoCenarios;
-	
+	HashMap<Integer, Cenario> colecaoCenarios;
+
 	public Controller() {
 		colecaoCenarios = new HashMap<>();
 	}
-	
+
 	public void inicializa(int caixa, double taxa) {
 		novoCaixa = new Caixa(caixa, taxa);
 	}
@@ -17,20 +17,28 @@ public class Controller {
 	public int getCaixa() {
 		return novoCaixa.getCaixa();
 	}
-	
+
 	public int cadastrarCenario(String descricao) {
 		novoCenario = new Cenario(descricao);
 		this.colecaoCenarios.put(novoCenario.getId(), novoCenario);
 		return this.novoCenario.getId();
 	}
-	
+
 	public String exibirCenario(int cenario) {
 		return this.colecaoCenarios.get(cenario).toString();
-		
+
+	}
+	
+	public String exibirCenarios() {
+		String cenarios = "";
+		for (int i = 0; i < this.colecaoCenarios.size(); i++) {
+			cenarios += this.colecaoCenarios.get(i).toString() + "\n"; 
+		}
+		return cenarios;
 	}
 
 	boolean encerrarCenario(String ocorreuOunao) {
-		
+
 		return ocorreuOuNao;
 	}
 

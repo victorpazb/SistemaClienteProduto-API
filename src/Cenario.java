@@ -18,6 +18,12 @@ public class Cenario {
 		return this.colecaoApostades;
 	}
 	
+	public void setApostadores(String apostador, int valor, String previsao) {
+		Aposta novaAposta = new Aposta(apostador, valor, previsao);
+		this.colecaoApostades.add(novaAposta);
+	}
+
+	
 	public int getId() {
 		return this.id;
 	}
@@ -28,6 +34,14 @@ public class Cenario {
 	
 	public void setFinalizado(String finalizadoOuNao) {
 		this.finalizado = finalizadoOuNao;
+	}
+	
+	public String apostasDoCenrio() {
+		String apostas = "";
+		for(int i = 0; i < this.colecaoApostades.size(); i++) {
+			apostas += this.colecaoApostades.get(i).toString() + "\n";
+		}
+		return apostas;
 	}
 
 	
