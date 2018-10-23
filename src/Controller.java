@@ -70,10 +70,10 @@ public class Controller {
 	}
 
 	public void fecharAposta(int cenario, boolean ocorreu) {
-		int valorTotalDosPerdedores = 0;
+		int valorTotalRateio = 0;
 		String resultado = "";
 		if (ocorreu == false) {
-			resultado = "NAO VAI ACONTECER";
+			resultado = "N VAI ACONTECER";
 
 		} else if (ocorreu == true) {
 			resultado = "VAI ACONTECER";
@@ -82,12 +82,12 @@ public class Controller {
 		int quantidadeApostasNoCenario = this.colecaoCenarios.get(cenario).getColecaoApostadores().size();
 		for (int i = 0; i < quantidadeApostasNoCenario; i++) {
 			if (!this.colecaoCenarios.get(cenario).getApostadores(i).getPrevisao().equals(resultado)) {
-				valorTotalDosPerdedores += this.colecaoCenarios.get(cenario).getApostadores(i).getValorAposta();
+				valorTotalRateio += this.colecaoCenarios.get(cenario).getApostadores(i).getValorAposta();
 			}
 
 		}
 
-		this.colecaoCenarios.get(cenario).setValorTotalDosPerdedores(valorTotalDosPerdedores);
+		this.colecaoCenarios.get(cenario).setValorTotalRateio(valorTotalRateio);
 
 	}
 
@@ -104,16 +104,14 @@ public class Controller {
 
 	}
 
-
 	public int getCaixaCenario(int cenario) {
-		return (int) (this.colecaoCenarios.get(cenario).getValorTotalDosPerdedores() * this.novoCaixa.getTaxa());
+		return (int) (this.colecaoCenarios.get(cenario).getValorTotalRateio() * this.novoCaixa.getTaxa());
 
 	}
 
 	public int getTotalRateioCenario(int cenario) {
-		return valorTotalDeApostas(cenario) - this.colecaoCenarios.get(cenario).getValorTotalDosPerdedores();
+		return this.colecaoCenarios.get(cenario).getValorTotalRateio() - getCaixaCenario(cenario);
 
 	}
-
 
 }

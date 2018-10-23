@@ -13,14 +13,16 @@ public class Main {
 			System.out.println(facade.cadastrarCenario("inter campeao"));
 			System.out.println(facade.cadastrarCenario("lalalaooo"));
 			
-			
-			facade.cadastrarAposta(2, "victor", 2000, "VAI ACONTECER");
+			facade.cadastrarAposta(2, "victor", 199, "VAI ACONTECER");
+			facade.cadastrarAposta(2, "victor", 20000, "VAI ACONTECER");
 			facade.cadastrarAposta(2, "HUGO", 3000, "N VAI ACONTECER");
-			facade.cadastrarAposta(2, "carlos", 1000, "VAI ACONTECER");
+			facade.cadastrarAposta(2, "carlos", 1000, "N VAI ACONTECER");
 			
 			facade.fecharAposta(2, false);
 			facade.inicializa(1000, 0.01);
 			System.out.println(facade.getCaixaCenario(2));
+			
+			System.out.println(facade.exibeApostas(2));
 
 			System.out.println(facade.getTotalRateioCenario(2));
 			

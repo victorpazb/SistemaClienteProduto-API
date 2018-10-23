@@ -33,6 +33,10 @@ public class Facade {
 		controle.cadastrarAposta(cenario, apostador, valor, previsao);
 	}
 	
+	public String exibeApostas(int cenario) {
+		return controle.exibirApostasDeCenario(cenario);
+	}
+	
 	public int valorTotalDeApostas(int cenario) {
 		return controle.valorTotalDeApostas(cenario);
 	}

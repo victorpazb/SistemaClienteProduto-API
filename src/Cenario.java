@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Cenario {
 
-	private int valorTotalDosPerdedores;
+	private int valorTotalRateio;
 	private String descricao;
 	private String aconteceu;
 	private String finalizado = "Nao finalizado";
@@ -46,15 +46,15 @@ public class Cenario {
 		this.finalizado = finalizadoOuNao;
 	}
 	
-	public void setValorTotalDosPerdedores(int valor) {
-		this.valorTotalDosPerdedores = valor;
+	public void setValorTotalRateio(int valor) {
+		this.valorTotalRateio = valor;
 	}
 	
-	public int getValorTotalDosPerdedores() {
-		return this.valorTotalDosPerdedores;
+	public int getValorTotalRateio() {
+		return this.valorTotalRateio;
 	}
 
-	public String exibirApostasDoCenrio() {
+	public String exibirApostasDoCenario() {
 		String apostas = "";
 		for (int i = 0; i < this.colecaoApostades.size(); i++) {
 			apostas += this.colecaoApostades.get(i).toString() + "\n";
