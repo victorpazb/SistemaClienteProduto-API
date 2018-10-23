@@ -88,6 +88,7 @@ public class Controller {
 		}
 
 		this.colecaoCenarios.get(cenario).setValorTotalRateio(valorTotalRateio);
+		this.novoCaixa.setTaxa((int) (this.colecaoCenarios.get(cenario).getValorTotalRateio() * this.novoCaixa.getTaxa()));
 
 	}
 

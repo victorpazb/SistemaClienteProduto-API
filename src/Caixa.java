@@ -14,6 +14,10 @@ public class Caixa {
 		return this.valorEmCaixa;
 	}
 	
+	public void setTaxa(int valor) {
+		this.valorEmCaixa += valor;
+	}
+	
 	public double getTaxa() {
 		return this.taxa;
 	}

@@ -6,7 +6,11 @@
 public class Main {
 	
 	public static void main(String[] args) {
+			
+			
+			
 			Facade facade = new Facade();
+			facade.inicializa(1000, 0.01);
 			
 			System.out.println(facade.cadastrarCenario("flamengo campeao"));
 			System.out.println(facade.cadastrarCenario("palmeiras campeao"));
@@ -19,12 +23,14 @@ public class Main {
 			facade.cadastrarAposta(2, "carlos", 1000, "N VAI ACONTECER");
 			
 			facade.fecharAposta(2, false);
-			facade.inicializa(1000, 0.01);
+			
 			System.out.println(facade.getCaixaCenario(2));
 			
 			System.out.println(facade.exibeApostas(2));
 
 			System.out.println(facade.getTotalRateioCenario(2));
+			
+			System.out.println(facade.getCaixa());
 			
 			
 			
