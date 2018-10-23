@@ -14,6 +14,10 @@ public class Caixa {
 		return this.valorEmCaixa;
 	}
 	
+	public double getTaxa() {
+		return this.taxa;
+	}
+	
 	
 
 }

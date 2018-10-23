@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Cenario {
 
+	private int valorTotalDosPerdedores;
 	private String descricao;
 	private String aconteceu;
 	private String finalizado = "Nao finalizado";
@@ -43,6 +44,14 @@ public class Cenario {
 
 	public void setFinalizado(String finalizadoOuNao) {
 		this.finalizado = finalizadoOuNao;
+	}
+	
+	public void setValorTotalDosPerdedores(int valor) {
+		this.valorTotalDosPerdedores = valor;
+	}
+	
+	public int getValorTotalDosPerdedores() {
+		return this.valorTotalDosPerdedores;
 	}
 
 	public String exibirApostasDoCenrio() {

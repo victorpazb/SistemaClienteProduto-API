@@ -1,27 +1,25 @@
 
 public class Facade {
 
-	
 	Controller controle = new Controller();
-	
-	
+
 	public void inicializa(int caixa, double taxa) {
-		
+		controle.inicializa(caixa, taxa);
 	}
-	
-	int getCaixa() {
-		return 1;
+
+	public int getCaixa() {
+		return controle.getCaixa();
 	}
-	
+
 	public int cadastrarCenario(String descricao) {
 		return controle.cadastrarCenario(descricao);
-		
+
 	}
-	
+
 	public String exibirCenario(int cenario) {
 		return controle.exibirCenario(cenario);
 	}
-	
+
 	public String exibirCenarios() {
 		return controle.exibirCenarios();
 	}
@@ -30,29 +28,32 @@ public class Facade {
 		boolean ocorreuOuNao = false;
 		return ocorreuOuNao;
 	}
-	
+
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 		controle.cadastrarAposta(cenario, apostador, valor, previsao);
 	}
+	
+	public int valorTotalDeApostas(int cenario) {
+		return controle.valorTotalDeApostas(cenario);
+	}
 
 	public void fecharAposta(int cenario, boolean ocorreu) {
-
+		controle.fecharAposta(cenario, ocorreu);
 	}
 
-	double retornarValorTotalCenárioParaCaixa() {
-		// cenario encerrado que será destinado ao caixa
-	}
 
 	public int getCaixaCenario(int cenario) {
+		return controle.getCaixaCenario(cenario);
 
 	}
 
-	int getTotalRateioCenarioParaVencedores(int cenario) {
-
+	public int getTotalRateioCenario(int cenario) {
+		return controle.getTotalRateioCenario(cenario);
 	}
 
-	int getTotalRateioCenario(int cenario) {
-
+	
+	public int totalDeApostas(int cenario) {
+		return controle.totalDeApostas(cenario);
 	}
 
 }
