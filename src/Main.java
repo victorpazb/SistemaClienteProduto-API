@@ -6,14 +6,11 @@ public class Main {
 			
 			
 			Facade facade = new Facade();
-			
-			System.out.println(facade.cadastrarCenario("FLAMENGO CAMPEAO 2018"));
-			
-			
-			
-			System.out.println(facade.exibirCenario(1));
-			
-			System.out.println(facade.exibirCenarios());
+			System.out.println(facade.cadastrarCenario("Brasil campeao"));
+			System.out.println(facade.cadastrarCenario("Brasil hexa"));
+			facade.cadastrarAposta(1, "Victor", 1000, "VAI ACONTECER");
+
+			System.out.println(facade.exibeApostas(1));
 			
 			
 		

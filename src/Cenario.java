@@ -6,7 +6,7 @@ public class Cenario {
 	private String descricao;
 	private String aconteceu;
 	private String finalizado = "Nao finalizado";
-	private static int counter;
+	private static int counter = 1;
 	private int id;
 	private ArrayList<Aposta> colecaoApostades;
 
@@ -15,13 +15,16 @@ public class Cenario {
 	public Cenario(String descricao) {
 		this.descricao = descricao;
 		this.colecaoApostades = new ArrayList<>();
-		counter++;
-		this.id = counter;
+		this.id = getCounter();
 
 	}
 	
 	public ArrayList<Aposta> getColecaoApostadores() {
 		return this.colecaoApostades;
+	}
+	
+	public static int getCounter() {
+		return counter++;
 	}
 
 	
