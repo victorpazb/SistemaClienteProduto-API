@@ -30,6 +30,10 @@ public class Facade {
 		boolean ocorreuOuNao = false;
 		return ocorreuOuNao;
 	}
+	
+	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
+		controle.cadastrarAposta(cenario, apostador, valor, previsao);
+	}
 
 	public void fecharAposta(int cenario, boolean ocorreu) {
 
