@@ -16,10 +16,6 @@ public class Aposta {
 	}
 	
 
-	public String getNomeApostador() {
-		return this.nomeApostador;
-	}
-
 
 	public int getValorAposta() {
 		return this.valorAposta;
@@ -29,7 +25,6 @@ public class Aposta {
 	public String getPrevisao() {
 		return this.previsao;
 	}
-
 
 	@Override
 	public String toString() {
