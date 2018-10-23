@@ -52,16 +52,19 @@ public class Controller {
 	public void fecharAposta(int cenario, boolean ocorreu) {
 
 	}
-	
+
 	public String exibirApostasDeCenario(int cenario) {
-		if(this.colecaoCenarios.get(cenario).getApostadores().isEmpty()) {
-			throw new NullPointerException("nao foram feitas apostas");
+		if(this.colecaoCenarios.get(cenario).getColecaoApostadores().isEmpty()) {
+			throw new NullPointerException("nao foram feitas apostas ainda neste cenario");
 		}
 		String apostas = "";
-		for(int i = 0; i < this.colecaoCenarios.get(cenario).getApostadores().size(); i++) {
-			apostas += this.colecaoCenarios.get(cenario).getApostadores().toString() + "\n";
+		for(int i = 0; i < this.colecaoCenarios.get(cenario).getColecaoApostadores().size() ; i++) {
+			apostas += this.colecaoCenarios.get(cenario).getApostadores(i) + " \n";
 		}
+		
+		
 		return apostas;
+
 	}
 
 	double retornarValorTotalCenárioParaCaixa() {

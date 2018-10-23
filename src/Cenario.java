@@ -18,9 +18,14 @@ public class Cenario {
 		this.id = counter;
 
 	}
-
-	public ArrayList getApostadores() {
+	
+	public ArrayList getColecaoApostadores() {
 		return this.colecaoApostades;
+	}
+
+	
+	public Aposta getApostadores(int i) {
+		return this.colecaoApostades.get(i);
 	}
 
 	public void setApostadores(String apostador, int valor, String previsao) {
