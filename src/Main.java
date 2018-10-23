@@ -6,6 +6,7 @@ public class Main {
 			
 			System.out.println(facade.cadastrarCenario("flamengo campeao"));
 			System.out.println(facade.cadastrarCenario("palmeiras campeao"));
+			System.out.println(facade.exibirCenario(1));
 			
 			
 			

@@ -2,9 +2,9 @@ import java.util.HashMap;
 
 public class Controller {
 
-	Caixa novoCaixa;
-	Cenario novoCenario;
-	HashMap<Integer, Cenario> colecaoCenarios;
+	private Caixa novoCaixa;
+	private Cenario novoCenario;
+	private HashMap<Integer, Cenario> colecaoCenarios;
 
 	public Controller() {
 		colecaoCenarios = new HashMap<>();
@@ -12,6 +12,10 @@ public class Controller {
 
 	public void inicializa(int caixa, double taxa) {
 		novoCaixa = new Caixa(caixa, taxa);
+	}
+	
+	public int getQuntidadeCenarios() {
+		return this.colecaoCenarios.size();
 	}
 
 	public int getCaixa() {

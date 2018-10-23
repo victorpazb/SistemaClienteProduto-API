@@ -4,24 +4,26 @@ public class Cenario {
 	private String descricao;
 	private String aconteceu;
 	private String finalizado = "Nao finalizado";
-	private static int id;
-	private int count;
+	private  int id;
 	private ArrayList<Aposta> colecaoApostades;
 
 	
-	
+	Controller controle = new Controller();
 	
 	public Cenario(String descricao) {
 		this.descricao = descricao;
 		this.colecaoApostades = new ArrayList<>();
-		this.id = geradorDeId();
+		this.id = controle.getQuntidadeCenarios() + 1;
 		
 		
 	}
+	
+	/**
+	
 	public static int geradorDeId() {
 		return // travado nessse gerador do id...
 	}
-	
+	*/
 	public ArrayList getApostadores() {
 		return this.colecaoApostades;
 	}
