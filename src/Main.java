@@ -1,8 +1,4 @@
-/**
- * main apenas para testes!
- * @author victorpfb
- *
- */
+
 public class Main {
 	
 	public static void main(String[] args) {
@@ -19,10 +15,10 @@ public class Main {
 			
 			facade.cadastrarAposta(2, "victor", 199, "VAI ACONTECER");
 			facade.cadastrarAposta(2, "victor", 20000, "VAI ACONTECER");
-			facade.cadastrarAposta(2, "HUGO", 3000, "N VAI ACONTECER");
-			facade.cadastrarAposta(2, "carlos", 1000, "N VAI ACONTECER");
+			facade.cadastrarAposta(2, "Hugo", 3000, "N VAI ACONTECER");
+			facade.cadastrarAposta(2, "Carlos", 1000, "N VAI ACONTECER");
 			
-			facade.fecharAposta(2, false);
+			facade.fecharAposta(2, true);
 			
 			System.out.println(facade.getCaixaCenario(2));
 			
@@ -31,6 +27,9 @@ public class Main {
 			System.out.println(facade.getTotalRateioCenario(2));
 			
 			System.out.println(facade.getCaixa());
+			
+			
+			System.out.println(facade.exibirCenario(2));
 			
 			
 			

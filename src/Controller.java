@@ -18,30 +18,6 @@ public class Controller {
 		return novoCaixa.getCaixa();
 	}
 
-	public int valorTotalDeApostas(int cenario) {
-
-		if (this.colecaoCenarios.get(cenario).getColecaoApostadores().isEmpty()) {
-			throw new NullPointerException("nao foram feitas apostas ainda neste cenario");
-		}
-
-		int valorTotalApostas = 0;
-		int quantidadeApostas = this.colecaoCenarios.get(cenario).getColecaoApostadores().size();
-
-		for (int i = 0; i < quantidadeApostas; i++) {
-			valorTotalApostas += this.colecaoCenarios.get(cenario).getApostadores(i).getValorAposta();
-		}
-
-		return valorTotalApostas;
-	}
-
-	public int totalDeApostas(int cenario) {
-		return this.colecaoCenarios.get(cenario).getColecaoApostadores().size();
-	}
-
-	public int getQuntidadeCenarios() {
-		return this.colecaoCenarios.size();
-	}
-
 	public int cadastrarCenario(String descricao) {
 		novoCenario = new Cenario(descricao);
 		this.colecaoCenarios.put(novoCenario.getId(), novoCenario);
@@ -69,14 +45,40 @@ public class Controller {
 		}
 	}
 
+	public int valorTotalDeApostas(int cenario) {
+
+		if (this.colecaoCenarios.get(cenario).getColecaoApostadores().isEmpty()) {
+			throw new NullPointerException("nao foram feitas apostas ainda neste cenario");
+		}
+
+		int valorTotalApostas = 0;
+		int quantidadeApostas = this.colecaoCenarios.get(cenario).getColecaoApostadores().size();
+
+		for (int i = 0; i < quantidadeApostas; i++) {
+			valorTotalApostas += this.colecaoCenarios.get(cenario).getApostadores(i).getValorAposta();
+		}
+
+		return valorTotalApostas;
+	}
+
+	public int totalDeApostas(int cenario) {
+		return this.colecaoCenarios.get(cenario).getColecaoApostadores().size();
+	}
+
 	public void fecharAposta(int cenario, boolean ocorreu) {
+
 		int valorTotalRateio = 0;
+		String ocorreuOuNao = "";
 		String resultado = "";
+
 		if (ocorreu == false) {
 			resultado = "N VAI ACONTECER";
+			ocorreuOuNao = "n ocorreu";
 
 		} else if (ocorreu == true) {
 			resultado = "VAI ACONTECER";
+			ocorreuOuNao = "ocorreu";
+
 		}
 
 		int quantidadeApostasNoCenario = this.colecaoCenarios.get(cenario).getColecaoApostadores().size();
@@ -88,11 +90,14 @@ public class Controller {
 		}
 
 		this.colecaoCenarios.get(cenario).setValorTotalRateio(valorTotalRateio);
-		this.novoCaixa.setTaxa((int) (this.colecaoCenarios.get(cenario).getValorTotalRateio() * this.novoCaixa.getTaxa()));
+		this.novoCaixa
+				.setTaxa((int) (this.colecaoCenarios.get(cenario).getValorTotalRateio() * this.novoCaixa.getTaxa()));
+		this.colecaoCenarios.get(cenario).setFinalizado("Finalizado");
+		this.colecaoCenarios.get(cenario).setAconteceu(ocorreuOuNao);
 
 	}
 
-	public String exibirApostasDeCenario(int cenario) {
+	public String exibeApostas(int cenario) {
 		if (this.colecaoCenarios.get(cenario).getColecaoApostadores().isEmpty()) {
 			throw new NullPointerException("nao foram feitas apostas ainda neste cenario");
 		}

@@ -24,27 +24,25 @@ public class Facade {
 		return controle.exibirCenarios();
 	}
 
-	boolean encerrarCenario() {
-		boolean ocorreuOuNao = false;
-		return ocorreuOuNao;
-	}
-
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 		controle.cadastrarAposta(cenario, apostador, valor, previsao);
 	}
-	
-	public String exibeApostas(int cenario) {
-		return controle.exibirApostasDeCenario(cenario);
-	}
-	
+
 	public int valorTotalDeApostas(int cenario) {
 		return controle.valorTotalDeApostas(cenario);
+	}
+
+	public int totalDeApostas(int cenario) {
+		return controle.totalDeApostas(cenario);
+	}
+
+	public String exibeApostas(int cenario) {
+		return controle.exibeApostas(cenario);
 	}
 
 	public void fecharAposta(int cenario, boolean ocorreu) {
 		controle.fecharAposta(cenario, ocorreu);
 	}
-
 
 	public int getCaixaCenario(int cenario) {
 		return controle.getCaixaCenario(cenario);
@@ -53,11 +51,6 @@ public class Facade {
 
 	public int getTotalRateioCenario(int cenario) {
 		return controle.getTotalRateioCenario(cenario);
-	}
-
-	
-	public int totalDeApostas(int cenario) {
-		return controle.totalDeApostas(cenario);
 	}
 
 }
