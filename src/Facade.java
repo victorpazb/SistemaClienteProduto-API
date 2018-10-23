@@ -1,7 +1,7 @@
 
 public class Facade {
 
-	Controller controle = new Controller();
+	private Controller controle = new Controller();
 
 	public void inicializa(int caixa, double taxa) {
 		controle.inicializa(caixa, taxa);

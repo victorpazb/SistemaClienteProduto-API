@@ -25,6 +25,9 @@ public class Controller {
 	}
 
 	public String exibirCenario(int cenario) {
+		if (!this.colecaoCenarios.containsKey(cenario)) {
+			throw new NullPointerException("cenario nao cadastrado");
+		}
 		return this.colecaoCenarios.get(cenario).toString();
 
 	}
@@ -62,10 +65,17 @@ public class Controller {
 	}
 
 	public int totalDeApostas(int cenario) {
+		if (!this.colecaoCenarios.containsKey(cenario)) {
+			throw new NullPointerException("cenario nao cadastrado");
+		}
 		return this.colecaoCenarios.get(cenario).getColecaoApostadores().size();
 	}
 
 	public void fecharAposta(int cenario, boolean ocorreu) {
+
+		if (!this.colecaoCenarios.containsKey(cenario)) {
+			throw new NullPointerException("cenario nao cadastrado");
+		}
 
 		int valorTotalRateio = 0;
 		String ocorreuOuNao = "";
@@ -98,6 +108,10 @@ public class Controller {
 	}
 
 	public String exibeApostas(int cenario) {
+		if (!this.colecaoCenarios.containsKey(cenario)) {
+			throw new NullPointerException("cenario nao cadastrado");
+		}
+
 		if (this.colecaoCenarios.get(cenario).getColecaoApostadores().isEmpty()) {
 			throw new NullPointerException("nao foram feitas apostas ainda neste cenario");
 		}
@@ -111,11 +125,17 @@ public class Controller {
 	}
 
 	public int getCaixaCenario(int cenario) {
+		if (!this.colecaoCenarios.containsKey(cenario)) {
+			throw new NullPointerException("cenario nao cadastrado");
+		}
 		return (int) (this.colecaoCenarios.get(cenario).getValorTotalRateio() * this.novoCaixa.getTaxa());
 
 	}
 
 	public int getTotalRateioCenario(int cenario) {
+		if (!this.colecaoCenarios.containsKey(cenario)) {
+			throw new NullPointerException("cenario nao cadastrado");
+		}
 		return this.colecaoCenarios.get(cenario).getValorTotalRateio() - getCaixaCenario(cenario);
 
 	}

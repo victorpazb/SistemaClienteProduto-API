@@ -20,8 +20,7 @@ public class Caixa {
 	
 	public double getTaxa() {
 		return this.taxa;
-	}
-	
+	}	
 	
 
 }
