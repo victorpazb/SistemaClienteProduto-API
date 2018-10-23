@@ -4,6 +4,7 @@ public class Aposta {
 	private String nomeApostador;
 	private int valorAposta;
 	private String previsao;
+	private double valorApostaEmReais;
 
 	
 	public Aposta(String nome, int valor, String previsao) {
@@ -11,7 +12,10 @@ public class Aposta {
 		this.nomeApostador = nome;
 		this.valorAposta = valor;
 		this.previsao = previsao;
+		this.valorApostaEmReais = valor / 100.0;
 	}
+	
+	
 
 
 	public String getNomeApostador() {
@@ -31,7 +35,7 @@ public class Aposta {
 
 	@Override
 	public String toString() {
-		return this.nomeApostador + " - " + this.valorAposta + " - " + this.previsao;
+		return this.nomeApostador + " - R$" + String.format("%.2f", this.valorApostaEmReais) + " - " + this.previsao;
 	}
 	
 	

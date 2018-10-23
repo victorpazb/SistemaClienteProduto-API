@@ -19,7 +19,7 @@ public class Cenario {
 
 	}
 	
-	public ArrayList getColecaoApostadores() {
+	public ArrayList<Aposta> getColecaoApostadores() {
 		return this.colecaoApostades;
 	}
 

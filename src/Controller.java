@@ -43,7 +43,7 @@ public class Controller {
 
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 		if (this.colecaoCenarios.containsKey(cenario)) {
-			this.colecaoCenarios.get(cenario).setApostadores(apostador, valor, previsao);
+			this.colecaoCenarios.get(cenario).setApostadores(apostador, valor, previsao.toUpperCase());
 		} else {
 			throw new NullPointerException("cenario nao cadastrado");
 		}
