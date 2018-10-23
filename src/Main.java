@@ -1,4 +1,8 @@
-
+/**
+ * main apenas para testes!
+ * @author victorpfb
+ *
+ */
 public class Main {
 	
 	public static void main(String[] args) {
@@ -9,10 +13,6 @@ public class Main {
 			System.out.println(facade.cadastrarCenario("inter campeao"));
 			System.out.println(facade.cadastrarCenario("lalalaooo"));
 			
-			facade.cadastrarAposta(1, "victor", 1999, "ocorre");
-			facade.cadastrarAposta(1, "HUGO", 3400, "ocorre");
-			facade.cadastrarAposta(1, "carlos", 900, "ocorre");
-			facade.cadastrarAposta(1, "abel", 1200, "n ocorre");
 			
 			facade.cadastrarAposta(2, "victor", 1999, "ocorre");
 			facade.cadastrarAposta(2, "HUGO", 3400, "ocorre");

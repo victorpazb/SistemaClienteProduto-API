@@ -15,8 +15,6 @@ public class Aposta {
 		this.valorApostaEmReais = valor / 100.0;
 	}
 	
-	
-
 
 	public String getNomeApostador() {
 		return this.nomeApostador;
