@@ -14,6 +14,18 @@ public class Cliente {
 		this.email = email;
 	}
 	
+	public void setNome(String novoNome) {
+		this.nome = novoNome;
+	}
+	
+	public void setLocal(String novoLocal) {
+		this.local = novoLocal;
+	}
+	
+	public void setEmail(String novoEmail) {
+		this.email = novoEmail;
+	}
+	
 	public String toString() {
 		return this.nome + " - " + this.local + " - " + this.email;
 	}

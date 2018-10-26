@@ -31,8 +31,24 @@ public class Controller {
 
 	}
 
-	public void editarCliente() {
-		// alterar atributos de cliente, menos o cpf
+	public void editarCliente(String cpf, String nomeAtributo, String novoValor) {
+		if(this.colecaoClientes.containsKey(cpf)) {
+			
+			switch (nomeAtributo.toLowerCase()) {
+			case "nome":
+				this.colecaoClientes.get(cpf).setNome(novoValor);
+				break;
+			case "local":
+				this.colecaoClientes.get(cpf).setLocal(novoValor);
+				break;
+			case "email":
+				this.colecaoClientes.get(cpf).setEmail(novoValor);
+				break;
+			default:
+				throw new IllegalArgumentException("opcao invalida");
+			}
+		}
+		throw new NullPointerException("cpf nao cadastrado"); // alguma duvida sobre qual excecao lancar
 	}
 
 	public void removerCliente() {
