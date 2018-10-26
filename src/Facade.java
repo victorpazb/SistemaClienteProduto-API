@@ -63,12 +63,6 @@ public class Facade {
 	}
 
 
-	public String exibirProduto(String nome) {
 
-	}
-
-	public String exibirProtudos() {
-
-	}
 
 }

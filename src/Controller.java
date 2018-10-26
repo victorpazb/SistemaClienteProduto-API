@@ -11,11 +11,12 @@ public class Controller {
 	}
 
 	public void cadastrarClientes(String cpf, String nome, String local, String email) {
-		if (!this.colecaoClientes.containsKey(cpf)) {
-			Cliente novoCliente = new Cliente(cpf, nome, local, email);
-			this.colecaoClientes.put(cpf, novoCliente);
+		if (this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("cpf ja cadastrado");
 		}
-		throw new IllegalArgumentException("cpf ja cadastrado");
+		Cliente novoCliente = new Cliente(cpf, nome, local, email);
+		this.colecaoClientes.put(cpf, novoCliente);
+
 	}
 
 	public String exibirCliente(String cpf) {
@@ -32,48 +33,48 @@ public class Controller {
 	}
 
 	public void editarCliente(String cpf, String nomeAtributo, String novoValor) {
-		if (this.colecaoClientes.containsKey(cpf)) {
-
-			switch (nomeAtributo.toLowerCase()) {
-			case "nome":
-				this.colecaoClientes.get(cpf).setNome(novoValor);
-				break;
-			case "local":
-				this.colecaoClientes.get(cpf).setLocal(novoValor);
-				break;
-			case "email":
-				this.colecaoClientes.get(cpf).setEmail(novoValor);
-				break;
-			default:
-				throw new IllegalArgumentException("opcao invalida");
-			}
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new NullPointerException("cpf nao cadastrado");
 		}
-		throw new NullPointerException("cpf nao cadastrado"); // alguma duvida sobre qual excecao lancar
+
+		switch (nomeAtributo.toLowerCase()) {
+		case "nome":
+			this.colecaoClientes.get(cpf).setNome(novoValor);
+			break;
+		case "local":
+			this.colecaoClientes.get(cpf).setLocal(novoValor);
+			break;
+		case "email":
+			this.colecaoClientes.get(cpf).setEmail(novoValor);
+			break;
+		default:
+			throw new IllegalArgumentException("opcao invalida");
+		}
 	}
 
 	public void removerCliente(String cpf) {
-		if (this.colecaoClientes.containsKey(cpf)) {
-			this.colecaoClientes.remove(cpf);
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("cpf nao cadastrado");
 		}
-		throw new IllegalArgumentException("cpf nao cadastrado");
+		this.colecaoClientes.remove(cpf);
 
 	}
 
 	public void cadastrarFornecedor(String nome, String email, String telefone) {
-		if (!this.colecaoFornecedores.containsKey(nome)) {
-			Fornecedor novoFornecedor = new Fornecedor(nome, email, telefone);
-			this.colecaoFornecedores.put(nome, novoFornecedor);
+		if (this.colecaoFornecedores.containsKey(nome)) {
+			throw new IllegalArgumentException("fornecedero ja cadastrado");
 		}
 
-		throw new IllegalArgumentException("fornecedero ja cadastrado");
+		Fornecedor novoFornecedor = new Fornecedor(nome, email, telefone);
+		this.colecaoFornecedores.put(nome, novoFornecedor);
 
 	}
 
 	public String exibeFornecedor(String nome) {
-		if (this.colecaoFornecedores.containsKey(nome)) {
-			return this.colecaoFornecedores.get(nome).toString();
+		if (!this.colecaoFornecedores.containsKey(nome)) {
+			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
-		throw new IllegalArgumentException("fornecedor nao cadastrado");
+		return this.colecaoFornecedores.get(nome).toString();
 
 	}
 
@@ -82,47 +83,56 @@ public class Controller {
 	}
 
 	public void editarFornecedor(String nome, String nomeAtributo, String novoValor) {
-		if (this.colecaoFornecedores.containsKey(nome)) {
-
-			switch (nomeAtributo.toLowerCase()) {
-			case "email":
-				this.colecaoFornecedores.get(nome).setEmail(novoValor);
-				break;
-			case "telefone":
-				this.colecaoFornecedores.get(nome).setTelefone(novoValor);
-				break;
-			default:
-
-				throw new IllegalArgumentException("opcao invalida");
-			}
+		if (!this.colecaoFornecedores.containsKey(nome)) {
+			throw new NullPointerException("cpf nao cadastrado");
 		}
-		throw new NullPointerException("cpf nao cadastrado");
+
+		switch (nomeAtributo.toLowerCase()) {
+		case "email":
+			this.colecaoFornecedores.get(nome).setEmail(novoValor);
+			break;
+		case "telefone":
+			this.colecaoFornecedores.get(nome).setTelefone(novoValor);
+			break;
+		default:
+
+			throw new IllegalArgumentException("opcao invalida");
+		}
 
 	}
 
 	public void removerFornecedor(String nome) {
-		if (this.colecaoFornecedores.containsKey(nome)) {
-			this.colecaoClientes.remove(nome);
+		if (!this.colecaoFornecedores.containsKey(nome)) {
+			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
-		throw new IllegalArgumentException("fornecedor nao cadastrado");
+		this.colecaoClientes.remove(nome);
 
 	}
 
 	public void cadastrarProduto(String nomeFornecedor, String nomeProduto, String descricao, String preco) {
 
-		if (this.colecaoFornecedores.containsKey(nomeFornecedor))
-			this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
+		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
+				throw new IllegalArgumentException("produto ja cadastrado");
+			}
+
+			throw new IllegalArgumentException("fornecedor nao cadastrado");
+		}
+
+		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
 
 	}
 
+	
+	
 	public String exibirProdutoEpecificoDeUmFornecedor(String nomeFornecedor, String nomeProduto) {
-		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
-				return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).toString();
+		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
+				throw new IllegalArgumentException("produto nao cadastrado");
 			}
-			throw new IllegalArgumentException("produto nao cadastrado");
+			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
-		throw new IllegalArgumentException("fornecedor nao cadastrado");
+		return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).toString();
 	}
 
 	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) { // em ordem alfa
@@ -133,14 +143,19 @@ public class Controller {
 		return "CFZ";
 	}
 
+	
+	
+	
+	
 	public void editarProduto(String nomeFornecedor, String nomeProduto, String novoPreco) {
-		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
-				this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).setPreco(novoPreco);
+		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
+				throw new IllegalArgumentException("produto nao cadastrado");
 			}
-			throw new IllegalArgumentException("produto nao cadastrado");
+			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
-		throw new IllegalArgumentException("fornecedor nao cadastrado");
+		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).setPreco(novoPreco);
+
 	}
 
 }
