@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class Fornecedor {
+public class Fornecedor implements Comparable<Fornecedor> {
 	private HashMap<String, Produto> listaDeProdutos;
 	private String nome;
 	private String email;
@@ -14,8 +14,14 @@ public class Fornecedor {
 		this.listaDeProdutos = new HashMap<>();
 	}
 	
+	
+	@Override
 	public String toString() {
 		return this.nome + " - " + this.email + " - " + this.telefone; 
+	}
+	
+	public String getNome() {
+		return this.nome;
 	}
 
 	public void setEmail(String email) {
@@ -39,6 +45,11 @@ public class Fornecedor {
 		
 		Produto novoProduto = new Produto(nome, descricao, preco);
 		this.listaDeProdutos.put(nome, novoProduto);
+	}
+
+	@Override
+	public int compareTo(Fornecedor outroFornecedor) {
+		return nome.compareTo(outroFornecedor.getNome());
 	}
 	
 	

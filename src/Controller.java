@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Controller {
 
@@ -79,7 +81,8 @@ public class Controller {
 	}
 
 	public String exibirFornecedores() {
-		return colecaoFornecedores.toString(); // retorno em ordem alfabetica
+		ArrayList<Fornecedor> listaFornecedores = new ArrayList<>();
+		return Collections.sort(this.colecaoFornecedores.values().toString());
 	}
 
 	public void editarFornecedor(String nome, String nomeAtributo, String novoValor) {
