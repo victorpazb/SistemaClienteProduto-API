@@ -6,6 +6,7 @@ public class Controller {
 
 	HashMap<String, Cliente> colecaoClientes;
 	HashMap<String, Fornecedor> colecaoFornecedores;
+	ArrayList<Fornecedor> listaAuxiliar;
 
 	public Controller() {
 		this.colecaoClientes = new HashMap<>();
@@ -81,8 +82,15 @@ public class Controller {
 	}
 
 	public String exibirFornecedores() {
-		ArrayList<Fornecedor> listaFornecedores = new ArrayList<>();
-		return Collections.sort(this.colecaoFornecedores.values().toString());
+		
+		listaAuxiliar = new ArrayList<>();
+		listaAuxiliar.addAll(this.colecaoFornecedores.values());
+		Collections.sort(listaAuxiliar);
+		String listaOrdenada = "";
+		for (Fornecedor fornecedor : listaAuxiliar) {
+			listaOrdenada += fornecedor.toString() + "\n";
+		}
+		return listaOrdenada;
 	}
 
 	public void editarFornecedor(String nome, String nomeAtributo, String novoValor) {
@@ -126,8 +134,6 @@ public class Controller {
 
 	}
 
-	
-	
 	public String exibirProdutoEpecificoDeUmFornecedor(String nomeFornecedor, String nomeProduto) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
@@ -146,10 +152,6 @@ public class Controller {
 		return "CFZ";
 	}
 
-	
-	
-	
-	
 	public void editarProduto(String nomeFornecedor, String nomeProduto, String novoPreco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
