@@ -1,6 +1,7 @@
 import java.util.HashMap;
 
 public class Fornecedor implements Comparable<Fornecedor> {
+	
 	private HashMap<String, Produto> listaDeProdutos;
 	private String nome;
 	private String email;
@@ -8,9 +9,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	
 	
 	public Fornecedor(String nome, String email, String telefone) {
-		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
+		this.nome = nome.trim();
+		this.email = email.trim();
+		this.telefone = telefone.trim();
 		this.listaDeProdutos = new HashMap<>();
 	}
 	
@@ -26,7 +27,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
+	} 
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
@@ -38,7 +39,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	
 	public void addProduto(String nome, String descricao, String preco ) {
 		for(int i = 0; i < this.listaDeProdutos.size(); i++) {
-			if(this.listaDeProdutos.get(i).getNome().equals(nome)) {
+			if(this.listaDeProdutos.containsKey(nome)) {
 				throw new IllegalArgumentException("produto ja cadastrado");
 			}
 		}
@@ -49,7 +50,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 
 	@Override
 	public int compareTo(Fornecedor outroFornecedor) {
-		return nome.compareTo(outroFornecedor.getNome());
+		return this.nome.compareTo(outroFornecedor.getNome());
 	}
 	
 	

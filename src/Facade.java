@@ -11,6 +11,10 @@ public class Facade {
 		return controle.exibirCliente(cpf);
 
 	}
+	
+	public String exibirListaDeClientes() {
+		return controle.exibeListaDeClientes();
+	}
 
 	public void editarCliente(String cpf, String nomeAtributo, String novoValor) {
 		controle.editarCliente(cpf, nomeAtributo, novoValor);
@@ -50,11 +54,11 @@ public class Facade {
 		return controle.exibirProdutoEpecificoDeUmFornecedor(nomeFornecedor, nomeProduto);
 	}
 
-	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) { // em ordem alfa
+	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) { 
 		return controle.exibirProtudosDeUmFornecedor(nomeFornecedor);
 	}
 
-	public String exibirProdutosDeTodosOsFornecedores() { // em ordem alfabetica do fornecedor
+	public String exibirProdutosDeTodosOsFornecedores() { 
 		return controle.exibirProdutosDeTodosOsFornecedores();
 	}
 

@@ -6,7 +6,6 @@ public class Controller {
 
 	HashMap<String, Cliente> colecaoClientes;
 	HashMap<String, Fornecedor> colecaoFornecedores;
-	ArrayList<Fornecedor> listaAuxiliar;
 
 	public Controller() {
 		this.colecaoClientes = new HashMap<>();
@@ -29,9 +28,16 @@ public class Controller {
 		return "cliente não cadastrado";
 	}
 
-	public String exibeListaDeClientes() { // tem que ser em ordem alfabetica tambem
+	public String exibeListaDeClientes() {
 
-		return "";
+		ArrayList<Cliente> listaAuxiliarClientes = new ArrayList<>();
+		listaAuxiliarClientes.addAll(this.colecaoClientes.values());
+		Collections.sort(listaAuxiliarClientes);
+		String listaOrdenada = "";
+		for (Cliente cliente : listaAuxiliarClientes) {
+			listaOrdenada += cliente.toString() + " | ";
+		}
+		return listaOrdenada;
 
 	}
 
@@ -82,13 +88,15 @@ public class Controller {
 	}
 
 	public String exibirFornecedores() {
-		
-		listaAuxiliar = new ArrayList<>();
-		listaAuxiliar.addAll(this.colecaoFornecedores.values());
-		Collections.sort(listaAuxiliar);
+
+		ArrayList<Fornecedor> listaAuxiliarFornecedores = new ArrayList<>();
+		listaAuxiliarFornecedores.addAll(this.colecaoFornecedores.values());
+
+		Collections.sort(listaAuxiliarFornecedores);
+
 		String listaOrdenada = "";
-		for (Fornecedor fornecedor : listaAuxiliar) {
-			listaOrdenada += fornecedor.toString() + "\n";
+		for (Fornecedor fornecedor : listaAuxiliarFornecedores) {
+			listaOrdenada += fornecedor.toString() + " | ";
 		}
 		return listaOrdenada;
 	}
@@ -120,20 +128,16 @@ public class Controller {
 
 	}
 
+	
 	public void cadastrarProduto(String nomeFornecedor, String nomeProduto, String descricao, String preco) {
-
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
-				throw new IllegalArgumentException("produto ja cadastrado");
-			}
-
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
-
 		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
-
 	}
 
+	
+	
 	public String exibirProdutoEpecificoDeUmFornecedor(String nomeFornecedor, String nomeProduto) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
@@ -144,12 +148,51 @@ public class Controller {
 		return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).toString();
 	}
 
-	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) { // em ordem alfa
-		return "SSA";
+	
+	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) {
+		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().isEmpty()) {
+				throw new NullPointerException("lista de produtos vazia!");
+			}
+			throw new IllegalArgumentException("fornecedor nao encontrado");
+		}
+
+		ArrayList<Produto> listaDeProdutos = new ArrayList<>();
+
+		listaDeProdutos.addAll(this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().values());
+
+		Collections.sort(listaDeProdutos);
+
+		String listaDeProdutosDoFornecedor = "";
+		for (Produto produto : listaDeProdutos) {
+			listaDeProdutosDoFornecedor += produto.toString() + " | ";
+		}
+		return listaDeProdutosDoFornecedor;
+
 	}
 
-	public String exibirProdutosDeTodosOsFornecedores() { // em ordem alfabetica do fornecedor
-		return "CFZ";
+	public String exibirProdutosDeTodosOsFornecedores() {
+		if (this.colecaoFornecedores.isEmpty()) {
+			throw new NullPointerException("sem fornecedores cadastrados");
+		}
+
+		ArrayList<Fornecedor> listaDeFornecedores = new ArrayList<>();
+		listaDeFornecedores.addAll(this.colecaoFornecedores.values());
+
+		ArrayList<Produto> listaDeProdutos = new ArrayList<>();
+
+		String listaDeProdutosDeTodosFornecedores = "";
+		for (Fornecedor fornecedor : listaDeFornecedores) {
+			listaDeProdutos.addAll(fornecedor.getListaDeProdutos().values());
+		}
+
+		Collections.sort(listaDeProdutos);
+		for (Produto produto : listaDeProdutos) {
+			listaDeProdutosDeTodosFornecedores += produto.toString() + " | ";
+		}
+
+		return listaDeProdutosDeTodosFornecedores;
+
 	}
 
 	public void editarProduto(String nomeFornecedor, String nomeProduto, String novoPreco) {
