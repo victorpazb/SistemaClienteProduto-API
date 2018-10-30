@@ -12,12 +12,22 @@ public class Controller {
 		this.colecaoFornecedores = new HashMap<>();
 	}
 
-	public void cadastrarClientes(String cpf, String nome, String local, String email) {
+	public boolean cadastrarCliente(String cpf, String nome, String local, String email) {
 		if (this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("cpf ja cadastrado");
 		}
+		
+		if(cpf == null | nome == null | local == null | email == null) {
+			throw new NullPointerException("algum parametro passodo eh nulo");
+		}
+		
+		if(cpf.trim().equals("") | nome.trim().equals("") | local.trim().equals("") | email.trim().equals("")) {
+			throw new IllegalArgumentException("algum parametro passado eh vazio");
+		}
+		
 		Cliente novoCliente = new Cliente(cpf, nome, local, email);
 		this.colecaoClientes.put(cpf, novoCliente);
+		return true;
 
 	}
 

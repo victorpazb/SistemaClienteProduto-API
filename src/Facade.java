@@ -3,8 +3,8 @@ public class Facade {
 
 	Controller controle = new Controller();
 
-	public void cadastrarClientes(String cpf, String nome, String local, String email) {
-		controle.cadastrarClientes(cpf, nome, local, email);
+	public void cadastrarCliente(String cpf, String nome, String local, String email) {
+		controle.cadastrarCliente(cpf, nome, local, email);
 	}
 
 	public String exibirCliente(String cpf) {
