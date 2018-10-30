@@ -11,9 +11,10 @@ public class Main {
 		facade.cadastrarProduto("Victor", "leite", "litro de caixa", "1123");
 		facade.cadastrarProduto("Victor", "papel", "higienico", "123");
 		facade.cadastrarProduto("Victor", "chocolate", "branco com frutas", "223");
+		facade.cadastrarProduto("Hugo", "vagem", "selecionada", "55");
 		
 		
-		System.out.println(facade.exibirProtudosDeUmFornecedor("Victor"));
+		System.out.println(facade.exibirProdutosDeTodosOsFornecedores());
 	}
 
 }
