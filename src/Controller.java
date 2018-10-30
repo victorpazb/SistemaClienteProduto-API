@@ -16,15 +16,15 @@ public class Controller {
 		if (this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("cpf ja cadastrado");
 		}
-		
-		if(cpf == null | nome == null | local == null | email == null) {
+
+		if (cpf == null | nome == null | local == null | email == null) {
 			throw new NullPointerException("algum parametro passodo eh nulo");
 		}
-		
-		if(cpf.trim().equals("") | nome.trim().equals("") | local.trim().equals("") | email.trim().equals("")) {
+
+		if (cpf.trim().equals("") | nome.trim().equals("") | local.trim().equals("") | email.trim().equals("")) {
 			throw new IllegalArgumentException("algum parametro passado eh vazio");
 		}
-		
+
 		Cliente novoCliente = new Cliente(cpf, nome, local, email);
 		this.colecaoClientes.put(cpf, novoCliente);
 		return true;
@@ -35,17 +35,28 @@ public class Controller {
 		if (this.colecaoClientes.containsKey(cpf)) {
 			return this.colecaoClientes.get(cpf).toString();
 		}
-		return "cliente não cadastrado";
+		throw new IllegalArgumentException("cpf nao cadastrado");
 	}
 
 	public String exibeListaDeClientes() {
 
+		if (this.colecaoClientes.isEmpty()) {
+			throw new NullPointerException("nenhum cliente foi cadastrado");
+		}
+
 		ArrayList<Cliente> listaAuxiliarClientes = new ArrayList<>();
 		listaAuxiliarClientes.addAll(this.colecaoClientes.values());
 		Collections.sort(listaAuxiliarClientes);
+
 		String listaOrdenada = "";
-		for (Cliente cliente : listaAuxiliarClientes) {
-			listaOrdenada += cliente.toString() + " | ";
+		for (int i = 0; i < listaAuxiliarClientes.size(); i++) {
+			if(i == 0 || i == listaAuxiliarClientes.size() - 1 && listaAuxiliarClientes.size() != 2) {
+				listaOrdenada += listaAuxiliarClientes.get(i).toString();
+			}else {
+				listaOrdenada += (" | " + listaAuxiliarClientes.get(i).toString());
+			}
+			
+
 		}
 		return listaOrdenada;
 
@@ -98,15 +109,24 @@ public class Controller {
 	}
 
 	public String exibirFornecedores() {
-
+		if(this.colecaoFornecedores.isEmpty()) {
+			throw new NullPointerException("lista vazia");
+		}
+			
 		ArrayList<Fornecedor> listaAuxiliarFornecedores = new ArrayList<>();
 		listaAuxiliarFornecedores.addAll(this.colecaoFornecedores.values());
 
 		Collections.sort(listaAuxiliarFornecedores);
 
 		String listaOrdenada = "";
-		for (Fornecedor fornecedor : listaAuxiliarFornecedores) {
-			listaOrdenada += fornecedor.toString() + " | ";
+		for (int i = 0; i < listaAuxiliarFornecedores.size(); i++) {
+			if(i == 0 || i == listaAuxiliarFornecedores.size() - 1 && listaAuxiliarFornecedores.size() != 2) {
+				listaOrdenada += listaAuxiliarFornecedores.get(i).toString();
+			}else {
+				listaOrdenada += (" | " + listaAuxiliarFornecedores.get(i).toString());
+			}
+			
+
 		}
 		return listaOrdenada;
 	}
@@ -138,7 +158,6 @@ public class Controller {
 
 	}
 
-	
 	public void cadastrarProduto(String nomeFornecedor, String nomeProduto, String descricao, String preco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
@@ -146,8 +165,6 @@ public class Controller {
 		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
 	}
 
-	
-	
 	public String exibirProdutoEpecificoDeUmFornecedor(String nomeFornecedor, String nomeProduto) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
@@ -158,7 +175,6 @@ public class Controller {
 		return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).toString();
 	}
 
-	
 	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().isEmpty()) {
@@ -174,8 +190,14 @@ public class Controller {
 		Collections.sort(listaDeProdutos);
 
 		String listaDeProdutosDoFornecedor = "";
-		for (Produto produto : listaDeProdutos) {
-			listaDeProdutosDoFornecedor += produto.toString() + " | ";
+		for (int i = 0; i < listaDeProdutos.size(); i++) {
+			if(i == 0 || i == listaDeProdutos.size() - 1 && listaDeProdutos.size() != 2) {
+				listaDeProdutosDoFornecedor += listaDeProdutos.get(i).toString();
+			}else {
+				listaDeProdutosDoFornecedor += (" | " + listaDeProdutos.get(i).toString());
+			}
+			
+
 		}
 		return listaDeProdutosDoFornecedor;
 
