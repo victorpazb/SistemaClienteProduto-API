@@ -50,12 +50,11 @@ public class Controller {
 
 		String listaOrdenada = "";
 		for (int i = 0; i < listaAuxiliarClientes.size(); i++) {
-			if(i == 0 || i == listaAuxiliarClientes.size() - 1 && listaAuxiliarClientes.size() != 2) {
+			if (i == 0) {
 				listaOrdenada += listaAuxiliarClientes.get(i).toString();
-			}else {
+			} else {
 				listaOrdenada += (" | " + listaAuxiliarClientes.get(i).toString());
 			}
-			
 
 		}
 		return listaOrdenada;
@@ -63,9 +62,24 @@ public class Controller {
 	}
 
 	public void editarCliente(String cpf, String nomeAtributo, String novoValor) {
-		if (!this.colecaoClientes.containsKey(cpf)) {
-			throw new NullPointerException("cpf nao cadastrado");
+		
+		
+		
+		if(cpf == null || nomeAtributo == null || novoValor == null) {
+			throw new NullPointerException("algum argumento passado foi nulo");
 		}
+		
+		if(cpf.trim().equals("") || novoValor.trim().equals("")) {
+			throw new IllegalArgumentException("cpf ou novo valor estao vazios");
+		}
+		
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("cpf nao cadastrado");
+		}
+		
+		
+		
+		
 
 		switch (nomeAtributo.toLowerCase()) {
 		case "nome":
@@ -109,10 +123,10 @@ public class Controller {
 	}
 
 	public String exibirFornecedores() {
-		if(this.colecaoFornecedores.isEmpty()) {
+		if (this.colecaoFornecedores.isEmpty()) {
 			throw new NullPointerException("lista vazia");
 		}
-			
+
 		ArrayList<Fornecedor> listaAuxiliarFornecedores = new ArrayList<>();
 		listaAuxiliarFornecedores.addAll(this.colecaoFornecedores.values());
 
@@ -120,12 +134,12 @@ public class Controller {
 
 		String listaOrdenada = "";
 		for (int i = 0; i < listaAuxiliarFornecedores.size(); i++) {
-			if(i == 0 || i == listaAuxiliarFornecedores.size() - 1 && listaAuxiliarFornecedores.size() != 2) {
+			
+			if (i == 0) {
 				listaOrdenada += listaAuxiliarFornecedores.get(i).toString();
-			}else {
+			} else {
 				listaOrdenada += (" | " + listaAuxiliarFornecedores.get(i).toString());
 			}
-			
 
 		}
 		return listaOrdenada;
@@ -191,12 +205,11 @@ public class Controller {
 
 		String listaDeProdutosDoFornecedor = "";
 		for (int i = 0; i < listaDeProdutos.size(); i++) {
-			if(i == 0 || i == listaDeProdutos.size() - 1 && listaDeProdutos.size() != 2) {
+			if (i == 0) {
 				listaDeProdutosDoFornecedor += listaDeProdutos.get(i).toString();
-			}else {
+			} else {
 				listaDeProdutosDoFornecedor += (" | " + listaDeProdutos.get(i).toString());
 			}
-			
 
 		}
 		return listaDeProdutosDoFornecedor;
@@ -214,13 +227,28 @@ public class Controller {
 		ArrayList<Produto> listaDeProdutos = new ArrayList<>();
 
 		String listaDeProdutosDeTodosFornecedores = "";
+		boolean peloMenosUmTemProdutos = false;
 		for (Fornecedor fornecedor : listaDeFornecedores) {
-			listaDeProdutos.addAll(fornecedor.getListaDeProdutos().values());
+			if (!fornecedor.getListaDeProdutos().values().isEmpty()) {
+				peloMenosUmTemProdutos = true;
+				listaDeProdutos.addAll(fornecedor.getListaDeProdutos().values());
+
+			}
+			
+
+		}
+		if (peloMenosUmTemProdutos == false) {
+			throw new IllegalArgumentException("fornecedor ainda nao tem produtos cadastrados");
 		}
 
 		Collections.sort(listaDeProdutos);
-		for (Produto produto : listaDeProdutos) {
-			listaDeProdutosDeTodosFornecedores += produto.toString() + " | ";
+		for (int i = 0; i < listaDeProdutos.size(); i++) {
+			if (i == 0) {
+				listaDeProdutosDeTodosFornecedores += listaDeProdutos.get(i).toString();
+			} else {
+				listaDeProdutosDeTodosFornecedores += " | " + listaDeProdutos.get(i).toString();
+			}
+
 		}
 
 		return listaDeProdutosDeTodosFornecedores;
