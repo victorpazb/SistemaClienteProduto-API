@@ -163,7 +163,7 @@ public class Controller {
 		if (!this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
-		this.colecaoClientes.remove(nome);
+		this.colecaoFornecedores.remove(nome);
 
 	}
 

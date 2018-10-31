@@ -258,7 +258,7 @@ class testeController {
 	}
 
 	@Test
-	void testeEditarFornecedorComNomeParametroInvalido() {
+	void testeEditarFornecedorComNomeDoParametroInvalido() {
 		controleTeste = new Controller();
 		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
 
@@ -268,6 +268,15 @@ class testeController {
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.editarFornecedor("victor", "telefonUS", "987565"));
 
+	}
+	
+	@Test 
+	void testeRemoveFornecedor() {
+		controleTeste = new Controller();
+		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
+		assertEquals("victor - victor@paz.com - 12345", controleTeste.exibeFornecedor("victor"));
+		controleTeste.removerFornecedor("victor");
+		assertTrue(controleTeste.colecaoFornecedores.isEmpty());
 	}
 
 }
