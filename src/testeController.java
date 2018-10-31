@@ -300,27 +300,25 @@ class testeController {
 		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.cadastrarProduto("victor", "carne", "carne de sol", "12,32"));
-		
+
 	}
-	
 
 	@Test
 	void testeCadastrarProdutoEmFornecedorNulo() {
 		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.cadastrarProduto(null, "carne", "carne de sol", "12,32"));
-		
+
 	}
-	
 
 	@Test
 	void testeCadastrarProdutoEmFornecedorVazio() {
 		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.cadastrarProduto("    ", "carne", "carne de sol", "12,32"));
-		
+
 	}
-	
+
 	@Test
 	void testeCadastrarProdutoComAlgumParametroNulo() {
 		controleTeste = new Controller();
@@ -328,13 +326,12 @@ class testeController {
 		assertThrows(NullPointerException.class,
 				() -> controleTeste.cadastrarProduto("victor", null, "carne de sol", "12,32"));
 		assertThrows(NullPointerException.class,
-			() -> controleTeste.cadastrarProduto("victor", "carne", null, "12,32"));
+				() -> controleTeste.cadastrarProduto("victor", "carne", null, "12,32"));
 		assertThrows(NullPointerException.class,
 				() -> controleTeste.cadastrarProduto("victor", "carne", "carne de sol", null));
-		
-		
+
 	}
-	
+
 	@Test
 	void testeCadastrarProdutoComAlgumParametroVazio() {
 		controleTeste = new Controller();
@@ -345,8 +342,25 @@ class testeController {
 				() -> controleTeste.cadastrarProduto("victor", "carne", "        ", "12,32"));
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.cadastrarProduto("victor", "carne", "carne de sol", "      "));
-	
+
 	}
-	
+
+	@Test
+	void testeExibirProdutoEspecificoDeUmFornecedor() {
+		controleTeste = new Controller();
+		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.cadastrarProduto("victor", "carne", "carne de sol", "12,32");
+		assertEquals("carne - carne de sol - 12,32",
+				controleTeste.exibirProdutoEpecificoDeUmFornecedor("victor", "carne"));
+	}
+
+	@Test
+	void testeExibirProdutoNaoCadastrado() {
+		controleTeste = new Controller();
+		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.cadastrarProduto("victor", "carne", "carne de sol", "12,32");
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibirProdutoEpecificoDeUmFornecedor("victor", "leite"));
+	}
 
 }

@@ -11,11 +11,11 @@ public class Controller {
 		this.colecaoClientes = new HashMap<>();
 		this.colecaoFornecedores = new HashMap<>();
 	}
-	
+
 	public HashMap<String, Fornecedor> getColecaoFornecedores() {
 		return this.colecaoFornecedores;
 	}
-	
+
 	public HashMap<String, Cliente> getColecaoClientes() {
 		return this.colecaoClientes;
 	}
@@ -183,12 +183,15 @@ public class Controller {
 	}
 
 	public String exibirProdutoEpecificoDeUmFornecedor(String nomeFornecedor, String nomeProduto) {
-		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+
+		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
 				throw new IllegalArgumentException("produto nao cadastrado");
 			}
+		} else {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
+
 		return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).toString();
 	}
 
