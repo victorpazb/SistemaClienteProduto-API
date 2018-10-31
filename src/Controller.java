@@ -100,7 +100,7 @@ public class Controller {
 	
 	public void removerCliente(String cpf) {
 		if (!this.colecaoClientes.containsKey(cpf)) {
-			throw new IllegalArgumentException("cpf nao cadastrado");
+			throw new NullPointerException("cpf nao cadastrado");
 		}
 		this.colecaoClientes.remove(cpf);
 
