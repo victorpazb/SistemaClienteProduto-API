@@ -4,15 +4,20 @@ import org.junit.jupiter.api.Test;
 
 class testeController {
 
+	Controller controleTeste;
+	
+	
 	@Test
 	void testeCadastrarCliente() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		assertTrue(controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com"));
 	}
 
+	
+	
 	@Test
 	void testeCadastrarClienteComAlgumParametroNulo() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		assertThrows(NullPointerException.class,
 				() -> controleTeste.cadastrarCliente(null, "victor", "lcc3", "victor@ufcg.br"));
 		assertThrows(NullPointerException.class,
@@ -24,7 +29,7 @@ class testeController {
 
 	@Test
 	void testeCadastrarClienteComAlgumParametroVazio() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.cadastrarCliente("    ", "victor", "lcc3", "victor@ufcg.br"));
 		assertThrows(IllegalArgumentException.class,
@@ -37,7 +42,7 @@ class testeController {
 
 	@Test
 	void testeCadastrarClienteJaCadastrado() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor.braga@ccc.ufcg.edu.br");
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor.braga@ccc.ufcg.edu.br"));
@@ -46,20 +51,20 @@ class testeController {
 
 	@Test
 	void testeExibirCliente() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor.braga@ccc.ufcg.edu.br");
 		assertEquals("victor - lcc3 - victor.braga@ccc.ufcg.edu.br", controleTeste.exibirCliente("123"));
 	}
 
 	@Test
 	void testeExibirClienteQueNaoExiste() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibirCliente("234"));
 	}
 
 	@Test
 	void testeExibirListaDeClientes() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 
 		controleTeste.cadastrarCliente("324", "hugo", "lcc3", "hugo@paz.com");
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
@@ -70,13 +75,13 @@ class testeController {
 
 	@Test
 	void testeExibirListaDeClientesVazia() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		assertThrows(NullPointerException.class, () -> controleTeste.exibeListaDeClientes());
 	}
 
 	@Test
 	void testeEditarClienteNome() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
 		controleTeste.editarCliente("123", "nome", "braga");
 		assertEquals("braga - lcc3 - victor@paz.com", controleTeste.exibirCliente("123"));
@@ -84,7 +89,7 @@ class testeController {
 
 	@Test
 	void testeEditarClienteLocal() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
 		controleTeste.editarCliente("123", "local", "spLab");
 		assertEquals("victor - spLab - victor@paz.com", controleTeste.exibirCliente("123"));
@@ -92,7 +97,7 @@ class testeController {
 
 	@Test
 	void testeEditarClienteEmail() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
 		controleTeste.editarCliente("123", "email", "victorpfb@ufcg.com");
 		assertEquals("victor - lcc3 - victorpfb@ufcg.com", controleTeste.exibirCliente("123"));
@@ -100,14 +105,14 @@ class testeController {
 
 	@Test
 	void testeEditarClienteNaoCadastrado() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.editarCliente("123", "email", "victorpfb@ufcg.com"));
 	}
 	
 	@Test
 	void testeEditarClienteComParametroNulo() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
 		
 		assertThrows(NullPointerException.class,
@@ -121,7 +126,7 @@ class testeController {
 	
 	@Test
 	void testeEditarClienteComParametroVazio() {
-		Controller controleTeste = new Controller();
+		controleTeste = new Controller();
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
 		
 		assertThrows(IllegalArgumentException.class,
@@ -131,5 +136,15 @@ class testeController {
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.editarCliente("123", "nome", "   "));
 		
+	}
+	
+	
+	@Test
+	void testeRemoverCliente() {
+		controleTeste = new Controller();
+		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
+		assertEquals("victor - lcc3 - victor@paz.com", controleTeste.exibirCliente("123"));
+		controleTeste.removerCliente("123");
+		assertTrue(controleTeste.colecaoClientes.isEmpty());
 	}
 }

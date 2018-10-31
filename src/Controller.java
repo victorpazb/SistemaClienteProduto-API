@@ -96,6 +96,8 @@ public class Controller {
 		}
 	}
 
+	
+	
 	public void removerCliente(String cpf) {
 		if (!this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("cpf nao cadastrado");
@@ -104,6 +106,7 @@ public class Controller {
 
 	}
 
+	
 	public void cadastrarFornecedor(String nome, String email, String telefone) {
 		if (this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedero ja cadastrado");
