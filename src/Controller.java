@@ -62,24 +62,18 @@ public class Controller {
 	}
 
 	public void editarCliente(String cpf, String nomeAtributo, String novoValor) {
-		
-		
-		
-		if(cpf == null || nomeAtributo == null || novoValor == null) {
+
+		if (cpf == null || nomeAtributo == null || novoValor == null) {
 			throw new NullPointerException("algum argumento passado foi nulo");
 		}
-		
-		if(cpf.trim().equals("") || novoValor.trim().equals("")) {
+
+		if (cpf.trim().equals("") || novoValor.trim().equals("")) {
 			throw new IllegalArgumentException("cpf ou novo valor estao vazios");
 		}
-		
+
 		if (!this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("cpf nao cadastrado");
 		}
-		
-		
-		
-		
 
 		switch (nomeAtributo.toLowerCase()) {
 		case "nome":
@@ -96,8 +90,6 @@ public class Controller {
 		}
 	}
 
-	
-	
 	public void removerCliente(String cpf) {
 		if (!this.colecaoClientes.containsKey(cpf)) {
 			throw new NullPointerException("cpf nao cadastrado");
@@ -106,7 +98,6 @@ public class Controller {
 
 	}
 
-	
 	public void cadastrarFornecedor(String nome, String email, String telefone) {
 		if (this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedero ja cadastrado");
@@ -118,8 +109,8 @@ public class Controller {
 	}
 
 	public String exibeFornecedor(String nome) {
-		if (!this.colecaoFornecedores.containsKey(nome)) {
-			throw new IllegalArgumentException("fornecedor nao cadastrado");
+		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nome.trim().equals("")) {
+			throw new IllegalArgumentException("parametro invalido");
 		}
 		return this.colecaoFornecedores.get(nome).toString();
 
@@ -137,7 +128,7 @@ public class Controller {
 
 		String listaOrdenada = "";
 		for (int i = 0; i < listaAuxiliarFornecedores.size(); i++) {
-			
+
 			if (i == 0) {
 				listaOrdenada += listaAuxiliarFornecedores.get(i).toString();
 			} else {
@@ -149,8 +140,9 @@ public class Controller {
 	}
 
 	public void editarFornecedor(String nome, String nomeAtributo, String novoValor) {
-		if (!this.colecaoFornecedores.containsKey(nome)) {
-			throw new NullPointerException("cpf nao cadastrado");
+		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nomeAtributo == null || novoValor == null
+				|| nome.trim().equals("") || nomeAtributo.trim().equals("") || novoValor.trim().equals("")) {
+			throw new IllegalArgumentException("parametro invalido passado");
 		}
 
 		switch (nomeAtributo.toLowerCase()) {
@@ -162,7 +154,7 @@ public class Controller {
 			break;
 		default:
 
-			throw new IllegalArgumentException("opcao invalida");
+			throw new IllegalArgumentException("opcao invalida, deve digitar email ou telefone");
 		}
 
 	}
@@ -237,7 +229,6 @@ public class Controller {
 				listaDeProdutos.addAll(fornecedor.getListaDeProdutos().values());
 
 			}
-			
 
 		}
 		if (peloMenosUmTemProdutos == false) {
