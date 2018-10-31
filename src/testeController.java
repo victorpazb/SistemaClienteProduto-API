@@ -278,5 +278,13 @@ class testeController {
 		controleTeste.removerFornecedor("victor");
 		assertTrue(controleTeste.colecaoFornecedores.isEmpty());
 	}
+	
+	@Test
+	void testeRemoveFornecedorQueNaoExiste() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class, ()-> controleTeste.removerFornecedor("victor"));
+	}
+	
+	
 
 }
