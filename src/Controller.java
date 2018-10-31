@@ -4,12 +4,20 @@ import java.util.Collections;
 
 public class Controller {
 
-	HashMap<String, Cliente> colecaoClientes;
-	HashMap<String, Fornecedor> colecaoFornecedores;
+	private HashMap<String, Cliente> colecaoClientes;
+	private HashMap<String, Fornecedor> colecaoFornecedores;
 
 	public Controller() {
 		this.colecaoClientes = new HashMap<>();
 		this.colecaoFornecedores = new HashMap<>();
+	}
+	
+	public HashMap<String, Fornecedor> getColecaoFornecedores() {
+		return this.colecaoFornecedores;
+	}
+	
+	public HashMap<String, Cliente> getColecaoClientes() {
+		return this.colecaoClientes;
 	}
 
 	public boolean cadastrarCliente(String cpf, String nome, String local, String email) {

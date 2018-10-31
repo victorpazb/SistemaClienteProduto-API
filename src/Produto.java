@@ -6,6 +6,10 @@ public class Produto implements Comparable<Produto>{
 	private String preco;
 
 	public Produto(String nome, String descricao, String preco) {
+		if(nome.trim().equals("") || descricao.trim().equals("") || preco.trim().equals("")) {
+			throw new IllegalArgumentException("parametro passado para construcao de produto eh vazio");
+		}
+		
 		this.nome = nome.trim();
 		this.descricao = descricao.trim();
 		this.preco = preco.trim();

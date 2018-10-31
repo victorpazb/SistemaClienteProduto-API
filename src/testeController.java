@@ -136,7 +136,7 @@ class testeController {
 		controleTeste.cadastrarCliente("123", "victor", "lcc3", "victor@paz.com");
 		assertEquals("victor - lcc3 - victor@paz.com", controleTeste.exibirCliente("123"));
 		controleTeste.removerCliente("123");
-		assertTrue(controleTeste.colecaoClientes.isEmpty());
+		assertTrue(controleTeste.getColecaoClientes().isEmpty());
 	}
 
 	@Test
@@ -149,7 +149,8 @@ class testeController {
 	void testeCadastrarFornecedor() {
 		controleTeste = new Controller();
 		controleTeste.cadastrarFornecedor("victor", "victor@yahoo.com", "423423");
-		assertEquals("victor - victor@yahoo.com - 423423", controleTeste.colecaoFornecedores.get("victor").toString());
+		assertEquals("victor - victor@yahoo.com - 423423",
+				controleTeste.getColecaoFornecedores().get("victor").toString());
 	}
 
 	@Test
@@ -269,22 +270,83 @@ class testeController {
 				() -> controleTeste.editarFornecedor("victor", "telefonUS", "987565"));
 
 	}
-	
-	@Test 
+
+	@Test
 	void testeRemoveFornecedor() {
 		controleTeste = new Controller();
 		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
 		assertEquals("victor - victor@paz.com - 12345", controleTeste.exibeFornecedor("victor"));
 		controleTeste.removerFornecedor("victor");
-		assertTrue(controleTeste.colecaoFornecedores.isEmpty());
+		assertTrue(controleTeste.getColecaoFornecedores().isEmpty());
 	}
-	
+
 	@Test
 	void testeRemoveFornecedorQueNaoExiste() {
 		controleTeste = new Controller();
-		assertThrows(IllegalArgumentException.class, ()-> controleTeste.removerFornecedor("victor"));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.removerFornecedor("victor"));
+	}
+
+	@Test
+	void testeCadastrarProduto() {
+		controleTeste = new Controller();
+		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.cadastrarProduto("victor", "carne", "carne de sol", "12,32");
+		assertEquals("carne - carne de sol - 12,32",
+				controleTeste.getColecaoFornecedores().get("victor").getListaDeProdutos().get("carne").toString());
+	}
+
+	@Test
+	void testeCadastrarProdutoEmFornecedorInexistente() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.cadastrarProduto("victor", "carne", "carne de sol", "12,32"));
+		
 	}
 	
+
+	@Test
+	void testeCadastrarProdutoEmFornecedorNulo() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.cadastrarProduto(null, "carne", "carne de sol", "12,32"));
+		
+	}
+	
+
+	@Test
+	void testeCadastrarProdutoEmFornecedorVazio() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.cadastrarProduto("    ", "carne", "carne de sol", "12,32"));
+		
+	}
+	
+	@Test
+	void testeCadastrarProdutoComAlgumParametroNulo() {
+		controleTeste = new Controller();
+		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
+		assertThrows(NullPointerException.class,
+				() -> controleTeste.cadastrarProduto("victor", null, "carne de sol", "12,32"));
+		assertThrows(NullPointerException.class,
+			() -> controleTeste.cadastrarProduto("victor", "carne", null, "12,32"));
+		assertThrows(NullPointerException.class,
+				() -> controleTeste.cadastrarProduto("victor", "carne", "carne de sol", null));
+		
+		
+	}
+	
+	@Test
+	void testeCadastrarProdutoComAlgumParametroVazio() {
+		controleTeste = new Controller();
+		controleTeste.cadastrarFornecedor("victor", "victor@paz.com", "12345");
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.cadastrarProduto("victor", "     ", "carne de sol", "12,32"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.cadastrarProduto("victor", "carne", "        ", "12,32"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.cadastrarProduto("victor", "carne", "carne de sol", "      "));
+	
+	}
 	
 
 }
