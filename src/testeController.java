@@ -363,6 +363,16 @@ class testeController {
 				() -> controleTeste.exibeProduto("victor", "leite", "leite desnatado"));
 	}
 	
+	@Test
+	void testeRemoveProduto() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
+		assertFalse(controleTeste.getColecaoFornecedores().get("victor").getListaDeProdutos().isEmpty());
+		controleTeste.removeProduto("carne", "carne de sol", "victor");
+		assertTrue(controleTeste.getColecaoFornecedores().get("victor").getListaDeProdutos().isEmpty());
+	}
+	
 	
 
 }

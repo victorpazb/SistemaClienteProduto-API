@@ -185,15 +185,18 @@ public class Controller {
 	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
 		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
+					.containsKey(nomeProduto + " - " + descricao)) {
 				throw new IllegalArgumentException("produto nao cadastrado");
 			}
 		} else {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
 
-		if(this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
-			return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto + " - " + descricao).toString();
+		if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
+				.containsKey(nomeProduto + " - " + descricao)) {
+			return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
+					.get(nomeProduto + " - " + descricao).toString();
 		}
 		throw new IllegalArgumentException("produto nao encontrado");
 	}
@@ -265,18 +268,30 @@ public class Controller {
 
 	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double novoPreco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
 				throw new IllegalArgumentException("produto nao cadastrado");
 			} else if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).getDescricao()
 					.equals(descricao)) {
-				
-				{
-				}
 
 			}
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
 		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).setPreco(novoPreco);
+
+	}
+
+	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
+		
+		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
+				throw new IllegalArgumentException("produto nao cadastrado");
+			} else if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).getDescricao()
+					.equals(descricao)) {
+
+			}
+			throw new IllegalArgumentException("fornecedor nao cadastrado");
+		}
+		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().remove(nomeProduto + " - " + descricao);
 
 	}
 

@@ -70,6 +70,10 @@ public class Facade {
 	public void editaProduto(String nomeFornecedor, String nomeProduto, String descricao, double novoPreco) {
 		controle.editaProduto(nomeFornecedor, nomeProduto, descricao, novoPreco);
 	}
+	
+	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
+		controle.removeProduto(nomeProduto, descricao, nomeFornecedor);
+	}
 
 
 
