@@ -1,14 +1,16 @@
+import easyaccept.EasyAccept;
 
 public class Facade {
 	
 	public static void main(String[] args) {
 		args = new String[] {"Facade", "testesAceitacao/use_case_1.txt"};
+		EasyAccept.main(args);
 	}
 
 	Controller controle = new Controller();
 
-	public void adicionaCliente(String cpf, String nome, String local, String email) {
-		controle.adicionaCliente(cpf, nome, local, email);
+	public void adicionaCliente(String cpf, String nome, String email, String localizacao) {
+		controle.adicionaCliente(cpf, nome, email, localizacao);
 	}
 
 	public String exibeCliente(String cpf) {
@@ -16,8 +18,8 @@ public class Facade {
 
 	}
 	
-	public String exibirListaDeClientes() {
-		return controle.exibeListaDeClientes();
+	public String exibeClientes() {
+		return controle.exibeClientes();
 	}
 
 	public void editaCliente(String cpf, String atributo, String novoValor) {

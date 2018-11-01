@@ -20,33 +20,50 @@ public class Controller {
 		return this.colecaoClientes;
 	}
 
-	public boolean adicionaCliente(String cpf, String nome, String local, String email) {
+	public boolean adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		if (this.colecaoClientes.containsKey(cpf)) {
-			throw new IllegalArgumentException("cpf ja cadastrado");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
+		}
+		
+		if(cpf == null || nome == null || email == null || localizacao == null) {
+			throw new NullPointerException("algum parametro passado eh nulo");
+		}
+		
+		
+		
+		if (cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf invalido.");
+		}
+		if (nome.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
+		}
+		if (email.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
+		}
+		if (localizacao.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		}
 
-		if (cpf == null | nome == null | local == null | email == null) {
-			throw new NullPointerException("algum parametro passodo eh nulo");
-		}
-
-		if (cpf.trim().equals("") | nome.trim().equals("") | local.trim().equals("") | email.trim().equals("")) {
-			throw new IllegalArgumentException("algum parametro passado eh vazio");
-		}
-
-		Cliente novoCliente = new Cliente(cpf, nome, local, email);
+		Cliente novoCliente = new Cliente(cpf, nome, email, localizacao);
 		this.colecaoClientes.put(cpf, novoCliente);
 		return true;
 
 	}
 
+	
+	
 	public String exibeCliente(String cpf) {
-		if (this.colecaoClientes.containsKey(cpf)) {
-			return this.colecaoClientes.get(cpf).toString();
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("Erro na exibicao do cliente: cliente nao existe.");
+
 		}
-		throw new IllegalArgumentException("cpf nao cadastrado");
+	
+		return this.colecaoClientes.get(cpf).toString();
+	
+		
 	}
 
-	public String exibeListaDeClientes() {
+	public String exibeClientes() {
 
 		if (this.colecaoClientes.isEmpty()) {
 			throw new NullPointerException("nenhum cliente foi cadastrado");
@@ -71,16 +88,25 @@ public class Controller {
 
 	public void editaCliente(String cpf, String atributo, String novoValor) {
 
-		if (cpf == null || atributo == null || novoValor == null) {
-			throw new NullPointerException("algum argumento passado foi nulo");
+		if(cpf == null) {
+			throw new NullPointerException("cpf nulo");
+		}
+		
+		
+		if (atributo == null || atributo.trim().equals("")) {
+			throw new NullPointerException("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
 		}
 
-		if (cpf.trim().equals("") || novoValor.trim().equals("")) {
-			throw new IllegalArgumentException("cpf ou novo valor estao vazios");
+		if (novoValor == null || novoValor.trim().equals("")) {
+			throw new NullPointerException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
 		}
 
 		if (!this.colecaoClientes.containsKey(cpf)) {
-			throw new IllegalArgumentException("cpf nao cadastrado");
+			throw new IllegalArgumentException("Erro na edicao do cliente: cliente nao existe.");
+		}
+
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("Erro na exibicao do cliente: cliente nao existe.");
 		}
 
 		switch (atributo.toLowerCase()) {
@@ -94,14 +120,11 @@ public class Controller {
 			this.colecaoClientes.get(cpf).setEmail(novoValor);
 			break;
 		default:
-			throw new IllegalArgumentException("opcao invalida");
+			throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao existe.");
 		}
 	}
 
 	public void removeCliente(String cpf) {
-		if (!this.colecaoClientes.containsKey(cpf)) {
-			throw new NullPointerException("cpf nao cadastrado");
-		}
 		this.colecaoClientes.remove(cpf);
 
 	}
@@ -283,12 +306,10 @@ public class Controller {
 
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
-		if(nomeFornecedor.trim().equals("") || descricao.trim().equals("") || nomeProduto.trim().equals("")) {
+		if (nomeFornecedor.trim().equals("") || descricao.trim().equals("") || nomeProduto.trim().equals("")) {
 			throw new IllegalArgumentException();
 		}
-		
-		
-		
+
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
 					.containsKey(nomeProduto + " - " + descricao)) {
@@ -297,8 +318,7 @@ public class Controller {
 
 			throw new IllegalArgumentException("fornecedor nao existe");
 		}
-		
-		
+
 		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().remove(nomeProduto + " - " + descricao);
 
 	}

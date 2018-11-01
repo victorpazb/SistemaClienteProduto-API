@@ -9,7 +9,7 @@ class testeController {
 	@Test
 	void testeCadastrarCliente() {
 		controleTeste = new Controller();
-		assertTrue(controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com"));
+		assertTrue(controleTeste.adicionaCliente("12345678910", "victor", "lcc3", "victor@paz.com"));
 	}
 
 	@Test
@@ -40,7 +40,7 @@ class testeController {
 	@Test
 	void testeCadastrarClienteJaCadastrado() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor.braga@ccc.ufcg.edu.br");
+		controleTeste.adicionaCliente("12345678910", "victor", "lcc3", "victor.braga@ccc.ufcg.edu.br");
 		assertThrows(IllegalArgumentException.class,
 				() -> controleTeste.adicionaCliente("123", "victor", "lcc3", "victor.braga@ccc.ufcg.edu.br"));
 
@@ -49,8 +49,8 @@ class testeController {
 	@Test
 	void testeExibirCliente() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor.braga@ccc.ufcg.edu.br");
-		assertEquals("victor - lcc3 - victor.braga@ccc.ufcg.edu.br", controleTeste.exibeCliente("123"));
+		controleTeste.adicionaCliente("12345678910", "victor", "victor.braga@ccc.ufcg.edu.br", "lcc3");
+		assertEquals("victor - victor.braga@ccc.ufcg.edu.br - lcc3", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
@@ -63,41 +63,41 @@ class testeController {
 	void testeExibirListaDeClientes() {
 		controleTeste = new Controller();
 
-		controleTeste.adicionaCliente("324", "hugo", "lcc3", "hugo@paz.com");
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com");
-		controleTeste.adicionaCliente("345", "paulo", "lcc3", "paulo@paz.com");
+		controleTeste.adicionaCliente("12345678910", "hugo", "lcc3", "hugo@paz.com");
+		controleTeste.adicionaCliente("12345678911", "victor", "lcc3", "victor@paz.com");
+		controleTeste.adicionaCliente("12345678912", "paulo", "lcc3", "paulo@paz.com");
 		assertEquals("hugo - lcc3 - hugo@paz.com | paulo - lcc3 - paulo@paz.com | victor - lcc3 - victor@paz.com",
-				controleTeste.exibeListaDeClientes());
+				controleTeste.exibeClientes());
 	}
 
 	@Test
 	void testeExibirListaDeClientesVazia() {
 		controleTeste = new Controller();
-		assertThrows(NullPointerException.class, () -> controleTeste.exibeListaDeClientes());
+		assertThrows(NullPointerException.class, () -> controleTeste.exibeClientes());
 	}
 
 	@Test
 	void testeEditarClienteNome() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com");
-		controleTeste.editaCliente("123", "nome", "braga");
-		assertEquals("braga - lcc3 - victor@paz.com", controleTeste.exibeCliente("123"));
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
+		controleTeste.editaCliente("12345678910", "nome", "Braga");
+		assertEquals("Braga - victor@paz.com - lcc3", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
 	void testeEditarClienteLocal() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com");
-		controleTeste.editaCliente("123", "local", "spLab");
-		assertEquals("victor - spLab - victor@paz.com", controleTeste.exibeCliente("123"));
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
+		controleTeste.editaCliente("12345678910", "local", "spLab");
+		assertEquals("victor - victor@paz.com - spLab", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
 	void testeEditarClienteEmail() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com");
-		controleTeste.editaCliente("123", "email", "victorpfb@ufcg.com");
-		assertEquals("victor - lcc3 - victorpfb@ufcg.com", controleTeste.exibeCliente("123"));
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
+		controleTeste.editaCliente("12345678910", "email", "victorpfb@ufcg.com");
+		assertEquals("victor - victorpfb@ufcg.com - lcc3", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
@@ -110,32 +110,32 @@ class testeController {
 	@Test
 	void testeEditarClienteComParametroNulo() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com");
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
 
-		assertThrows(NullPointerException.class, () -> controleTeste.editaCliente(null, "local", "lcc2"));
-		assertThrows(NullPointerException.class, () -> controleTeste.editaCliente("123", null, "victorpfb@ufcg.com"));
-		assertThrows(NullPointerException.class, () -> controleTeste.editaCliente("123", "nome", null));
+		assertThrows(NullPointerException.class, () -> controleTeste.editaCliente(null, "localizacao", "lcc2"));
+		assertThrows(NullPointerException.class, () -> controleTeste.editaCliente("12345678910", null, "victorpfb@ufcg.com"));
+		assertThrows(NullPointerException.class, () -> controleTeste.editaCliente("12345678910", "nome", null));
 
 	}
 
 	@Test
 	void testeEditarClienteComParametroVazio() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com");
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
 
-		assertThrows(IllegalArgumentException.class, () -> controleTeste.editaCliente("   ", "local", "lcc2"));
-		assertThrows(IllegalArgumentException.class,
-				() -> controleTeste.editaCliente("123", "  ", "victorpfb@ufcg.com"));
-		assertThrows(IllegalArgumentException.class, () -> controleTeste.editaCliente("123", "nome", "   "));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.editaCliente("   ", "localizacao", "lcc2"));
+		assertThrows(NullPointerException.class,
+				() -> controleTeste.editaCliente("12345678910", "  ", "victorpfb@ufcg.com"));
+		assertThrows(NullPointerException.class, () -> controleTeste.editaCliente("12345678910", "nome", "   "));
 
 	}
 
 	@Test
 	void testeRemoverCliente() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("123", "victor", "lcc3", "victor@paz.com");
-		assertEquals("victor - lcc3 - victor@paz.com", controleTeste.exibeCliente("123"));
-		controleTeste.removeCliente("123");
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
+		assertEquals("victor - victor@paz.com - lcc3", controleTeste.exibeCliente("12345678910"));
+		controleTeste.removeCliente("12345678910");
 		assertTrue(controleTeste.getColecaoClientes().isEmpty());
 	}
 

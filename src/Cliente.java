@@ -3,13 +3,13 @@ public class Cliente implements Comparable<Cliente> {
 
 	private String cpf;
 	private String nome;
-	private String local;
+	private String localizacao;
 	private String email;
 
-	public Cliente(String cpf, String nome, String local, String email) {
+	public Cliente(String cpf, String nome, String email, String localizacao) {
 		this.cpf = cpf.trim();
 		this.nome = nome.trim();
-		this.local = local.trim();
+		this.localizacao = localizacao.trim();
 		this.email = email.trim();
 	}
 
@@ -22,7 +22,7 @@ public class Cliente implements Comparable<Cliente> {
 	}
 
 	public void setLocal(String novoLocal) {
-		this.local = novoLocal;
+		this.localizacao = novoLocal;
 	}
 
 	public void setEmail(String novoEmail) {
@@ -30,7 +30,7 @@ public class Cliente implements Comparable<Cliente> {
 	}
 
 	public String toString() {
-		return this.nome + " - " + this.local + " - " + this.email;
+		return this.nome + " - " + this.email + " - " +this.localizacao;
 	}
 
 	@Override
