@@ -45,7 +45,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		}
 		
 		Produto novoProduto = new Produto(nome, descricao, preco);
-		this.listaDeProdutos.put(nome + " - " + descricao, novoProduto);
+		this.listaDeProdutos.put(novoProduto.getIdProduto(), novoProduto);
 	}
 
 	@Override

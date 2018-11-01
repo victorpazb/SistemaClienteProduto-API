@@ -4,6 +4,7 @@ public class Produto implements Comparable<Produto>{
 	private String nome;
 	private String descricao;
 	private double preco;
+	private String idProduto;
 
 	public Produto(String nome, String descricao, double preco) {
 		if(nome.trim().equals("") || descricao.trim().equals("") || preco < 0.0) {
@@ -13,10 +14,15 @@ public class Produto implements Comparable<Produto>{
 		this.nome = nome.trim();
 		this.descricao = descricao.trim();
 		this.preco = preco;
+		this.idProduto = nome + " - " + descricao;
 	}
 
 	public String getNome() {
 		return this.nome;
+	}
+	
+	public String getIdProduto() {
+		return this.idProduto;
 	}
 	
 	public String getDescricao() {

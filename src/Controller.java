@@ -268,7 +268,8 @@ public class Controller {
 
 	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double novoPreco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
+					.containsKey(nomeProduto + " - " + descricao)) {
 				throw new IllegalArgumentException("produto nao cadastrado");
 			} else if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).getDescricao()
 					.equals(descricao)) {
@@ -281,16 +282,23 @@ public class Controller {
 	}
 
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
+
+		if(nomeFornecedor.trim().equals("") || descricao.trim().equals("") || nomeProduto.trim().equals("")) {
+			throw new IllegalArgumentException();
+		}
+		
+		
 		
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
-				throw new IllegalArgumentException("produto nao cadastrado");
-			} else if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).getDescricao()
-					.equals(descricao)) {
-
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
+					.containsKey(nomeProduto + " - " + descricao)) {
+				throw new IllegalArgumentException("Erro na remocao de produto: produto nao existe.");
 			}
-			throw new IllegalArgumentException("fornecedor nao cadastrado");
+
+			throw new IllegalArgumentException("fornecedor nao existe");
 		}
+		
+		
 		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().remove(nomeProduto + " - " + descricao);
 
 	}
