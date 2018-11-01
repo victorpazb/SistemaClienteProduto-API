@@ -2,7 +2,7 @@
 public class Facade {
 	
 	public static void main(String[] args) {
-		args = new String[] {"Sample facade", "acceptance_test/us1.txt"};
+		args = new String[] {"Facade", "testesAceitacao/use_case_1.txt"};
 	}
 
 	Controller controle = new Controller();
@@ -29,33 +29,34 @@ public class Facade {
 		controle.removeCliente(cpf);
 	}
 
-	public void cadastrarFornecedor(String nome, String email, String telefone) {
-		controle.cadastrarFornecedor(nome, email, telefone);
+	public void adicionaFornecedor(String nome, String email, String telefone) {
+		controle.adicionaFornecedor(nome, email, telefone);
 	}
 
 	public String exibeFornecedor(String nome) {
 		return controle.exibeFornecedor(nome);
 	}
 
-	public String exibirFornecedores() {
-		return controle.exibirFornecedores();
+	public String exibeFornecedores() {
+		return controle.exibeFornecedores();
 
 	}
 
-	public void editarFornecedor(String nome, String nomeAtributo, String novoValor) {
-		controle.editarFornecedor(nome, nomeAtributo, novoValor);
+	public void editaFornecedor(String nome, String nomeAtributo, String novoValor) {
+		controle.editaFornecedor(nome, nomeAtributo, novoValor);
 	}
 
-	public void removerFornecedor(String nome) {
-		controle.removerFornecedor(nome);
+	public void removeFornecedor(String nome) {
+		controle.removeFornecedor(nome);
 	}
 
-	public void cadastrarProduto(String nomeFornecedor, String nomeProduto, String descricao, String preco) {
-		controle.cadastrarProduto(nomeFornecedor, nomeProduto, descricao, preco);
+	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+		controle.adicionaProduto(nomeFornecedor, nomeProduto, descricao, preco);
 	}
+	
 
-	public String exibirProdutoEpecificoDeUmFornecedor(String nomeFornecedor, String nomeProduto) {
-		return controle.exibirProdutoEpecificoDeUmFornecedor(nomeFornecedor, nomeProduto);
+	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
+		return controle.exibeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 
 	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) { 
@@ -66,8 +67,8 @@ public class Facade {
 		return controle.exibirProdutosDeTodosOsFornecedores();
 	}
 
-	public void editarProduto(String nomeFornecedor, String nomeProduto, String novoPreco) {
-		controle.editarProduto(nomeFornecedor, nomeProduto, novoPreco);
+	public void editaProduto(String nomeFornecedor, String nomeProduto, String descricao, double novoPreco) {
+		controle.editaProduto(nomeFornecedor, nomeProduto, descricao, novoPreco);
 	}
 
 

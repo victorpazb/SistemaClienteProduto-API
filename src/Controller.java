@@ -106,7 +106,7 @@ public class Controller {
 
 	}
 
-	public void cadastrarFornecedor(String nome, String email, String telefone) {
+	public void adicionaFornecedor(String nome, String email, String telefone) {
 		if (this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedero ja cadastrado");
 		}
@@ -124,7 +124,7 @@ public class Controller {
 
 	}
 
-	public String exibirFornecedores() {
+	public String exibeFornecedores() {
 		if (this.colecaoFornecedores.isEmpty()) {
 			throw new NullPointerException("lista vazia");
 		}
@@ -147,7 +147,7 @@ public class Controller {
 		return listaOrdenada;
 	}
 
-	public void editarFornecedor(String nome, String nomeAtributo, String novoValor) {
+	public void editaFornecedor(String nome, String nomeAtributo, String novoValor) {
 		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nomeAtributo == null || novoValor == null
 				|| nome.trim().equals("") || nomeAtributo.trim().equals("") || novoValor.trim().equals("")) {
 			throw new IllegalArgumentException("parametro invalido passado");
@@ -167,7 +167,7 @@ public class Controller {
 
 	}
 
-	public void removerFornecedor(String nome) {
+	public void removeFornecedor(String nome) {
 		if (!this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
@@ -175,24 +175,27 @@ public class Controller {
 
 	}
 
-	public void cadastrarProduto(String nomeFornecedor, String nomeProduto, String descricao, String preco) {
+	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
 		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
 	}
 
-	public String exibirProdutoEpecificoDeUmFornecedor(String nomeFornecedor, String nomeProduto) {
+	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
 		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
+			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
 				throw new IllegalArgumentException("produto nao cadastrado");
 			}
 		} else {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
 
-		return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).toString();
+		if(this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto + " - " + descricao)) {
+			return this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto + " - " + descricao).toString();
+		}
+		throw new IllegalArgumentException("produto nao encontrado");
 	}
 
 	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) {
@@ -260,10 +263,16 @@ public class Controller {
 
 	}
 
-	public void editarProduto(String nomeFornecedor, String nomeProduto, String novoPreco) {
+	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double novoPreco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().containsKey(nomeProduto)) {
 				throw new IllegalArgumentException("produto nao cadastrado");
+			} else if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).getDescricao()
+					.equals(descricao)) {
+				
+				{
+				}
+
 			}
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}

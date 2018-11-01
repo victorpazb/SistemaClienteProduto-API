@@ -37,7 +37,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		return this.listaDeProdutos;
 	}
 	
-	public void addProduto(String nome, String descricao, String preco ) {
+	public void addProduto(String nome, String descricao, double preco ) {
 		for(int i = 0; i < this.listaDeProdutos.size(); i++) {
 			if(this.listaDeProdutos.containsKey(nome)) {
 				throw new IllegalArgumentException("produto ja cadastrado");
@@ -45,7 +45,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		}
 		
 		Produto novoProduto = new Produto(nome, descricao, preco);
-		this.listaDeProdutos.put(nome, novoProduto);
+		this.listaDeProdutos.put(nome + " - " + descricao, novoProduto);
 	}
 
 	@Override

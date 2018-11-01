@@ -3,23 +3,27 @@ public class Produto implements Comparable<Produto>{
 
 	private String nome;
 	private String descricao;
-	private String preco;
+	private double preco;
 
-	public Produto(String nome, String descricao, String preco) {
-		if(nome.trim().equals("") || descricao.trim().equals("") || preco.trim().equals("")) {
-			throw new IllegalArgumentException("parametro passado para construcao de produto eh vazio");
+	public Produto(String nome, String descricao, double preco) {
+		if(nome.trim().equals("") || descricao.trim().equals("") || preco < 0.0) {
+			throw new IllegalArgumentException("parametro passado para construcao de produto vazio ou preco eh negativo");
 		}
 		
 		this.nome = nome.trim();
 		this.descricao = descricao.trim();
-		this.preco = preco.trim();
+		this.preco = preco;
 	}
 
 	public String getNome() {
 		return this.nome;
 	}
+	
+	public String getDescricao() {
+		return this.descricao;
+	}
 
-	public void setPreco(String novoPreco) {
+	public void setPreco(double novoPreco) {
 		this.preco = novoPreco;
 	}
 
