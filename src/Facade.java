@@ -1,14 +1,18 @@
 
 public class Facade {
+	
+	public static void main(String[] args) {
+		args = new String[] {"Sample facade", "acceptance_test/us1.txt"};
+	}
 
 	Controller controle = new Controller();
 
-	public void cadastrarCliente(String cpf, String nome, String local, String email) {
-		controle.cadastrarCliente(cpf, nome, local, email);
+	public void adicionaCliente(String cpf, String nome, String local, String email) {
+		controle.adicionaCliente(cpf, nome, local, email);
 	}
 
-	public String exibirCliente(String cpf) {
-		return controle.exibirCliente(cpf);
+	public String exibeCliente(String cpf) {
+		return controle.exibeCliente(cpf);
 
 	}
 	
@@ -16,13 +20,13 @@ public class Facade {
 		return controle.exibeListaDeClientes();
 	}
 
-	public void editarCliente(String cpf, String nomeAtributo, String novoValor) {
-		controle.editarCliente(cpf, nomeAtributo, novoValor);
+	public void editaCliente(String cpf, String atributo, String novoValor) {
+		controle.editaCliente(cpf, atributo, novoValor);
 
 	}
 
-	public void removerCliente(String cpf) {
-		controle.removerCliente(cpf);
+	public void removeCliente(String cpf) {
+		controle.removeCliente(cpf);
 	}
 
 	public void cadastrarFornecedor(String nome, String email, String telefone) {

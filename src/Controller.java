@@ -20,7 +20,7 @@ public class Controller {
 		return this.colecaoClientes;
 	}
 
-	public boolean cadastrarCliente(String cpf, String nome, String local, String email) {
+	public boolean adicionaCliente(String cpf, String nome, String local, String email) {
 		if (this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("cpf ja cadastrado");
 		}
@@ -39,7 +39,7 @@ public class Controller {
 
 	}
 
-	public String exibirCliente(String cpf) {
+	public String exibeCliente(String cpf) {
 		if (this.colecaoClientes.containsKey(cpf)) {
 			return this.colecaoClientes.get(cpf).toString();
 		}
@@ -69,9 +69,9 @@ public class Controller {
 
 	}
 
-	public void editarCliente(String cpf, String nomeAtributo, String novoValor) {
+	public void editaCliente(String cpf, String atributo, String novoValor) {
 
-		if (cpf == null || nomeAtributo == null || novoValor == null) {
+		if (cpf == null || atributo == null || novoValor == null) {
 			throw new NullPointerException("algum argumento passado foi nulo");
 		}
 
@@ -83,7 +83,7 @@ public class Controller {
 			throw new IllegalArgumentException("cpf nao cadastrado");
 		}
 
-		switch (nomeAtributo.toLowerCase()) {
+		switch (atributo.toLowerCase()) {
 		case "nome":
 			this.colecaoClientes.get(cpf).setNome(novoValor);
 			break;
@@ -98,7 +98,7 @@ public class Controller {
 		}
 	}
 
-	public void removerCliente(String cpf) {
+	public void removeCliente(String cpf) {
 		if (!this.colecaoClientes.containsKey(cpf)) {
 			throw new NullPointerException("cpf nao cadastrado");
 		}
