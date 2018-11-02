@@ -9,8 +9,9 @@ public class Facade {
 
 	Controller controle = new Controller();
 
-	public void adicionaCliente(String cpf, String nome, String email, String localizacao) {
+	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		controle.adicionaCliente(cpf, nome, email, localizacao);
+		return cpf;
 	}
 
 	public String exibeCliente(String cpf) {

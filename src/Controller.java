@@ -20,7 +20,7 @@ public class Controller {
 		return this.colecaoClientes;
 	}
 
-	public boolean adicionaCliente(String cpf, String nome, String email, String localizacao) {
+	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		if (this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
 		}
@@ -46,7 +46,7 @@ public class Controller {
 
 		Cliente novoCliente = new Cliente(nome, email, localizacao);
 		this.colecaoClientes.put(cpf, novoCliente);
-		return true;
+		return cpf;
 
 	}
 
@@ -198,6 +198,8 @@ public class Controller {
 
 	}
 
+	
+	
 	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
@@ -205,6 +207,8 @@ public class Controller {
 		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
 	}
 
+	
+	
 	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
 		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
