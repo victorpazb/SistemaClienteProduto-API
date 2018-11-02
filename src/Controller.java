@@ -25,7 +25,7 @@ public class Controller {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
 		}
 		
-		if(cpf == null || nome == null || email == null || localizacao == null) {
+		if(cpf == null || nome == null || localizacao == null || email == null) {
 			throw new NullPointerException("algum parametro passado eh nulo");
 		}
 		
@@ -44,7 +44,7 @@ public class Controller {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		}
 
-		Cliente novoCliente = new Cliente(cpf, nome, email, localizacao);
+		Cliente novoCliente = new Cliente(nome, email, localizacao);
 		this.colecaoClientes.put(cpf, novoCliente);
 		return true;
 
@@ -113,7 +113,7 @@ public class Controller {
 		case "nome":
 			this.colecaoClientes.get(cpf).setNome(novoValor);
 			break;
-		case "local":
+		case "localizacao":
 			this.colecaoClientes.get(cpf).setLocal(novoValor);
 			break;
 		case "email":

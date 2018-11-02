@@ -11,7 +11,7 @@ expectError "Erro no cadastro do cliente: cliente ja existe." adicionaCliente cp
 expectError "Erro no cadastro do cliente: cpf invalido." adicionaCliente cpf=471821918247128947129 nome="Ana Mira" email="ana@ccc.ufcg.edu.br" localizacao="GetComp"
 expectError "Erro no cadastro do cliente: cpf invalido." adicionaCliente cpf=123455 nome="Gabriel Maracuja" email="gsmtech@ccc.ufcg.edu.br" localizacao="Propex"
 ## Exibindo clientes ##
-expect "Victor Emanuel - Labarc - vitao@ccc.ufcg.edu.br" exibeCliente cpf=${cliente1}
+expect "Victor Emanuel - Labarc - vitao@ccc.ufcg.edu.br" exibeCliente cpf=00023827490
 expect "Wilson Andre - Embedded - wilson_andre@ccc.ufcg.edu.br" exibeCliente cpf=${cliente2}
 expect "Amigao Fernandes - LSD - amigao_fernandes@ccc.ufcg.edu.br" exibeCliente cpf=${cliente3}
 expect "Ana Amari - SPG - ana_amari@ccc.ufcg.edu.br" exibeCliente cpf=${cliente4}

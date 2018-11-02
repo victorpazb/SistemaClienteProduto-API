@@ -49,8 +49,8 @@ class testeController {
 	@Test
 	void testeExibirCliente() {
 		controleTeste = new Controller();
-		controleTeste.adicionaCliente("12345678910", "victor", "victor.braga@ccc.ufcg.edu.br", "lcc3");
-		assertEquals("victor - victor.braga@ccc.ufcg.edu.br - lcc3", controleTeste.exibeCliente("12345678910"));
+		controleTeste.adicionaCliente("12345678910", "Victor Emanuel", "vitao@ccc.ufcg.edu.br", "Labarc");
+		assertEquals("Victor Emanuel - Labarc - vitao@ccc.ufcg.edu.br", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
@@ -88,7 +88,7 @@ class testeController {
 	void testeEditarClienteLocal() {
 		controleTeste = new Controller();
 		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
-		controleTeste.editaCliente("12345678910", "local", "spLab");
+		controleTeste.editaCliente("12345678910", "localizacao", "spLab");
 		assertEquals("victor - victor@paz.com - spLab", controleTeste.exibeCliente("12345678910"));
 	}
 

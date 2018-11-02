@@ -1,13 +1,11 @@
 
 public class Cliente implements Comparable<Cliente> {
 
-	private String cpf;
 	private String nome;
 	private String localizacao;
 	private String email;
 
-	public Cliente(String cpf, String nome, String email, String localizacao) {
-		this.cpf = cpf.trim();
+	public Cliente(String nome, String email, String localizacao) {
 		this.nome = nome.trim();
 		this.localizacao = localizacao.trim();
 		this.email = email.trim();
@@ -30,7 +28,7 @@ public class Cliente implements Comparable<Cliente> {
 	}
 
 	public String toString() {
-		return this.nome + " - " + this.email + " - " +this.localizacao;
+		return this.nome + " - " + this.localizacao + " - " + this.email;
 	}
 
 	@Override
