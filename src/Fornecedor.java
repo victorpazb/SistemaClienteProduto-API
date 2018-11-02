@@ -72,12 +72,23 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 * @param preco
 	 *            double que representa o preco do produto
 	 */
-	public void addProduto(String nome, String descricao, double preco) {
+	public void addProduto(String nomeFornecedor, String nome, String descricao, double preco) {
 
-		Produto novoProduto = new Produto(nome, descricao, preco);
+		Produto novoProduto = new Produto(nomeFornecedor, nome, descricao, preco);
 		if (this.getListaDeProdutos().containsValue(novoProduto)) {
-			throw new IllegalArgumentException("produto ja cadastrado");
+			throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 		}
+		if (nome.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro no cadastro de produto: nome nao pode ser vazio ou nulo.");
+		}if(descricao == null || descricao.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
+		}if(preco < 0.0) {
+			throw new IllegalArgumentException(
+					"Erro no cadastro de produto: preco invalido.");
+		}
+
 		this.listaDeProdutos.put(novoProduto.getIdProduto(), novoProduto);
 	}
 

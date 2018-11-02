@@ -3,7 +3,7 @@ import easyaccept.EasyAccept;
 public class Facade {
 	
 	public static void main(String[] args) {
-		args = new String[] {"Facade", "testesAceitacao/use_case_1.txt"};
+		args = new String[] {"Facade", "testesAceitacao/use_case_1.txt", "testesAceitacao/use_case_2.txt", "testesAceitacao/use_case_3.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -32,8 +32,9 @@ public class Facade {
 		controle.removeCliente(cpf);
 	}
 
-	public void adicionaFornecedor(String nome, String email, String telefone) {
+	public String adicionaFornecedor(String nome, String email, String telefone) {
 		controle.adicionaFornecedor(nome, email, telefone);
+		return nome;
 	}
 
 	public String exibeFornecedor(String nome) {
@@ -53,8 +54,9 @@ public class Facade {
 		controle.removeFornecedor(nome);
 	}
 
-	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+	public String adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
 		controle.adicionaProduto(nomeFornecedor, nomeProduto, descricao, preco);
+		return nomeProduto + " - " + descricao;
 	}
 	
 
@@ -62,12 +64,12 @@ public class Facade {
 		return controle.exibeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 
-	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) { 
-		return controle.exibirProtudosDeUmFornecedor(nomeFornecedor);
+	public String exibeProdutosFornecedor(String nomeFornecedor) { 
+		return controle.exibeProdutosFornecedor(nomeFornecedor);
 	}
 
-	public String exibirProdutosDeTodosOsFornecedores() { 
-		return controle.exibirProdutosDeTodosOsFornecedores();
+	public String exibeProdutos() { 
+		return controle.exibeProdutos();
 	}
 
 	public void editaProduto(String nomeFornecedor, String nomeProduto, String descricao, double novoPreco) {

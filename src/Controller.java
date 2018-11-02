@@ -1,4 +1,7 @@
 import java.util.HashMap;
+
+import com.sun.java.accessibility.util.java.awt.ListTranslator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -199,13 +202,28 @@ public class Controller {
 	 * @param telefone
 	 *            String que representa o telefone do fornecedor
 	 */
-	public void adicionaFornecedor(String nome, String email, String telefone) {
+	public String adicionaFornecedor(String nome, String email, String telefone) {
 		if (this.colecaoFornecedores.containsKey(nome)) {
-			throw new IllegalArgumentException("fornecedero ja cadastrado");
+			throw new IllegalArgumentException("Erro no cadastro de fornecedor: fornecedor ja existe.");
+		}
+
+		if (nome == null || email == null || telefone == null) {
+			throw new NullPointerException("algum parametro passado eh nulo");
+		}
+
+		if (nome.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
+		if (email.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
+		}
+		if (telefone.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do fornecedor: telefone nao pode ser vazia ou nula.");
 		}
 
 		Fornecedor novoFornecedor = new Fornecedor(nome, email, telefone);
 		this.colecaoFornecedores.put(nome, novoFornecedor);
+		return nome;
 
 	}
 
@@ -220,8 +238,8 @@ public class Controller {
 	 */
 
 	public String exibeFornecedor(String nome) {
-		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nome.trim().equals("")) {
-			throw new IllegalArgumentException("parametro invalido");
+		if (!this.colecaoFornecedores.containsKey(nome)) {
+			throw new IllegalArgumentException("Erro na exibicao do fornecedor: fornecedor nao existe.");
 		}
 		return this.colecaoFornecedores.get(nome).toString();
 
@@ -268,9 +286,12 @@ public class Controller {
 	 *            novo valor a ser atribuido ao atributo escolhido
 	 */
 	public void editaFornecedor(String nome, String nomeAtributo, String novoValor) {
-		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nomeAtributo == null || novoValor == null
-				|| nome.trim().equals("") || nomeAtributo.trim().equals("") || novoValor.trim().equals("")) {
-			throw new IllegalArgumentException("parametro invalido passado");
+		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nomeAtributo == null
+				|| nome.trim().equals("") || nomeAtributo.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
+		}
+		if (novoValor == null || novoValor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: novo valor nao pode ser vazio ou nulo.");
 		}
 
 		switch (nomeAtributo.toLowerCase()) {
@@ -280,9 +301,12 @@ public class Controller {
 		case "telefone":
 			this.colecaoFornecedores.get(nome).setTelefone(novoValor);
 			break;
+		case "nome":
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser editado.");
+
 		default:
 
-			throw new IllegalArgumentException("opcao invalida, deve digitar email ou telefone");
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao existe.");
 		}
 
 	}
@@ -292,6 +316,10 @@ public class Controller {
 	 * atraves da String nome passada, caso exista na colecao.
 	 */
 	public void removeFornecedor(String nome) {
+		if (nome == null || nome.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na remocao do fornecedor: nome do fornecedor nao pode ser vazio.");
+		}
+
 		if (!this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
 		}
@@ -307,11 +335,18 @@ public class Controller {
 	 * fornecedor especifico
 	 * 
 	 */
-	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
-		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			throw new IllegalArgumentException("fornecedor nao cadastrado");
+	public String adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+
+		if (nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de produto: fornecedor nao pode ser vazio ou nulo.");
 		}
-		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
+
+		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro no cadastro de produto: fornecedor nao existe.");
+		}
+
+		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeFornecedor, nomeProduto, descricao, preco);
+		return nomeProduto + " - " + descricao;
 	}
 
 	/**
@@ -323,13 +358,25 @@ public class Controller {
 	 */
 	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
+		if (nomeProduto == null || nomeProduto.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
+		}
+
+		if (descricao == null || descricao.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao de produto: descricao nao pode ser vazia ou nula.");
+		}
+
+		if (nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
+
 		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
 					.containsKey(nomeProduto + " - " + descricao)) {
-				throw new IllegalArgumentException("produto nao cadastrado");
+				throw new IllegalArgumentException("Erro na exibicao de produto: produto nao existe.");
 			}
 		} else {
-			throw new IllegalArgumentException("fornecedor nao cadastrado");
+			throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao existe.");
 		}
 
 		if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
@@ -348,7 +395,7 @@ public class Controller {
 	 * 
 	 */
 
-	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) {
+	public String exibeProdutosFornecedor(String nomeFornecedor) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().isEmpty()) {
 				throw new NullPointerException("lista de produtos vazia!");
@@ -365,9 +412,9 @@ public class Controller {
 		String listaDeProdutosDoFornecedor = "";
 		for (int i = 0; i < listaDeProdutos.size(); i++) {
 			if (i == 0) {
-				listaDeProdutosDoFornecedor += listaDeProdutos.get(i).toString();
+				listaDeProdutosDoFornecedor += nomeFornecedor + " - " + listaDeProdutos.get(i).toString();
 			} else {
-				listaDeProdutosDoFornecedor += (" | " + listaDeProdutos.get(i).toString());
+				listaDeProdutosDoFornecedor += (" | " + nomeFornecedor + " - " + listaDeProdutos.get(i).toString());
 			}
 
 		}
@@ -381,41 +428,31 @@ public class Controller {
 	 * algum para todos eles produto.
 	 */
 
-	public String exibirProdutosDeTodosOsFornecedores() {
+	public String exibeProdutos() {
 		if (this.colecaoFornecedores.isEmpty()) {
 			throw new NullPointerException("sem fornecedores cadastrados");
 		}
 
 		ArrayList<Fornecedor> listaDeFornecedores = new ArrayList<>();
+
 		listaDeFornecedores.addAll(this.colecaoFornecedores.values());
+		Collections.sort(listaDeFornecedores);
 
-		ArrayList<Produto> listaDeProdutos = new ArrayList<>();
-
-		String listaDeProdutosDeTodosFornecedores = "";
-		boolean peloMenosUmTemProdutos = false;
+		String todosOsProdutos = "";
 		for (Fornecedor fornecedor : listaDeFornecedores) {
-			if (!fornecedor.getListaDeProdutos().values().isEmpty()) {
-				peloMenosUmTemProdutos = true;
-				listaDeProdutos.addAll(fornecedor.getListaDeProdutos().values());
+			ArrayList<Produto> listaDeProdutos = new ArrayList<>();
+			listaDeProdutos.addAll(fornecedor.getListaDeProdutos().values());
+			Collections.sort(listaDeProdutos);
+			for (int i = 0; i < listaDeProdutos.size(); i++) {
 
+				if (i == 0) {
+					todosOsProdutos += listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral();
+				}
+				todosOsProdutos += " | " + listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral() + " | ";
 			}
-
-		}
-		if (peloMenosUmTemProdutos == false) {
-			throw new IllegalArgumentException("fornecedor ainda nao tem produtos cadastrados");
 		}
 
-		Collections.sort(listaDeProdutos);
-		for (int i = 0; i < listaDeProdutos.size(); i++) {
-			if (i == 0) {
-				listaDeProdutosDeTodosFornecedores += listaDeProdutos.get(i).toString();
-			} else {
-				listaDeProdutosDeTodosFornecedores += " | " + listaDeProdutos.get(i).toString();
-			}
-
-		}
-
-		return listaDeProdutosDeTodosFornecedores;
+		return todosOsProdutos;
 
 	}
 
@@ -425,17 +462,33 @@ public class Controller {
 	 * 
 	 */
 	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double novoPreco) {
-		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
-					.containsKey(nomeProduto + " - " + descricao)) {
-				throw new IllegalArgumentException("produto nao cadastrado");
-			} else if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).getDescricao()
-					.equals(descricao)) {
 
-			}
-			throw new IllegalArgumentException("fornecedor nao cadastrado");
+		if (novoPreco < 0.0) {
+			throw new IllegalArgumentException("Erro na edicao de produto: preco invalido.");
 		}
-		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).setPreco(novoPreco);
+		if (nomeProduto == null || nomeProduto.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
+		}
+		if (descricao == null || descricao.trim().equals("")) {
+
+			throw new IllegalArgumentException("Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
+		}
+
+		if (nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
+
+			throw new IllegalArgumentException("Erro na edicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
+
+		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
+			throw new IllegalArgumentException("Erro na edicao de produto: fornecedor nao existe.");
+		}
+
+		if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
+				.containsKey(nomeProduto + " - " + descricao)) {
+			throw new IllegalArgumentException("produto nao cadastrado");
+		}
+
+		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto + " - " + descricao).setPreco(novoPreco);
 
 	}
 
@@ -448,17 +501,34 @@ public class Controller {
 
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
+		if(nomeProduto == null || nomeProduto.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
+		}
+		if(descricao == null || descricao.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
+		}
+		if(nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na remocao de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
+		
+		
+		
+		
+		
+		
 		if (nomeFornecedor.trim().equals("") || descricao.trim().equals("") || nomeProduto.trim().equals("")) {
 			throw new IllegalArgumentException();
 		}
 
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
-					.containsKey(nomeProduto + " - " + descricao)) {
-				throw new IllegalArgumentException("Erro na remocao de produto: produto nao existe.");
-			}
 
-			throw new IllegalArgumentException("fornecedor nao existe");
+			throw new IllegalArgumentException("Erro na remocao de produto: fornecedor nao existe.");
+
+		}
+
+		if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
+				.containsKey(nomeProduto + " - " + descricao)) {
+			throw new IllegalArgumentException("Erro na remocao de produto: produto nao existe.");
 		}
 
 		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().remove(nomeProduto + " - " + descricao);

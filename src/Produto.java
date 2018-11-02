@@ -1,3 +1,5 @@
+import java.text.Format;
+
 /**
  * classe que define Produto, tem os atributos String nome, String descricao,
  * double preco.
@@ -7,6 +9,7 @@
  */
 public class Produto implements Comparable<Produto> {
 
+	private String fornecedor;
 	private String nome;
 	private String descricao;
 	private double preco;
@@ -22,12 +25,9 @@ public class Produto implements Comparable<Produto> {
 	 * @param preco
 	 *            double que eh o preco do produto
 	 */
-	public Produto(String nome, String descricao, double preco) {
-		if (nome.trim().equals("") || descricao.trim().equals("") || preco < 0.0) {
-			throw new IllegalArgumentException(
-					"parametro passado para construcao de produto vazio ou preco eh negativo");
-		}
+	public Produto(String fornecedor, String nome, String descricao, double preco) {
 
+		this.fornecedor = fornecedor.trim();
 		this.nome = nome.trim();
 		this.descricao = descricao.trim();
 		this.preco = preco;
@@ -65,6 +65,7 @@ public class Produto implements Comparable<Produto> {
 	public void setPreco(double novoPreco) {
 		this.preco = novoPreco;
 	}
+	
 
 	/**
 	 * metodo equals que diz q um produto eh igual ao outro se tiverem nome e
@@ -77,6 +78,8 @@ public class Produto implements Comparable<Produto> {
 		return this.nome.equals(produtoTeste.nome) && this.descricao.equals(produtoTeste.getDescricao());
 	}
 
+	
+	
 	/**
 	 * metodo compareTo serve para ordenar os produtos em ordem alfabetica para que
 	 * so entao possam ser exibidor em uma lista
@@ -85,6 +88,14 @@ public class Produto implements Comparable<Produto> {
 	public int compareTo(Produto outroProduto) {
 		return this.nome.compareTo(outroProduto.getNome());
 	}
+	
+	
+	public String toStringParaImpressaoEmListaGeral() {
+		String preco = String.format(" - R$%.2f", this.preco);
+		String precoFormatado = preco.replace(".", ",");
+		return this.fornecedor + " - " + this.nome + " - " + this.descricao + precoFormatado;
+	}
+	
 
 	/**
 	 * metodo toString de produto, retorna a representacao textual do produto da
@@ -92,7 +103,9 @@ public class Produto implements Comparable<Produto> {
 	 */
 	@Override
 	public String toString() {
-		return this.nome + " - " + this.descricao + " - " + this.preco;
+		String preco = String.format(" - R$%.2f", this.preco);
+		String precoFormatado = preco.replace(".", ",");
+		return this.nome + " - " + this.descricao + precoFormatado;
 	}
 
 }
