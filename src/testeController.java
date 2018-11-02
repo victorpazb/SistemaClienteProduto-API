@@ -9,7 +9,7 @@ class testeController {
 	@Test
 	void testeCadastrarCliente() {
 		controleTeste = new Controller();
-		assertTrue(controleTeste.adicionaCliente("12345678910", "victor", "lcc3", "victor@paz.com"));
+		assertEquals("12345678910",  controleTeste.adicionaCliente("12345678910", "victor", "lcc3", "victor@paz.com"));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ class testeController {
 		controleTeste.adicionaCliente("12345678910", "hugo", "lcc3", "hugo@paz.com");
 		controleTeste.adicionaCliente("12345678911", "victor", "lcc3", "victor@paz.com");
 		controleTeste.adicionaCliente("12345678912", "paulo", "lcc3", "paulo@paz.com");
-		assertEquals("hugo - lcc3 - hugo@paz.com | paulo - lcc3 - paulo@paz.com | victor - lcc3 - victor@paz.com",
+		assertEquals("hugo - hugo@paz.com - lcc3 | paulo - paulo@paz.com - lcc3 | victor - victor@paz.com - lcc3",
 				controleTeste.exibeClientes());
 	}
 
@@ -81,7 +81,7 @@ class testeController {
 		controleTeste = new Controller();
 		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
 		controleTeste.editaCliente("12345678910", "nome", "Braga");
-		assertEquals("Braga - victor@paz.com - lcc3", controleTeste.exibeCliente("12345678910"));
+		assertEquals("Braga - lcc3 - victor@paz.com", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
@@ -89,7 +89,7 @@ class testeController {
 		controleTeste = new Controller();
 		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
 		controleTeste.editaCliente("12345678910", "localizacao", "spLab");
-		assertEquals("victor - victor@paz.com - spLab", controleTeste.exibeCliente("12345678910"));
+		assertEquals("victor - spLab - victor@paz.com", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
@@ -97,7 +97,7 @@ class testeController {
 		controleTeste = new Controller();
 		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
 		controleTeste.editaCliente("12345678910", "email", "victorpfb@ufcg.com");
-		assertEquals("victor - victorpfb@ufcg.com - lcc3", controleTeste.exibeCliente("12345678910"));
+		assertEquals("victor - lcc3 - victorpfb@ufcg.com", controleTeste.exibeCliente("12345678910"));
 	}
 
 	@Test
@@ -134,7 +134,7 @@ class testeController {
 	void testeRemoverCliente() {
 		controleTeste = new Controller();
 		controleTeste.adicionaCliente("12345678910", "victor", "victor@paz.com", "lcc3");
-		assertEquals("victor - victor@paz.com - lcc3", controleTeste.exibeCliente("12345678910"));
+		assertEquals("victor - lcc3 - victor@paz.com", controleTeste.exibeCliente("12345678910"));
 		controleTeste.removeCliente("12345678910");
 		assertTrue(controleTeste.getColecaoClientes().isEmpty());
 	}
@@ -291,7 +291,7 @@ class testeController {
 		controleTeste = new Controller();
 		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
 		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
-		assertEquals("carne - carne de sol - 12.32",
+		assertEquals("carne - carne de sol - R$12,32",
 				controleTeste.getColecaoFornecedores().get("victor").getListaDeProdutos().get("carne - carne de sol").toString());
 	}
 
@@ -350,7 +350,7 @@ class testeController {
 		controleTeste = new Controller();
 		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
 		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
-		assertEquals("carne - carne de sol - 12.32",
+		assertEquals("carne - carne de sol - R$12,32",
 				controleTeste.exibeProduto("carne", "carne de sol", "victor"));
 	}
 
