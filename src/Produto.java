@@ -65,7 +65,6 @@ public class Produto implements Comparable<Produto> {
 	public void setPreco(double novoPreco) {
 		this.preco = novoPreco;
 	}
-	
 
 	/**
 	 * metodo equals que diz q um produto eh igual ao outro se tiverem nome e
@@ -78,8 +77,6 @@ public class Produto implements Comparable<Produto> {
 		return this.nome.equals(produtoTeste.nome) && this.descricao.equals(produtoTeste.getDescricao());
 	}
 
-	
-	
 	/**
 	 * metodo compareTo serve para ordenar os produtos em ordem alfabetica para que
 	 * so entao possam ser exibidor em uma lista
@@ -88,14 +85,19 @@ public class Produto implements Comparable<Produto> {
 	public int compareTo(Produto outroProduto) {
 		return this.nome.compareTo(outroProduto.getNome());
 	}
-	
-	
+
+	/**
+	 * 
+	 * metodo criado para gerar a representacao textual do produto juntamente com o
+	 * nome de seu fornecedor para ser apresentado no metodo que exibe todos os
+	 * produtos de todos os fornecedores e que pede que venha antes de cada produto o
+	 * nome de seu fornecedor
+	 */
 	public String toStringParaImpressaoEmListaGeral() {
 		String preco = String.format(" - R$%.2f", this.preco);
 		String precoFormatado = preco.replace(".", ",");
 		return this.fornecedor + " - " + this.nome + " - " + this.descricao + precoFormatado;
 	}
-	
 
 	/**
 	 * metodo toString de produto, retorna a representacao textual do produto da
