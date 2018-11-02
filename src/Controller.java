@@ -2,35 +2,64 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * classe controller que contem todos os metodos usados pela fachada
+ *
+ */
 public class Controller {
 
 	private HashMap<String, Cliente> colecaoClientes;
 	private HashMap<String, Fornecedor> colecaoFornecedores;
 
+	/**
+	 * construtor da classe controller, ao ser criada cria tambem os mapas que sao
+	 * as colecoes colecaoClientes e colecaoFornecedores
+	 */
 	public Controller() {
 		this.colecaoClientes = new HashMap<>();
 		this.colecaoFornecedores = new HashMap<>();
 	}
 
+	/**
+	 * @return getter que retorna a colecao de fornecedores
+	 */
+
 	public HashMap<String, Fornecedor> getColecaoFornecedores() {
 		return this.colecaoFornecedores;
 	}
+
+	/**
+	 * @return getter que retorna a colecao de clientes
+	 */
 
 	public HashMap<String, Cliente> getColecaoClientes() {
 		return this.colecaoClientes;
 	}
 
+	/**
+	 * metodo que adiona um cliente a colecao de clientes, recebe cpf, nome, email e
+	 * localizacao
+	 * 
+	 * @param cpf
+	 *            string que define o cpf do cliente
+	 * @param nome
+	 *            string que define o nome do cliente
+	 * @param email
+	 *            string que define o email do cliente
+	 * @param localizacao
+	 *            string que define a localizacao do cliente
+	 * @return retorna o cpf cadastrado
+	 */
+
 	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		if (this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
 		}
-		
-		if(cpf == null || nome == null || localizacao == null || email == null) {
+
+		if (cpf == null || nome == null || localizacao == null || email == null) {
 			throw new NullPointerException("algum parametro passado eh nulo");
 		}
-		
-		
-		
+
 		if (cpf.length() != 11) {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf invalido.");
 		}
@@ -50,19 +79,28 @@ public class Controller {
 
 	}
 
-	
-	
+	/**
+	 * metodo que exibe a representacao textual de um cliente, e o procura na
+	 * colecao de clientes apartir do cpf passado
+	 * 
+	 * @param cpf
+	 *            String usada para procurar o cliente na colecao de clientes
+	 * @return retorna o toString() do cliente em questao, caso exista
+	 */
 	public String exibeCliente(String cpf) {
 		if (!this.colecaoClientes.containsKey(cpf)) {
 			throw new IllegalArgumentException("Erro na exibicao do cliente: cliente nao existe.");
 
 		}
-	
+
 		return this.colecaoClientes.get(cpf).toString();
-	
-		
+
 	}
 
+	/**
+	 * @return retorna o toString de todos os clientes cadastrados separados por "|"
+	 *         e em ordem alfabetica
+	 */
 	public String exibeClientes() {
 
 		if (this.colecaoClientes.isEmpty()) {
@@ -86,13 +124,24 @@ public class Controller {
 
 	}
 
+	/**
+	 * metodoq que pode alterar os atributos de um cliente, exceto o cpf. recebe o
+	 * cpf para localizar o cliente, o atributo q quer se alterar e o novo valor
+	 * para o mesmo
+	 * 
+	 * @param cpf
+	 *            string que localiza e identifica o cliente
+	 * @param atributo
+	 *            string que representa o atributo q se deseja alterar
+	 * @param novoValor
+	 *            valor novo para o atributo escolhido
+	 */
 	public void editaCliente(String cpf, String atributo, String novoValor) {
 
-		if(cpf == null) {
+		if (cpf == null) {
 			throw new NullPointerException("cpf nulo");
 		}
-		
-		
+
 		if (atributo == null || atributo.trim().equals("")) {
 			throw new NullPointerException("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
 		}
@@ -124,11 +173,32 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * [ metodo que remove um clinete da colecao de clientes a partir de uma String
+	 * cpf recebida com o cpf o cliente eh localizado ou nao na colecao e, caso
+	 * exista, eh removido.
+	 * 
+	 * @param cpf
+	 */
 	public void removeCliente(String cpf) {
 		this.colecaoClientes.remove(cpf);
 
 	}
 
+	/**
+	 * metodo que cria e adiciona um fornecedor a colecao de fornecedores, caso ele
+	 * ja nao exista na colecao. oq determina isso eh o nome, nao devem existir dois
+	 * fornecedores de mesmo nome. priemrio o metodo verifica se a colecao contem a
+	 * chave nome, caso nao exista ele cria o objeto novoFornecedor com os
+	 * parametros passados.
+	 * 
+	 * @param nome
+	 *            String que representa o nome do fornecedor
+	 * @param email
+	 *            String que representa o email do fornecedor
+	 * @param telefone
+	 *            String que representa o telefone do fornecedor
+	 */
 	public void adicionaFornecedor(String nome, String email, String telefone) {
 		if (this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedero ja cadastrado");
@@ -139,6 +209,16 @@ public class Controller {
 
 	}
 
+	/**
+	 * metodo que recebe uma String nome e com ela retorna o valor correspondente no
+	 * mapa que guarda os fornecedores.
+	 * 
+	 * @param nome
+	 *            String que representa o nome do fornecedor que se busca exibir
+	 * @return Caso encontre, retorna o objeto correspondente na sua repsentacao
+	 *         textual
+	 */
+
 	public String exibeFornecedor(String nome) {
 		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nome.trim().equals("")) {
 			throw new IllegalArgumentException("parametro invalido");
@@ -147,6 +227,11 @@ public class Controller {
 
 	}
 
+	/**
+	 * metodo que retorna a representacao textual de todos os fornecedores presentes
+	 * na colecao de fornecedores separados por " | " e em ordem alfabetica
+	 * 
+	 */
 	public String exibeFornecedores() {
 		if (this.colecaoFornecedores.isEmpty()) {
 			throw new NullPointerException("lista vazia");
@@ -170,6 +255,18 @@ public class Controller {
 		return listaOrdenada;
 	}
 
+	/**
+	 * * metodoq que pode alterar os atributos de um fornecedor, exceto o nome.
+	 * recebe o nome para localizar o fornecedor, o atributo q quer se alterar e o
+	 * novo valor para o mesmo
+	 * 
+	 * @param nome
+	 *            string que representa o fornecedor que se quer encontrar
+	 * @param nomeAtributo
+	 *            nome do atributo que se quer alterar
+	 * @param novoValor
+	 *            novo valor a ser atribuido ao atributo escolhido
+	 */
 	public void editaFornecedor(String nome, String nomeAtributo, String novoValor) {
 		if (!this.colecaoFornecedores.containsKey(nome) || nome == null || nomeAtributo == null || novoValor == null
 				|| nome.trim().equals("") || nomeAtributo.trim().equals("") || novoValor.trim().equals("")) {
@@ -190,6 +287,10 @@ public class Controller {
 
 	}
 
+	/**
+	 * metodo que remove um fornecedor da colecao de fornecedores. O localiza
+	 * atraves da String nome passada, caso exista na colecao.
+	 */
 	public void removeFornecedor(String nome) {
 		if (!this.colecaoFornecedores.containsKey(nome)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
@@ -198,8 +299,14 @@ public class Controller {
 
 	}
 
-	
-	
+	/**
+	 * recebe o nome do fornecedor e tenta localiza lo na colecao de fornecedores,
+	 * caso encontre usa o nome do produto + sua descricao para saber se esse
+	 * fornecedor ja tem esse produto cadastrado, caso nao tenha o objeto produto eh
+	 * criado com os parametros passados e adicionado a colecao de produtos daquele
+	 * fornecedor especifico
+	 * 
+	 */
 	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			throw new IllegalArgumentException("fornecedor nao cadastrado");
@@ -207,8 +314,13 @@ public class Controller {
 		this.colecaoFornecedores.get(nomeFornecedor).addProduto(nomeProduto, descricao, preco);
 	}
 
-	
-	
+	/**
+	 * metodo que recebe o nome de um produto, descricao e fornecedor. com essas
+	 * informacoes verifica se o fornecedor existe, existindo ele verifica na
+	 * colecao de produtos desse cornecedor se o produto com essa descricao existe,
+	 * existindo ele retorna o toString desse produto
+	 *
+	 */
 	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
 		if (this.colecaoFornecedores.containsKey(nomeFornecedor)) {
@@ -227,6 +339,14 @@ public class Controller {
 		}
 		throw new IllegalArgumentException("produto nao encontrado");
 	}
+
+	/**
+	 * metodo que recebe uma String nome do fornecedor, verifica se ele esta na
+	 * colecao de fornecedores. caso esteja presente, o metodo retorna uma
+	 * represencao textual de todos os produso cadastrados para o fornecedor,
+	 * separados por " | " e em ordem alfabetica, caso exista algum produto.
+	 * 
+	 */
 
 	public String exibirProtudosDeUmFornecedor(String nomeFornecedor) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
@@ -254,6 +374,12 @@ public class Controller {
 		return listaDeProdutosDoFornecedor;
 
 	}
+
+	/**
+	 * metodo retorna uma represencao textual de todos os produso cadastrados para
+	 * todos os fornecedores, separados por " | " e em ordem alfabetica, caso exista
+	 * algum para todos eles produto.
+	 */
 
 	public String exibirProdutosDeTodosOsFornecedores() {
 		if (this.colecaoFornecedores.isEmpty()) {
@@ -293,6 +419,11 @@ public class Controller {
 
 	}
 
+	/**
+	 * metodo que edita o preco de um produto. Nem o nome nem a descricao podem ser
+	 * alterados
+	 * 
+	 */
 	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double novoPreco) {
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
 			if (!this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos()
@@ -307,6 +438,13 @@ public class Controller {
 		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto).setPreco(novoPreco);
 
 	}
+
+	/**
+	 * 
+	 * Metodo que recebe uma String nomeFornecedor e verifica se ele existe na
+	 * colecao de fornecedores. Caso exista, verifica-se se o produto existe na
+	 * colecao de produtos dele. Caso exista, esse produto eh removido
+	 */
 
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
