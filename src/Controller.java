@@ -515,7 +515,6 @@ public class Controller {
 		
 		
 		
-		
 		if (nomeFornecedor.trim().equals("") || descricao.trim().equals("") || nomeProduto.trim().equals("")) {
 			throw new IllegalArgumentException();
 		}
@@ -533,6 +532,11 @@ public class Controller {
 
 		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().remove(nomeProduto + " - " + descricao);
 
+	}
+	
+	
+	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+	
 	}
 
 }

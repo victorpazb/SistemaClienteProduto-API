@@ -3,7 +3,7 @@ import easyaccept.EasyAccept;
 public class Facade {
 	
 	public static void main(String[] args) {
-		args = new String[] {"Facade", "testesAceitacao/use_case_1.txt", "testesAceitacao/use_case_2.txt", "testesAceitacao/use_case_3.txt" };
+		args = new String[] {"Facade", "testesAceitacao/use_case_1.txt", "testesAceitacao/use_case_2.txt", "testesAceitacao/use_case_3.txt", "testesAceitacao/use_case_4.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -79,6 +79,11 @@ public class Facade {
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 		controle.removeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
+	
+	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+		controle.adicionaCombo(fornecedor, nome, descricao, fator, produtos);
+	}
+
 
 
 

@@ -27,6 +27,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		this.email = email.trim();
 		this.telefone = telefone.trim();
 		this.listaDeProdutos = new HashMap<>();
+		
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	}
 
 	/**
-	 * @return * setter que altera o atributo telefone do fornecedor
+	 * setter que altera o atributo telefone do fornecedor
 	 */
 
 	public void setTelefone(String telefone) {
@@ -90,6 +91,10 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		}
 
 		this.listaDeProdutos.put(novoProduto.getIdProduto(), novoProduto);
+	}
+	
+	public void addCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+		
 	}
 
 	/**
