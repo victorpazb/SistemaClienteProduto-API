@@ -1,16 +1,30 @@
-import java.util.HashMap;
+import java.util.ArrayList;
+
 public class Combo {
-	
-	private HashMap<String, Produto> colecaoCombos;
+
+	private String produtos;
+	private String fornecedor;
 	private String nome;
 	private String descricao;
 	private double fator;
-	private double preco;
-	
-	public Combo(String nome, String descricao, double fator) {
+	private double precoDoCombo;
+
+	public Combo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+
+		this.fornecedor = fornecedor;
 		this.nome = nome;
 		this.descricao = descricao;
-		// this.preco = preco dos produtos - precoDosProdutos * fator;
+		this.produtos = produtos;
+
+	}
+
+	public String getNome() {
+		return this.nome;
 	}
 	
+	public void setPreco(double preco) {
+		this.precoDoCombo = preco;
+	}
+
+
 }

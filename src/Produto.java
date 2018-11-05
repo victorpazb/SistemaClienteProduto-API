@@ -57,6 +57,13 @@ public class Produto implements Comparable<Produto> {
 	}
 
 	/**
+	 * @return getter que retorna o preco do produto
+	 */
+	public double getPreco() {
+		return this.preco;
+	}
+
+	/**
 	 * setter que atualizar o preco do produto, recebe um double novoPreco e
 	 * atualiza preco
 	 * 
@@ -90,8 +97,8 @@ public class Produto implements Comparable<Produto> {
 	 * 
 	 * metodo criado para gerar a representacao textual do produto juntamente com o
 	 * nome de seu fornecedor para ser apresentado no metodo que exibe todos os
-	 * produtos de todos os fornecedores e que pede que venha antes de cada produto o
-	 * nome de seu fornecedor
+	 * produtos de todos os fornecedores e que pede que venha antes de cada produto
+	 * o nome de seu fornecedor
 	 */
 	public String toStringParaImpressaoEmListaGeral() {
 		String preco = String.format(" - R$%.2f", this.preco);

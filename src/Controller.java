@@ -534,9 +534,26 @@ public class Controller {
 
 	}
 	
-	
-	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
-	
+	/**
+	 * recebe o nome do fornecedor e tenta localiza lo na colecao de fornecedores,
+	 * caso encontre, usa o nome do combo para saber se esse
+	 * fornecedor ja tem esse Combo cadastrado, caso nao tenha o objeto combo eh
+	 * criado com os parametros passados e adicionado a colecao de Combos daquele
+	 * fornecedor especifico
+	 * 
+	 */
+	public String adicionaCombo(String fornecedor, String nomeCombo, String descricao, double fator, String produtos) {
+
+		if (fornecedor == null || fornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+
+		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao existe.");
+		}
+
+		this.colecaoFornecedores.get(fornecedor).addCombo(fornecedor, nomeCombo, descricao, fator, produtos);
+		return nomeCombo;
 	}
 
 }

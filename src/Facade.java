@@ -80,8 +80,9 @@ public class Facade {
 		controle.removeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 	
-	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+	public String adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
 		controle.adicionaCombo(fornecedor, nome, descricao, fator, produtos);
+		return nome;
 	}
 
 
