@@ -8,13 +8,28 @@ import java.text.Format;
  *
  */
 public class Produto implements Comparable<Produto> {
-
+	
+	private String produtos; 
 	private String fornecedor;
 	private String nome;
 	private String descricao;
 	private double preco;
 	private String idProduto;
+	private double fator;
+	
+	
+	public Produto(String fornecedor, String nome, String descricao, double fator, String produtos) {
 
+		this.fornecedor = fornecedor.trim();
+		this.nome = nome.trim();
+		this.descricao = descricao.trim();
+		this.fator = fator;
+		this.idProduto = nome + " - " + descricao;
+		this.produtos = produtos.trim();
+	}
+
+	
+	
 	/**
 	 * construtor da classe, recebe o nome, descricao e preco
 	 * 
@@ -32,8 +47,19 @@ public class Produto implements Comparable<Produto> {
 		this.descricao = descricao.trim();
 		this.preco = preco;
 		this.idProduto = nome + " - " + descricao;
+		this.fator = 1;
 	}
 
+	
+	public double getFator() {
+		return this.fator;
+	}
+	
+	public void setFator(double novoFator) {
+		this.fator = novoFator;
+	}
+	
+	
 	/**
 	 * getter que retorna o nome do produto
 	 */

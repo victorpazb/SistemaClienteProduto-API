@@ -439,16 +439,20 @@ public class Controller {
 		Collections.sort(listaDeFornecedores);
 
 		String todosOsProdutos = "";
-		for (Fornecedor fornecedor : listaDeFornecedores) {
+		for (int j = 0; j < listaDeFornecedores.size(); j++) {
 			ArrayList<Produto> listaDeProdutos = new ArrayList<>();
-			listaDeProdutos.addAll(fornecedor.getListaDeProdutos().values());
+			listaDeProdutos.addAll(listaDeFornecedores.get(j).getListaDeProdutos().values());
 			Collections.sort(listaDeProdutos);
+
 			for (int i = 0; i < listaDeProdutos.size(); i++) {
 
-				if (i == 0) {
+				if (i == 0 && j == 0) {
 					todosOsProdutos += listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral();
 				}
-				todosOsProdutos += " | " + listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral() + " | ";
+				else {
+
+					todosOsProdutos += " | " + listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral();
+				}
 			}
 		}
 
@@ -488,7 +492,8 @@ public class Controller {
 			throw new IllegalArgumentException("produto nao cadastrado");
 		}
 
-		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto + " - " + descricao).setPreco(novoPreco);
+		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().get(nomeProduto + " - " + descricao)
+				.setPreco(novoPreco);
 
 	}
 
@@ -501,20 +506,16 @@ public class Controller {
 
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 
-		if(nomeProduto == null || nomeProduto.trim().equals("")) {
+		if (nomeProduto == null || nomeProduto.trim().equals("")) {
 			throw new IllegalArgumentException("Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
 		}
-		if(descricao == null || descricao.trim().equals("")) {
+		if (descricao == null || descricao.trim().equals("")) {
 			throw new IllegalArgumentException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
 		}
-		if(nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
+		if (nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
 			throw new IllegalArgumentException("Erro na remocao de produto: fornecedor nao pode ser vazio ou nulo.");
 		}
-		
-		
-		
-		
-		
+
 		if (nomeFornecedor.trim().equals("") || descricao.trim().equals("") || nomeProduto.trim().equals("")) {
 			throw new IllegalArgumentException();
 		}
@@ -533,13 +534,12 @@ public class Controller {
 		this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().remove(nomeProduto + " - " + descricao);
 
 	}
-	
+
 	/**
 	 * recebe o nome do fornecedor e tenta localiza lo na colecao de fornecedores,
-	 * caso encontre, usa o nome do combo para saber se esse
-	 * fornecedor ja tem esse Combo cadastrado, caso nao tenha o objeto combo eh
-	 * criado com os parametros passados e adicionado a colecao de Combos daquele
-	 * fornecedor especifico
+	 * caso encontre, usa o nome do combo para saber se esse fornecedor ja tem esse
+	 * Combo cadastrado, caso nao tenha o objeto combo eh criado com os parametros
+	 * passados e adicionado a colecao de Combos daquele fornecedor especifico
 	 * 
 	 */
 	public String adicionaCombo(String fornecedor, String nomeCombo, String descricao, double fator, String produtos) {
@@ -551,9 +551,37 @@ public class Controller {
 		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao existe.");
 		}
+		
 
-		this.colecaoFornecedores.get(fornecedor).addCombo(fornecedor, nomeCombo, descricao, fator, produtos);
+		this.colecaoFornecedores.get(fornecedor).adicionaCombo(fornecedor, nomeCombo, descricao, fator, produtos);
 		return nomeCombo;
+	}
+	
+	public void editaCombo(String nomeCombo, String descricao, String fornecedor, double novoFator) {
+		
+		if(nomeCombo == null || nomeCombo.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if(descricao == null || descricao.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
+		}
+		if(fornecedor == null || fornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(!this.colecaoFornecedores.containsKey(fornecedor)) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao existe.");
+		}
+		
+		if(novoFator <= 0 || novoFator >= 1) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fator invalido.");
+		}
+		
+		if(!this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().containsKey(nomeCombo + " - " + descricao)) {
+			throw new IllegalArgumentException("Erro na edicao de combo: produto nao existe.");
+		}
+		
+		this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().get(nomeCombo + " - " + descricao).setFator(novoFator);
+		
 	}
 
 }

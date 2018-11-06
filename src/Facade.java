@@ -84,6 +84,10 @@ public class Facade {
 		controle.adicionaCombo(fornecedor, nome, descricao, fator, produtos);
 		return nome;
 	}
+	
+	public void editaCombo(String nomeCombo, String descricao, String fornecedor, double novoFator) {
+		controle.editaCombo(nomeCombo, descricao, fornecedor, novoFator);
+	}
 
 
 

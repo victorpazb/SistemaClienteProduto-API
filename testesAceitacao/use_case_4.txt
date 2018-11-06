@@ -58,7 +58,7 @@ editaCombo nome="Coxao com batata" descricao="Coxao de frango com batata frita" 
 editaCombo nome="Rubacao com suco" descricao="Rubacao completo com suco" fornecedor="Dona Alba" novoFator=0.25
 
 expect "Coxao com batata - Coxao de frango com batata frita - R$4,00" exibeProduto nome="Coxao com batata" descricao="Coxao de frango com batata frita" fornecedor="Marcos"
-expect "Rubacao com suco - Rubacao completo com suco - R$14,25" exibeProduto nome="Rubacao com suco" descricao="Rubacao completo com suco" fornecedor="Dona Alba"
+expect "Rubacao com suco - Rubacao completo com suco - R$14,15" exibeProduto nome="Rubacao com suco" descricao="Rubacao completo com suco" fornecedor="Dona Alba"
 
 expectError "Erro na edicao de combo: nome nao pode ser vazio ou nulo." editaCombo nome="" descricao="Coxao de frango com batata frita" fornecedor="Marcos" novoFator=0.20
 expectError "Erro na edicao de combo: descricao nao pode ser vazia ou nula." editaCombo nome="Coxao com batata" descricao="" fornecedor="Marcos" novoFator=0.20

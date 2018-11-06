@@ -7,7 +7,6 @@ import java.util.HashMap;
  */
 public class Fornecedor implements Comparable<Fornecedor> {
 
-	private HashMap<String, Combo> listaDeCombos;
 	private HashMap<String, Produto> listaDeProdutos;
 	private String nome;
 	private String email;
@@ -28,7 +27,6 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		this.email = email.trim();
 		this.telefone = telefone.trim();
 		this.listaDeProdutos = new HashMap<>();
-		this.listaDeCombos = new HashMap<>();
 
 	}
 
@@ -66,14 +64,6 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	}
 
 	/**
-	 * @return getter que retorna o HasgMap que guarda os combos do fornecedor
-	 */
-
-	public HashMap<String, Combo> getListaDeCombos() {
-		return this.listaDeCombos;
-	}
-
-	/**
 	 * metodo que adiciona um produto a colecao de produtos do fornecedor atual
 	 * 
 	 * @param nome
@@ -102,10 +92,11 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		this.listaDeProdutos.put(novoProduto.getIdProduto(), novoProduto);
 	}
 
-	public void addCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
 
-		Combo novoCombo = new Combo(fornecedor, nome, descricao, fator, produtos);
-		if (this.getListaDeCombos().containsValue(novoCombo)) {
+		Produto novoCombo = new Produto(fornecedor, nome, descricao, fator, produtos);
+
+		if (this.listaDeProdutos.containsKey(nome + " - " + descricao)) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: combo ja existe.");
 		}
 		if (nome.trim().equals("")) {
@@ -118,15 +109,23 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
 		}
 		if (produtos == null || produtos.trim().equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos");
+			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos.");
 		}
+
 		if (produtos.contains("+")) {
 			throw new IllegalArgumentException(
 					"Erro no cadastro de combo: um combo não pode possuir combos na lista de produtos.");
 		}
 
-		this.listaDeCombos.put(novoCombo.getNome(), novoCombo);
+		String[] listaProdutos = produtos.split(",");
+		for (String produto : listaProdutos) {
+			if (!this.listaDeProdutos.containsKey(produto.trim())) {
+				throw new IllegalArgumentException("Erro no cadastro de combo: produto nao existe.");
+			}
+		}
+
 		novoCombo.setPreco(definePrecoCombo(produtos, fator));
+		this.listaDeProdutos.put(nome + " - " + descricao, novoCombo);
 
 	}
 
@@ -145,7 +144,12 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 *            preco se os produtos fossem adquiridos individualmente
 	 * @return retorna o double valor final do combo
 	 */
-	public double definePrecoCombo(String produtos, double fator) {
+	private double definePrecoCombo(String produtos, double fator) {
+
+		if (fator <= 0.0 || fator >= 1.0) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
+		}
+
 		double valorDoCombo = 0.0;
 		String[] produtosLista = produtos.split(",");
 		for (int i = 0; i < produtosLista.length; i++) {
@@ -154,11 +158,11 @@ public class Fornecedor implements Comparable<Fornecedor> {
 				throw new IllegalArgumentException("Erro no cadastro de combo: produto nao existe.");
 			}
 
-			valorDoCombo += this.getListaDeProdutos().get(produtosLista[i].trim()).getPreco(); // o trim() eh necessario
-																								// para que o espaco
+			valorDoCombo += this.getListaDeProdutos().get(produtosLista[i].trim()).getPreco();         // o trim() eh necessario
+																								       // para que o espaco
 																								// apos a virgula na
-																								// string produtos nao
-																								// possa ser considerado
+																								         // string produtos nao
+																								         // possa ser considerado
 
 		}
 		return valorDoCombo = valorDoCombo * (1.0 - fator);
