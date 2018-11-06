@@ -580,7 +580,9 @@ public class Controller {
 			throw new IllegalArgumentException("Erro na edicao de combo: produto nao existe.");
 		}
 		
-		this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().get(nomeCombo + " - " + descricao).setFator(novoFator);
+		if(this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().get(nomeCombo + " - " + descricao) instanceof ProdutoComposto) {
+			((ProdutoComposto)this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().get(nomeCombo + " - " + descricao)).setFator(novoFator);
+		}
 		
 	}
 

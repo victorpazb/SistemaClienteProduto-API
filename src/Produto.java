@@ -1,123 +1,38 @@
-import java.text.Format;
 
-/**
- * classe que define Produto, tem os atributos String nome, String descricao,
- * double preco.
- * 
- * @author victorpfb
- *
- */
-public class Produto implements Comparable<Produto> {
-	
-	private String produtos; 
+public abstract class Produto implements Comparable<Produto> {
+
 	private String fornecedor;
 	private String nome;
 	private String descricao;
 	private double preco;
-	private String idProduto;
-	private double fator;
-	
-	
-	public Produto(String fornecedor, String nome, String descricao, double fator, String produtos) {
 
-		this.fornecedor = fornecedor.trim();
-		this.nome = nome.trim();
-		this.descricao = descricao.trim();
-		this.fator = fator;
-		this.idProduto = nome + " - " + descricao;
-		this.produtos = produtos.trim();
-	}
+	public Produto(String nomeFornecedor, String nome, String descricao, double preco) {
 
-	
-	
-	/**
-	 * construtor da classe, recebe o nome, descricao e preco
-	 * 
-	 * @param nome
-	 *            String que define o nome
-	 * @param descricao
-	 *            String que descreve o produto
-	 * @param preco
-	 *            double que eh o preco do produto
-	 */
-	public Produto(String fornecedor, String nome, String descricao, double preco) {
+		this.fornecedor = nomeFornecedor;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = definePreco(preco);
 
-		this.fornecedor = fornecedor.trim();
-		this.nome = nome.trim();
-		this.descricao = descricao.trim();
-		this.preco = preco;
-		this.idProduto = nome + " - " + descricao;
-		this.fator = 1;
-	}
-
-	
-	public double getFator() {
-		return this.fator;
 	}
 	
-	public void setFator(double novoFator) {
-		this.fator = novoFator;
+	public double getPreco() {
+		return this.preco;
+	}
+	public void setPreco(double novoPreco) {
+		this.preco = novoPreco;
 	}
 	
 	
-	/**
-	 * getter que retorna o nome do produto
-	 */
+
 	public String getNome() {
 		return this.nome;
 	}
-
-	/**
-	 * getter que retorna o idProduto
-	 * 
-	 */
-	public String getIdProduto() {
-		return this.idProduto;
-	}
-
-	/**
-	 * @return getter que retorna a descricao
-	 */
+	
 	public String getDescricao() {
 		return this.descricao;
 	}
 
-	/**
-	 * @return getter que retorna o preco do produto
-	 */
-	public double getPreco() {
-		return this.preco;
-	}
-
-	/**
-	 * setter que atualizar o preco do produto, recebe um double novoPreco e
-	 * atualiza preco
-	 * 
-	 * @param novoPreco
-	 */
-	public void setPreco(double novoPreco) {
-		this.preco = novoPreco;
-	}
-
-	/**
-	 * metodo equals que diz q um produto eh igual ao outro se tiverem nome e
-	 * descricao iguais.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-
-		Produto produtoTeste = (Produto) obj;
-		return this.nome.equals(produtoTeste.nome) && this.descricao.equals(produtoTeste.getDescricao());
-	}
-
-	/**
-	 * metodo compareTo serve para ordenar os produtos em ordem alfabetica para que
-	 * so entao possam ser exibidor em uma lista
-	 */
-	@Override
-	public int compareTo(Produto outroProduto) {
-		return this.nome.compareTo(outroProduto.getNome());
-	}
+	public abstract double definePreco(double preco);
 
 	/**
 	 * 
@@ -143,4 +58,26 @@ public class Produto implements Comparable<Produto> {
 		return this.nome + " - " + this.descricao + precoFormatado;
 	}
 
+	/**
+	 * metodo compareTo serve para ordenar os produtos em ordem alfabetica para que
+	 * so entao possam ser exibidor em uma lista
+	 */
+	@Override
+	public int compareTo(Produto outroProduto) {
+		return this.nome.compareTo(outroProduto.getNome());
+	}
+	
+	/**
+	 * metodo equals que diz q um produto eh igual ao outro se tiverem nome e
+	 * descricao iguais.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+
+		Produto produtoTeste = (Produto) obj;
+		if(produtoTeste instanceof Produto) {
+			return this.nome.equals(produtoTeste.nome) && this.descricao.equals(produtoTeste.getDescricao());
+		}
+		return false;
+	}
 }

@@ -75,7 +75,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 */
 	public void addProduto(String nomeFornecedor, String nome, String descricao, double preco) {
 
-		Produto novoProduto = new Produto(nomeFornecedor, nome, descricao, preco);
+		ProdutoSimples novoProduto = new ProdutoSimples(nomeFornecedor, nome, descricao, preco);
 		if (this.getListaDeProdutos().containsValue(novoProduto)) {
 			throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 		}
@@ -89,12 +89,15 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro no cadastro de produto: preco invalido.");
 		}
 
-		this.listaDeProdutos.put(novoProduto.getIdProduto(), novoProduto);
+		this.listaDeProdutos.put(nome + " - " + descricao, novoProduto);
 	}
 
+	
+	
+	
 	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
 
-		Produto novoCombo = new Produto(fornecedor, nome, descricao, fator, produtos);
+		ProdutoComposto novoCombo = new ProdutoComposto(fornecedor, nome, descricao, fator, produtos);
 
 		if (this.listaDeProdutos.containsKey(nome + " - " + descricao)) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: combo ja existe.");
@@ -184,6 +187,19 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	@Override
 	public int compareTo(Fornecedor outroFornecedor) {
 		return this.nome.compareTo(outroFornecedor.getNome());
+	}
+	
+	/**
+	 * metodo equals que diz q um objeto eh igual ao outro se tiverem mesmo nome
+	 */
+	@Override
+	public boolean equals(Object obj) {
+
+		Fornecedor fornecedorTeste = (Fornecedor) obj;
+		if(fornecedorTeste instanceof Fornecedor) {
+			return this.nome.equals(fornecedorTeste.nome);
+		}
+		return false;
 	}
 
 }
