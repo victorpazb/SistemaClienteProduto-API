@@ -591,12 +591,18 @@ public class Controller {
 		if (cpf.length() != 11) {
 			throw new IllegalArgumentException("Erro ao cadastrar compra: cpf invalido.");
 		}
-		if (fornecedor == null || fornecedor.trim().equals("")) {
-			throw new IllegalArgumentException("Erro ao cadastrar compra: fornecedor nao pode ser vazio ou nulo.");
-		}
 		if (data == null || data.trim().equals("")) {
 			throw new IllegalArgumentException("Erro ao cadastrar compra: data nao pode ser vazia ou nula.");
 		}
+		if (fornecedor == null || fornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (descricaoProduto == null || descricaoProduto.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro ao cadastrar compra: descricao do produto nao pode ser vazia ou nula");
+		}
+
+		
 		
 		String[] dataQuebrada = data.split("/");
 		if (dataQuebrada[0].length() != 2 || dataQuebrada[1].length() != 2 || dataQuebrada[2].length() != 4) {
@@ -617,10 +623,6 @@ public class Controller {
 		if (!this.colecaoFornecedores.get(fornecedor).getListaDeProdutos()
 				.containsKey(nomeProduto + " - " + descricaoProduto)) {
 			throw new IllegalArgumentException("Erro ao cadastrar compra: produto nao existe.");
-		}
-		if (descricaoProduto == null || descricaoProduto.trim().equals("")) {
-			throw new IllegalArgumentException(
-					"Erro ao cadastrar compra: descricao do produto nao pode ser vazia ou nula");
 		}
 
 		double preco = this.colecaoFornecedores.get(fornecedor).getListaDeProdutos()
