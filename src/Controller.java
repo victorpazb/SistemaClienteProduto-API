@@ -1,7 +1,9 @@
 import java.util.HashMap;
+import java.util.List;
 
 import com.sun.java.accessibility.util.java.awt.ListTranslator;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -555,6 +557,22 @@ public class Controller {
 		return nomeCombo;
 	}
 
+	/**
+	 * [ metodo que edita apenas o fator de um combo
+	 * 
+	 * @param nomeCombo
+	 *            - String que representa o nome do combo e junto com a descricao eh
+	 *            usado como chave no mapa de produtos
+	 *
+	 * @param descricao
+	 *            string que descreve o combo e compoe a chave do combo no mapa de
+	 *            produtos
+	 * @param fornecedor
+	 *            string que representa o fornecedor que vai se pesquisar os
+	 *            produtos que formarao o combo
+	 * @param novoFator
+	 *            double que representa o novoFator que sera aplicado ao combo
+	 */
 	public void editaCombo(String nomeCombo, String descricao, String fornecedor, double novoFator) {
 
 		if (nomeCombo == null || nomeCombo.trim().equals("")) {
@@ -586,6 +604,28 @@ public class Controller {
 
 	}
 
+	/**
+	 * metodo que adiciona um objeto compra a uma lista de compras(arrayList) e esta
+	 * relacionada a um fornecedor. essa dupla eh armazenada em um mapa que o
+	 * cliente contem, onde a chave e valor do mapa sao respectivamente fornecedor e
+	 * lista que recebe o tipo compra
+	 * 
+	 * @param cpf
+	 *            string que representa o cpf do cliente e eh usado para encontralo
+	 *            na colecao de clientes
+	 * @param fornecedor
+	 *            string que representa o fornecedor e eh usado para encontrar o
+	 *            fornecedor na colecao de fornecedores alem de setar as chaves do
+	 *            mapa
+	 * @param data
+	 *            string que representa a data da compra e eh um atributo de compra
+	 *            tambem
+	 * @param nomeProduto
+	 *            string q representa o produto e eh um atributo de compra
+	 * @param descricaoProduto
+	 *            string que representa a descricao do produto e tambem eh um
+	 *            atributo de compra
+	 */
 	public void adicionaCompra(String cpf, String fornecedor, String data, String nomeProduto,
 			String descricaoProduto) {
 		if (cpf.length() != 11) {
@@ -602,8 +642,6 @@ public class Controller {
 					"Erro ao cadastrar compra: descricao do produto nao pode ser vazia ou nula");
 		}
 
-		
-		
 		String[] dataQuebrada = data.split("/");
 		if (dataQuebrada[0].length() != 2 || dataQuebrada[1].length() != 2 || dataQuebrada[2].length() != 4) {
 			throw new IllegalArgumentException("Erro ao cadastrar compra: data invalida.");
@@ -629,6 +667,106 @@ public class Controller {
 				.get(nomeProduto + " - " + descricaoProduto).getPreco();
 		Compra novaCompra = new Compra(data, nomeProduto, preco);
 		this.colecaoClientes.get(cpf).setComprasNosFornecedores(fornecedor, novaCompra);
+
+	}
+
+	public String getDebito(String cpf, String fornecedor) {
+
+		if (cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cpf invalido.");
+		}
+		if (fornecedor == null || fornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao existe.");
+		}
+		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: fornecedor nao existe.");
+		}
+		if (this.colecaoFornecedores.containsKey(fornecedor) && this.colecaoClientes.containsKey(cpf)
+				&& (!this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor))) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
+		}
+
+		double debitoDoCliente = 0.0;
+		String debitoDoClienteFormatado = "";
+		if (this.colecaoFornecedores.containsKey(fornecedor) && this.colecaoClientes.containsKey(cpf)
+				&& this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor)) {
+			ArrayList<Compra> listaDeCompras = this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().get(fornecedor);
+			for (Compra compra : listaDeCompras) {
+				debitoDoCliente += compra.getPreco();
+			}
+		}
+		debitoDoClienteFormatado = String.format("%.2f", debitoDoCliente);
+		return debitoDoClienteFormatado;
+
+	}
+
+	public String exibeContas(String cpf, String fornecedor) {
+
+		if (cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: cpf invalido.");
+		}
+
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: cliente nao existe.");
+		}
+		if (fornecedor == null || fornecedor.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro ao exibir conta do cliente: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
+			throw new IllegalArgumentException("Erro ao exibir conta do cliente: fornecedor nao existe.");
+		}
+
+		if (this.colecaoFornecedores.containsKey(fornecedor) && this.colecaoClientes.containsKey(cpf)
+				&& (!this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor))) {
+			throw new IllegalArgumentException(
+					"Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		}
+
+		String listaComprasEmUmFornecedor = "Cliente: " + this.colecaoClientes.get(cpf).getNome() + " | "
+				+ this.colecaoFornecedores.get(fornecedor).getNome();
+		ArrayList<Compra> comprasEmUmFornecedor = this.colecaoClientes.get(cpf).getListaGeralDeCOmpras()
+				.get(fornecedor);
+		for (Compra compra : comprasEmUmFornecedor) {
+			listaComprasEmUmFornecedor += " | " + compra.toString();
+		}
+		return listaComprasEmUmFornecedor;
+	}
+
+	public String exibeContasClientes(String cpf) {
+
+		if (cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cpf invalido.");
+		}
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cliente nao existe.");
+		}
+		if (this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().isEmpty()) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cliente nao tem nenhuma conta.");
+		}
+
+		ArrayList<String> listaOrdenadaDeFornecedores = new ArrayList<>();
+		listaOrdenadaDeFornecedores.addAll(this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().keySet());
+		Collections.sort(listaOrdenadaDeFornecedores);
+
+		HashMap<String, ArrayList<Compra>> listasDeCompraDeUmCliente = this.colecaoClientes.get(cpf)
+				.getListaGeralDeCOmpras();
+
+		String representacaoTodasAsCompras = "Cliente: " + this.colecaoClientes.get(cpf).getNome();
+		for (String fornecedor : listaOrdenadaDeFornecedores) {
+			if (listasDeCompraDeUmCliente.containsKey(fornecedor)) {
+				representacaoTodasAsCompras += " | " + fornecedor;
+				ArrayList<Compra> listaDeCompra = listasDeCompraDeUmCliente.get(fornecedor);
+				for (Compra compra : listaDeCompra) {
+					representacaoTodasAsCompras += " | " + compra.toString();
+				}
+			}
+		}
+
+		return representacaoTodasAsCompras;
 
 	}
 

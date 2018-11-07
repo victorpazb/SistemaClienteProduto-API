@@ -92,9 +92,6 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		this.listaDeProdutos.put(nome + " - " + descricao, novoProduto);
 	}
 
-	
-	
-	
 	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
 
 		ProdutoComposto novoCombo = new ProdutoComposto(fornecedor, nome, descricao, fator, produtos);
@@ -161,11 +158,11 @@ public class Fornecedor implements Comparable<Fornecedor> {
 				throw new IllegalArgumentException("Erro no cadastro de combo: produto nao existe.");
 			}
 
-			valorDoCombo += this.getListaDeProdutos().get(produtosLista[i].trim()).getPreco();         // o trim() eh necessario
-																								       // para que o espaco
-																								// apos a virgula na
-																								         // string produtos nao
-																								         // possa ser considerado
+			valorDoCombo += this.getListaDeProdutos().get(produtosLista[i].trim()).getPreco(); // o trim() eh necessario
+																								// para que o espaco
+			// apos a virgula na
+			// string produtos nao
+			// possa ser considerado
 
 		}
 		return valorDoCombo = valorDoCombo * (1.0 - fator);
@@ -188,7 +185,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	public int compareTo(Fornecedor outroFornecedor) {
 		return this.nome.compareTo(outroFornecedor.getNome());
 	}
-	
+
 	/**
 	 * metodo equals que diz q um objeto eh igual ao outro se tiverem mesmo nome
 	 */
@@ -196,7 +193,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	public boolean equals(Object obj) {
 
 		Fornecedor fornecedorTeste = (Fornecedor) obj;
-		if(fornecedorTeste instanceof Fornecedor) {
+		if (fornecedorTeste instanceof Fornecedor) {
 			return this.nome.equals(fornecedorTeste.nome);
 		}
 		return false;

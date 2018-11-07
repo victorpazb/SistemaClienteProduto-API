@@ -92,5 +92,17 @@ public class Facade {
 	public void adicionaCompra(String cpf, String fornecedor, String data, String nomeProduto, String descricaoProduto) {
 		controle.adicionaCompra(cpf, fornecedor, data, nomeProduto, descricaoProduto);
 	}
+	
+	public String getDebito (String cpf, String fornecedor){
+		return controle.getDebito(cpf, fornecedor);
+	}
+	
+	public String exibeContas(String cpf, String fornecedor) {
+		return controle.exibeContas(cpf, fornecedor);
+	}
+	
+	public String exibeContasClientes(String cpf) {
+		return controle.exibeContasClientes(cpf);
+	}
 
 }
