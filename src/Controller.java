@@ -448,8 +448,7 @@ public class Controller {
 
 				if (i == 0 && j == 0) {
 					todosOsProdutos += listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral();
-				}
-				else {
+				} else {
 
 					todosOsProdutos += " | " + listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral();
 				}
@@ -551,39 +550,84 @@ public class Controller {
 		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao existe.");
 		}
-		
 
 		this.colecaoFornecedores.get(fornecedor).adicionaCombo(fornecedor, nomeCombo, descricao, fator, produtos);
 		return nomeCombo;
 	}
-	
+
 	public void editaCombo(String nomeCombo, String descricao, String fornecedor, double novoFator) {
-		
-		if(nomeCombo == null || nomeCombo.trim().equals("")) {
+
+		if (nomeCombo == null || nomeCombo.trim().equals("")) {
 			throw new IllegalArgumentException("Erro na edicao de combo: nome nao pode ser vazio ou nulo.");
 		}
-		if(descricao == null || descricao.trim().equals("")) {
+		if (descricao == null || descricao.trim().equals("")) {
 			throw new IllegalArgumentException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
 		}
-		if(fornecedor == null || fornecedor.trim().equals("")) {
+		if (fornecedor == null || fornecedor.trim().equals("")) {
 			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
 		}
-		if(!this.colecaoFornecedores.containsKey(fornecedor)) {
+		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
 			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao existe.");
 		}
-		
-		if(novoFator <= 0 || novoFator >= 1) {
+
+		if (novoFator <= 0 || novoFator >= 1) {
 			throw new IllegalArgumentException("Erro na edicao de combo: fator invalido.");
 		}
-		
-		if(!this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().containsKey(nomeCombo + " - " + descricao)) {
+
+		if (!this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().containsKey(nomeCombo + " - " + descricao)) {
 			throw new IllegalArgumentException("Erro na edicao de combo: produto nao existe.");
 		}
-		
-		if(this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().get(nomeCombo + " - " + descricao) instanceof ProdutoComposto) {
-			((ProdutoComposto)this.colecaoFornecedores.get(fornecedor).getListaDeProdutos().get(nomeCombo + " - " + descricao)).setFator(novoFator);
+
+		if (this.colecaoFornecedores.get(fornecedor).getListaDeProdutos()
+				.get(nomeCombo + " - " + descricao) instanceof ProdutoComposto) {
+			((ProdutoComposto) this.colecaoFornecedores.get(fornecedor).getListaDeProdutos()
+					.get(nomeCombo + " - " + descricao)).setFator(novoFator);
+		}
+
+	}
+
+	public void adicionaCompra(String cpf, String fornecedor, String data, String nomeProduto,
+			String descricaoProduto) {
+		if (cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: cpf invalido.");
+		}
+		if (fornecedor == null || fornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (data == null || data.trim().equals("")) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: data nao pode ser vazia ou nula.");
 		}
 		
+		String[] dataQuebrada = data.split("/");
+		if (dataQuebrada[0].length() != 2 || dataQuebrada[1].length() != 2 || dataQuebrada[2].length() != 4) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: data invalida.");
+
+		}
+		if (nomeProduto == null || nomeProduto.trim().equals("")) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: nome do produto nao pode ser vazio ou nulo.");
+		}
+
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: cliente nao existe.");
+		}
+		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: fornecedor nao existe.");
+		}
+
+		if (!this.colecaoFornecedores.get(fornecedor).getListaDeProdutos()
+				.containsKey(nomeProduto + " - " + descricaoProduto)) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: produto nao existe.");
+		}
+		if (descricaoProduto == null || descricaoProduto.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro ao cadastrar compra: descricao do produto nao pode ser vazia ou nula");
+		}
+
+		double preco = this.colecaoFornecedores.get(fornecedor).getListaDeProdutos()
+				.get(nomeProduto + " - " + descricaoProduto).getPreco();
+		Compra novaCompra = new Compra(data, nomeProduto, preco);
+		this.colecaoClientes.get(cpf).setComprasNosFornecedores(fornecedor, novaCompra);
+
 	}
 
 }

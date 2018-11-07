@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Classe cliente, representa um cliente a ser cadastrado no sistema e tem como
  * atributos: String nome, String localizacao, String email.
@@ -7,6 +10,8 @@ public class Cliente implements Comparable<Cliente> {
 	private String nome;
 	private String localizacao;
 	private String email;
+	private ArrayList<Compra> listaDeCadaFornecedor;
+	private HashMap<String, ArrayList<Compra>> listasDeCompraEmTodosOsFornecedore;
 
 	/**
 	 * Construtor da classe, recebe os parametros nome, emailç e localizacao.
@@ -23,6 +28,25 @@ public class Cliente implements Comparable<Cliente> {
 		this.nome = nome.trim();
 		this.localizacao = localizacao.trim();
 		this.email = email.trim();
+		this.listasDeCompraEmTodosOsFornecedore = new HashMap<>();
+		this.listaDeCadaFornecedor = new ArrayList<>();
+
+	}
+
+	public void setComprasNosFornecedores(String nomeFornecedor, Compra novaCompra) {
+		if (!this.listasDeCompraEmTodosOsFornecedore.containsKey(nomeFornecedor)) {
+			this.listaDeCadaFornecedor = new ArrayList<>();
+			this.listaDeCadaFornecedor.add(novaCompra);
+			this.listasDeCompraEmTodosOsFornecedore.put(nomeFornecedor, listaDeCadaFornecedor);
+
+		} else {
+			this.listasDeCompraEmTodosOsFornecedore.get(nomeFornecedor).add(novaCompra);
+		}
+
+	}
+
+	public HashMap<String, ArrayList<Compra>> getListaGeralDeCOmpras() {
+		return this.listasDeCompraEmTodosOsFornecedore;
 	}
 
 	/**

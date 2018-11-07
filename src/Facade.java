@@ -1,9 +1,10 @@
 import easyaccept.EasyAccept;
 
 public class Facade {
-	
+
 	public static void main(String[] args) {
-		args = new String[] {"Facade", "testesAceitacao/use_case_1.txt", "testesAceitacao/use_case_2.txt", "testesAceitacao/use_case_3.txt", "testesAceitacao/use_case_4.txt" };
+		args = new String[] { "Facade", "testesAceitacao/use_case_1.txt", "testesAceitacao/use_case_2.txt",
+				"testesAceitacao/use_case_3.txt", "testesAceitacao/use_case_4.txt", "testesAceitacao/use_case_5.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -18,7 +19,7 @@ public class Facade {
 		return controle.exibeCliente(cpf);
 
 	}
-	
+
 	public String exibeClientes() {
 		return controle.exibeClientes();
 	}
@@ -58,39 +59,38 @@ public class Facade {
 		controle.adicionaProduto(nomeFornecedor, nomeProduto, descricao, preco);
 		return nomeProduto + " - " + descricao;
 	}
-	
 
 	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 		return controle.exibeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 
-	public String exibeProdutosFornecedor(String nomeFornecedor) { 
+	public String exibeProdutosFornecedor(String nomeFornecedor) {
 		return controle.exibeProdutosFornecedor(nomeFornecedor);
 	}
 
-	public String exibeProdutos() { 
+	public String exibeProdutos() {
 		return controle.exibeProdutos();
 	}
 
 	public void editaProduto(String nomeFornecedor, String nomeProduto, String descricao, double novoPreco) {
 		controle.editaProduto(nomeFornecedor, nomeProduto, descricao, novoPreco);
 	}
-	
+
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 		controle.removeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
-	
+
 	public String adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
 		controle.adicionaCombo(fornecedor, nome, descricao, fator, produtos);
 		return nome;
 	}
-	
+
 	public void editaCombo(String nomeCombo, String descricao, String fornecedor, double novoFator) {
 		controle.editaCombo(nomeCombo, descricao, fornecedor, novoFator);
 	}
-
-
-
-
+	
+	public void adicionaCompra(String cpf, String fornecedor, String data, String nomeProduto, String descricaoProduto) {
+		controle.adicionaCompra(cpf, fornecedor, data, nomeProduto, descricaoProduto);
+	}
 
 }
