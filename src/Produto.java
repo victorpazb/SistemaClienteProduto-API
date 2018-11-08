@@ -5,17 +5,17 @@
  */
 public abstract class Produto implements Comparable<Produto> {
 
-	private String fornecedor;
-	private String nome;
-	private String descricao;
-	private double preco;
+	protected String fornecedor;
+	protected String nome;
+	protected String descricao;
+	protected double preco;
 
 	public Produto(String nomeFornecedor, String nome, String descricao, double preco) {
 
 		this.fornecedor = nomeFornecedor;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.preco = definePreco(preco);
+		this.preco = preco;
 
 	}
 
@@ -52,7 +52,7 @@ public abstract class Produto implements Comparable<Produto> {
 		return this.descricao;
 	}
 
-	public abstract double definePreco(double preco);
+	public abstract double definePreco();
 
 	/**
 	 * 
@@ -62,7 +62,7 @@ public abstract class Produto implements Comparable<Produto> {
 	 * o nome de seu fornecedor
 	 */
 	public String toStringParaImpressaoEmListaGeral() {
-		String preco = String.format(" - R$%.2f", this.preco);
+		String preco = String.format(" - R$%.2f", definePreco());
 		String precoFormatado = preco.replace(".", ",");
 		return this.fornecedor + " - " + this.nome + " - " + this.descricao + precoFormatado;
 	}
@@ -73,7 +73,7 @@ public abstract class Produto implements Comparable<Produto> {
 	 */
 	@Override
 	public String toString() {
-		String preco = String.format(" - R$%.2f", this.preco);
+		String preco = String.format(" - R$%.2f", definePreco());
 		String precoFormatado = preco.replace(".", ",");
 		return this.nome + " - " + this.descricao + precoFormatado;
 	}

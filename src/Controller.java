@@ -713,7 +713,7 @@ public class Controller {
 				debitoDoCliente += compra.getPreco();
 			}
 		}
-		debitoDoClienteFormatado = String.format("%.2f", debitoDoCliente);
+		debitoDoClienteFormatado = String.format("%.2f", debitoDoCliente).replace(",", ".");
 		return debitoDoClienteFormatado;
 
 	}

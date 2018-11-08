@@ -94,8 +94,6 @@ public class Fornecedor implements Comparable<Fornecedor> {
 
 	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
 
-		ProdutoComposto novoCombo = new ProdutoComposto(fornecedor, nome, descricao, fator, produtos);
-
 		if (this.listaDeProdutos.containsKey(nome + " - " + descricao)) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: combo ja existe.");
 		}
@@ -114,7 +112,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 
 		if (produtos.contains("+")) {
 			throw new IllegalArgumentException(
-					"Erro no cadastro de combo: um combo não pode possuir combos na lista de produtos.");
+					"Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos.");
 		}
 
 		String[] listaProdutos = produtos.split(",");
@@ -123,8 +121,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 				throw new IllegalArgumentException("Erro no cadastro de combo: produto nao existe.");
 			}
 		}
-
-		novoCombo.setPreco(definePrecoCombo(produtos, fator));
+		
+		double preco = definePrecoCombo(produtos, fator);
+		ProdutoComposto novoCombo = new ProdutoComposto(fornecedor, nome, descricao, fator, preco, produtos);
 		this.listaDeProdutos.put(nome + " - " + descricao, novoCombo);
 
 	}
@@ -165,7 +164,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			// possa ser considerado
 
 		}
-		return valorDoCombo = valorDoCombo * (1.0 - fator);
+		return valorDoCombo;
 	}
 
 	/**

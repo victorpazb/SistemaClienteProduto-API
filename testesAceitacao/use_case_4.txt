@@ -23,7 +23,7 @@ expectError "Erro no cadastro de combo: fator invalido." adicionaCombo fornecedo
 expectError "Erro no cadastro de combo: fator invalido." adicionaCombo fornecedor="Seu Olavo" nome="Tapioca com cafe" descricao="Tapioca de frango com cafe" fator=1 produtos="Tapioca de frango - Tapioca de frango e manteiga, Cafe - Cafe pequeno"
 expectError "Erro no cadastro de combo: combo deve ter produtos." adicionaCombo fornecedor="Seu Olavo" nome="Tapioca com cafe" descricao="Tapioca de frango com cafe" fator=0.7 produtos=""
 expectError "Erro no cadastro de combo: produto nao existe." adicionaCombo fornecedor="Seu Olavo" nome="Tapioca com cafe" descricao="Tapioca de frango com cafe" fator=0.3 produtos="Tapioca de frango - Tapioca de frango e manteiga, Cafe - Cafe pequeno"
-expectError "Erro no cadastro de combo: um combo não pode possuir combos na lista de produtos." adicionaCombo fornecedor="Seu Olavo" nome="Pastel de frango e X-burguer + suco" descricao="Pastel de forno de frango e X-burguer com suco de maracuja" fator=0.3 produtos="Pastel de frango - Pastel de forno de frango, X-burguer + suco - X-burguer com suco de maracuja"
+expectError "Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos." adicionaCombo fornecedor="Seu Olavo" nome="Pastel de frango e X-burguer + suco" descricao="Pastel de forno de frango e X-burguer com suco de maracuja" fator=0.3 produtos="Pastel de frango - Pastel de forno de frango, X-burguer + suco - X-burguer com suco de maracuja"
 
 ## Exibindo combos ##
 
@@ -58,7 +58,7 @@ editaCombo nome="Coxao com batata" descricao="Coxao de frango com batata frita" 
 editaCombo nome="Rubacao com suco" descricao="Rubacao completo com suco" fornecedor="Dona Alba" novoFator=0.25
 
 expect "Coxao com batata - Coxao de frango com batata frita - R$4,00" exibeProduto nome="Coxao com batata" descricao="Coxao de frango com batata frita" fornecedor="Marcos"
-expect "Rubacao com suco - Rubacao completo com suco - R$14,15" exibeProduto nome="Rubacao com suco" descricao="Rubacao completo com suco" fornecedor="Dona Alba"
+expect "Rubacao com suco - Rubacao completo com suco - R$14,25" exibeProduto nome="Rubacao com suco" descricao="Rubacao completo com suco" fornecedor="Dona Alba"
 
 expectError "Erro na edicao de combo: nome nao pode ser vazio ou nulo." editaCombo nome="" descricao="Coxao de frango com batata frita" fornecedor="Marcos" novoFator=0.20
 expectError "Erro na edicao de combo: descricao nao pode ser vazia ou nula." editaCombo nome="Coxao com batata" descricao="" fornecedor="Marcos" novoFator=0.20
