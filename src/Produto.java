@@ -1,4 +1,8 @@
-
+/**
+ * classe que define um produto. 
+ * @author victorpfb
+ *
+ */
 public abstract class Produto implements Comparable<Produto> {
 
 	private String fornecedor;
@@ -14,20 +18,36 @@ public abstract class Produto implements Comparable<Produto> {
 		this.preco = definePreco(preco);
 
 	}
-	
+
+	/**
+	 * @return getter que retorna um double preco do produto
+	 */
 	public double getPreco() {
 		return this.preco;
 	}
+
+	/**
+	 * setter que atualiza o preco do produto
+	 * 
+	 * @param novoPreco
+	 *            double passado para atualizar o preco do produto
+	 */
 	public void setPreco(double novoPreco) {
 		this.preco = novoPreco;
 	}
-	
-	
+
+	/**
+	 * @return getter que retorna uma String que eh o nome do produto
+	 */
 
 	public String getNome() {
 		return this.nome;
 	}
-	
+
+	/**
+	 * 
+	 * @return getter que retorna uma string q representa a descricao do produto
+	 */
 	public String getDescricao() {
 		return this.descricao;
 	}
@@ -66,7 +86,7 @@ public abstract class Produto implements Comparable<Produto> {
 	public int compareTo(Produto outroProduto) {
 		return this.nome.compareTo(outroProduto.getNome());
 	}
-	
+
 	/**
 	 * metodo equals que diz q um produto eh igual ao outro se tiverem nome e
 	 * descricao iguais.
@@ -75,7 +95,7 @@ public abstract class Produto implements Comparable<Produto> {
 	public boolean equals(Object obj) {
 
 		Produto produtoTeste = (Produto) obj;
-		if(produtoTeste instanceof Produto) {
+		if (produtoTeste instanceof Produto) {
 			return this.nome.equals(produtoTeste.nome) && this.descricao.equals(produtoTeste.getDescricao());
 		}
 		return false;

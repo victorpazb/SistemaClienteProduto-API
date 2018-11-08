@@ -338,7 +338,10 @@ public class Controller {
 	 * 
 	 */
 	public String adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
-
+		if(descricao == null) {
+			throw new NullPointerException();
+		}
+		
 		if (nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro de produto: fornecedor nao pode ser vazio ou nulo.");
 		}
@@ -670,6 +673,18 @@ public class Controller {
 
 	}
 
+	/**
+	 * metodo que atraves do cpf passado encontra um cliente e com o nome do
+	 * fornecedor verifica o saldo devedor pelas compras feitas com equele
+	 * fornecedor especifico
+	 * 
+	 * @param cpf
+	 *            String que representa o cpf do cliente
+	 * @param fornecedor
+	 *            string que representa nome do fornecedor
+	 * @return retorna uma String que representa o saldo devedor do cliente junto ao
+	 *         fornecedor informado
+	 */
 	public String getDebito(String cpf, String fornecedor) {
 
 		if (cpf.length() != 11) {
@@ -702,6 +717,21 @@ public class Controller {
 		return debitoDoClienteFormatado;
 
 	}
+
+	/**
+	 * Metodo que recebe o cpf para encontrar um cliente, a partir dele verifica a
+	 * lista de contas do cliente, verifica se exite uma conta que seja do
+	 * fornecedor informado. caso exista, eh feita uma varredura nos produtos e seus
+	 * toString sao coledos e uma lista com os produtos consumidos naquele
+	 * fornecedor pelo cliente, eh exibida.
+	 * 
+	 * @param cpf
+	 *            cpf do cliente
+	 * @param fornecedor
+	 *            nome do fornecedor onde foram feitas as compras
+	 * @return retorna uma lista de Strings q sao os produtos consumidos no
+	 *         fornecedor informado
+	 */
 
 	public String exibeContas(String cpf, String fornecedor) {
 
@@ -736,6 +766,12 @@ public class Controller {
 		return listaComprasEmUmFornecedor;
 	}
 
+	/**
+	 * @return exibe a lista de todas as compras realizadas em todos os
+	 *         fornecedores, sendo apresentada de modo que os fornecedores aparecam
+	 *         em ordem alfabetica
+	 * 
+	 */
 	public String exibeContasClientes(String cpf) {
 
 		if (cpf.length() != 11) {

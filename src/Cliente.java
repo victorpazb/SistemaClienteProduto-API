@@ -33,6 +33,21 @@ public class Cliente implements Comparable<Cliente> {
 
 	}
 
+	/**
+	 * metodo que coloca uma Compra na lista de compras de um cliente que eh um
+	 * mapa, o metodo recebe o nome do fornecedor, que sao as chaves do mapa. Caso a
+	 * chave nao exista, ela eh inserida. O valor do mapa sao Arraylist que recebem
+	 * o tipo Compra. Assim, ao criar uma compra, esse metodo eh chamado e verifica
+	 * se o fornecedor existe na nesse mapa, se sim, a compra eh colocada pra ele,
+	 * se ele nao existe na lista mas esta cadastrado na colecao de fornecedores,
+	 * sera inserido um novo fornecedor na lista do cliente.
+	 * 
+	 * @param nomeFornecedor
+	 *            String que representa o nome do fornecedor
+	 * @param novaCompra
+	 *            objeto do tipo compra, criado para ser inserido na lista de
+	 *            compras que corresponde ao fornecedor passado
+	 */
 	public void setComprasNosFornecedores(String nomeFornecedor, Compra novaCompra) {
 		if (!this.listasDeCompraEmTodosOsFornecedore.containsKey(nomeFornecedor)) {
 			this.listaDeCadaFornecedor = new ArrayList<>();
