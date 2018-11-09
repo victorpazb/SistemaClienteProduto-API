@@ -338,10 +338,10 @@ public class Controller {
 	 * 
 	 */
 	public String adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
-		if(descricao == null) {
+		if (descricao == null) {
 			throw new NullPointerException();
 		}
-		
+
 		if (nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro de produto: fornecedor nao pode ser vazio ou nulo.");
 		}
@@ -401,11 +401,18 @@ public class Controller {
 	 */
 
 	public String exibeProdutosFornecedor(String nomeFornecedor) {
+
+		if (nomeFornecedor == null || nomeFornecedor.trim().equals("")) {
+			throw new IllegalArgumentException(
+					"Erro na exibicao dos produtos do fornecedor: nome nao pode ser nulo ou vazio");
+		}
+
 		if (!this.colecaoFornecedores.containsKey(nomeFornecedor)) {
-			if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().isEmpty()) {
-				throw new NullPointerException("lista de produtos vazia!");
-			}
 			throw new IllegalArgumentException("fornecedor nao encontrado");
+		}
+
+		if (this.colecaoFornecedores.get(nomeFornecedor).getListaDeProdutos().isEmpty()) {
+			throw new NullPointerException("lista de produtos vazia!");
 		}
 
 		ArrayList<Produto> listaDeProdutos = new ArrayList<>();
@@ -435,7 +442,7 @@ public class Controller {
 
 	public String exibeProdutos() {
 		if (this.colecaoFornecedores.isEmpty()) {
-			throw new NullPointerException("sem fornecedores cadastrados");
+			throw new NullPointerException("sem fornecedores cadastrados para exibir seus produtos");
 		}
 
 		ArrayList<Fornecedor> listaDeFornecedores = new ArrayList<>();
@@ -458,6 +465,9 @@ public class Controller {
 					todosOsProdutos += " | " + listaDeProdutos.get(i).toStringParaImpressaoEmListaGeral();
 				}
 			}
+		}
+		if(todosOsProdutos.equals("")) {
+			throw new NullPointerException("nao existem produtos cadastrados");
 		}
 
 		return todosOsProdutos;

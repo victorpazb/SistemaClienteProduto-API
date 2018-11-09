@@ -400,17 +400,16 @@ class testeController {
 		assertThrows(IllegalArgumentException.class, () -> controleTeste.adicionaCombo("victor", "   ",
 				"carne de sol com suco", 0.5, "carne - carne de sol, suco - suco de laranja"));
 	}
-	
+
 	@Test
 	void testeAdicionaComboDescricaoComboNulaOuVazia() {
 		controleTeste = new Controller();
 		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
 		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
-		assertThrows(IllegalArgumentException.class, () -> controleTeste.adicionaCombo("victor", "carne + suco",
-				"    ", 0.5, "carne - carne de sol, suco - suco de laranja"));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.adicionaCombo("victor", "carne + suco", "    ",
+				0.5, "carne - carne de sol, suco - suco de laranja"));
 	}
-	
-	
+
 	@Test
 	void testeExibeCombo() {
 		controleTeste = new Controller();
@@ -419,10 +418,11 @@ class testeController {
 		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
 		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
 				"carne - carne de sol, suco - suco de laranja");
-		assertEquals("carne + suco - carne de sol com suco - R$7,00", controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "victor"));
+		assertEquals("carne + suco - carne de sol com suco - R$7,00",
+				controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "victor"));
 
 	}
-	
+
 	@Test
 	void testeExibeComboNomeComboVazioOuNulo() {
 		controleTeste = new Controller();
@@ -431,10 +431,11 @@ class testeController {
 		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
 		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
 				"carne - carne de sol, suco - suco de laranja");
-		assertThrows(IllegalArgumentException.class	,()-> controleTeste.exibeProduto("  ", "carne de sol com suco", "victor"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("  ", "carne de sol com suco", "victor"));
 
 	}
-	
+
 	@Test
 	void testeExibeComboDescricaoComboVaziaOuNula() {
 		controleTeste = new Controller();
@@ -443,10 +444,11 @@ class testeController {
 		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
 		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
 				"carne - carne de sol, suco - suco de laranja");
-		assertThrows(IllegalArgumentException.class	,()-> controleTeste.exibeProduto("carne + suco", "    ", "victor"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("carne + suco", "    ", "victor"));
 
 	}
-	
+
 	@Test
 	void testeExibeComboFornecedorVazioOuNulo() {
 		controleTeste = new Controller();
@@ -455,10 +457,11 @@ class testeController {
 		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
 		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
 				"carne - carne de sol, suco - suco de laranja");
-		assertThrows(IllegalArgumentException.class	,()-> controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "    "));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "    "));
 
 	}
-	
+
 	@Test
 	void testeExibeComboFornecedorNaoExiste() {
 		controleTeste = new Controller();
@@ -467,10 +470,11 @@ class testeController {
 		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
 		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
 				"carne - carne de sol, suco - suco de laranja");
-		assertThrows(IllegalArgumentException.class	,()-> controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "hugo"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "hugo"));
 
 	}
-	
+
 	@Test
 	void testeExibeComboComboNaoCadastrado() {
 		controleTeste = new Controller();
@@ -479,7 +483,140 @@ class testeController {
 		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
 		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
 				"carne - carne de sol, suco - suco de laranja");
-		assertThrows(IllegalArgumentException.class	,()-> controleTeste.exibeProduto("bolo + refri", "bolo de chocolate e coca", "victor"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("bolo + refri", "bolo de chocolate e coca", "victor"));
 
 	}
+
+	@Test
+	void testeEditaCombo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
+				"carne - carne de sol, suco - suco de laranja");
+		assertEquals("carne + suco - carne de sol com suco - R$7,00",
+				controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "victor"));
+		controleTeste.editaCombo("carne + suco", "carne de sol com suco", "victor", 0.3);
+		assertEquals("carne + suco - carne de sol com suco - R$9,80",
+				controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "victor"));
+
+	}
+
+	@Test
+	void testeEditaComboPassandoNomeComboVazioOuNulo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
+				"carne - carne de sol, suco - suco de laranja");
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("  ", "carne de sol com suco", "victor"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto(null, "carne de sol com suco", "victor"));
+
+	}
+
+	@Test
+	void testeEditaComboPassandoDescricaoVaziaOuNula() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
+				"carne - carne de sol, suco - suco de laranja");
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("carne + suco", "     ", "victor"));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProduto("carne + suco", null, "victor"));
+
+	}
+
+	@Test
+	void testeEditaComboPassandoFornecedorVazioOuNulo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		controleTeste.adicionaCombo("victor", "carne + suco", "carne de sol com suco", 0.5,
+				"carne - carne de sol, suco - suco de laranja");
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("carne + suco", "carne de sol com suco", "  "));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("carne + suco", "carne de sol com suco", null));
+
+	}
+
+	@Test
+	void testeExibeProdutosFornecedor() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		assertEquals("victor - carne - carne de sol - R$12,00 | victor - suco - suco de laranja - R$2,00",
+				controleTeste.exibeProdutosFornecedor("victor"));
+
+	}
+
+	@Test
+	void testeExibeProdutosFornecedorFornecedorNuloOuVazio() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProdutosFornecedor("    "));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProdutosFornecedor(null));
+
+	}
+
+	@Test
+	void testeExibeProdutosFornecedorQueNaoExiste() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProdutosFornecedor("hugo"));
+
+	}
+
+	@Test
+	void testeExibeProdutosFornecedorComListaDeProdutosVazia() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		assertThrows(NullPointerException.class, () -> controleTeste.exibeProdutosFornecedor("victor"));
+
+	}
+
+	@Test
+	void testeExibeProdutos() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("hugo", "hugo@paz.com", "12346789");
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("victor", "suco", "suco de laranja", 2);
+		controleTeste.adicionaProduto("hugo", "carne", "carne moida", 6);
+		controleTeste.adicionaProduto("hugo", "refri", "coca", 3);
+		assertEquals(
+				"hugo - carne - carne moida - R$6,00 | hugo - refri - coca - R$3,00 | victor - carne - carne de sol - R$12,00 | victor - suco - suco de laranja - R$2,00",
+				controleTeste.exibeProdutos());
+
+	}
+
+	@Test
+	void testeExibeProdutosSemProdutosParaMostrar() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("hugo", "hugo@paz.com", "12346789");
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		assertThrows(NullPointerException.class, () -> controleTeste.exibeProdutos());
+
+	}
+
+	@Test
+	void testeExibeProdutosSemFornecedoresCadastrados() {
+		controleTeste = new Controller();
+		assertThrows(NullPointerException.class, () -> controleTeste.exibeProdutos());
+
+	}
+
 }
