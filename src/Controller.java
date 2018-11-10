@@ -78,8 +78,9 @@ public class Controller {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		}
 
-		Cliente novoCliente = new Cliente(nome, email, localizacao);
+		Cliente novoCliente = new Cliente(cpf, nome, email, localizacao);
 		this.colecaoClientes.put(cpf, novoCliente);
+
 		return cpf;
 
 	}
@@ -679,6 +680,7 @@ public class Controller {
 		double preco = this.colecaoFornecedores.get(fornecedor).getListaDeProdutos()
 				.get(nomeProduto + " - " + descricaoProduto).getPreco();
 		Compra novaCompra = new Compra(data, nomeProduto, preco);
+		novaCompra.setDescricao(descricaoProduto);
 		this.colecaoClientes.get(cpf).setComprasNosFornecedores(fornecedor, novaCompra);
 
 	}
@@ -696,11 +698,11 @@ public class Controller {
 	 *         fornecedor informado
 	 */
 	public String getDebito(String cpf, String fornecedor) {
-		
+
 		if (cpf == null || cpf.trim().equals("")) {
 			throw new IllegalArgumentException("Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.");
 		}
-		
+
 		if (cpf.length() != 11) {
 			throw new IllegalArgumentException("Erro ao recuperar debito: cpf invalido.");
 		}
@@ -874,6 +876,55 @@ public class Controller {
 		if (this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor)) {
 			this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().get(fornecedor).clear();
 		}
+	}
+
+	public void ordenarPor(String criterio) {
+		switch (criterio.toLowerCase()) {
+		
+		
+		case "cliente":
+		
+			break;
+		case "data":
+		
+			break;
+		case "fornecedor":
+			
+			break;
+		default:
+			
+			break;
+		}
+
+	}
+
+	public String listarCompras() {
+
+		String listagem = "";
+		ArrayList<Cliente> clientesOrdenados = new ArrayList<>();
+		clientesOrdenados.addAll(this.colecaoClientes.values());
+		Collections.sort(clientesOrdenados);
+		for (Cliente cliente : clientesOrdenados) {
+
+			ArrayList<String> fornecedoresOrdenados = new ArrayList<>();
+			fornecedoresOrdenados.addAll(this.colecaoClientes.get(cliente.getCpf()).getListaGeralDeCOmpras().keySet());
+			Collections.sort(fornecedoresOrdenados);
+
+			for (String fornecedor : fornecedoresOrdenados) {
+				HashMap<String, ArrayList<Compra>> produtosDoClientePorFornecedor = this.colecaoClientes
+						.get(cliente.getCpf()).getListaGeralDeCOmpras();
+				ArrayList<Compra> comprasOrdenadas = produtosDoClientePorFornecedor.get(fornecedor);
+				Collections.sort(comprasOrdenadas);
+
+				for (Compra compra : comprasOrdenadas) {
+					listagem += cliente.getNome() + ", " + fornecedor + ", " + compra.getDescricao() + ", "
+							+ compra.getData() + " | ";
+				}
+			}
+		}
+
+		return listagem;
+
 	}
 
 }

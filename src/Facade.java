@@ -4,7 +4,8 @@ public class Facade {
 
 	public static void main(String[] args) {
 		args = new String[] { "Facade", "testesAceitacao/use_case_1.txt", "testesAceitacao/use_case_2.txt",
-				"testesAceitacao/use_case_3.txt", "testesAceitacao/use_case_4.txt", "testesAceitacao/use_case_5.txt", "testesAceitacao/use_case_6.txt" };
+				"testesAceitacao/use_case_3.txt", "testesAceitacao/use_case_4.txt", "testesAceitacao/use_case_5.txt",
+				"testesAceitacao/use_case_6.txt", "testesAceitacao/use_case_7.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -88,25 +89,35 @@ public class Facade {
 	public void editaCombo(String nomeCombo, String descricao, String fornecedor, double novoFator) {
 		controle.editaCombo(nomeCombo, descricao, fornecedor, novoFator);
 	}
-	
-	public void adicionaCompra(String cpf, String fornecedor, String data, String nomeProduto, String descricaoProduto) {
+
+	public void adicionaCompra(String cpf, String fornecedor, String data, String nomeProduto,
+			String descricaoProduto) {
 		controle.adicionaCompra(cpf, fornecedor, data, nomeProduto, descricaoProduto);
 	}
-	
-	public String getDebito (String cpf, String fornecedor){
+
+	public String getDebito(String cpf, String fornecedor) {
 		return controle.getDebito(cpf, fornecedor);
 	}
-	
+
 	public String exibeContas(String cpf, String fornecedor) {
 		return controle.exibeContas(cpf, fornecedor);
 	}
-	
+
 	public String exibeContasClientes(String cpf) {
 		return controle.exibeContasClientes(cpf);
 	}
-	
+
 	public void realizaPagamento(String cpf, String fornecedor) {
 		controle.realizaPagamento(cpf, fornecedor);
 	}
+
+	public void ordenaPor(String criterio) {
+
+	}
+
+	public String listarCompras() {
+		return controle.listarCompras();
+	}
+	
 
 }

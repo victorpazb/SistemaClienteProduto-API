@@ -7,6 +7,7 @@ import java.util.HashMap;
  */
 public class Cliente implements Comparable<Cliente> {
 
+	public String cpf;
 	private String nome;
 	private String localizacao;
 	private String email;
@@ -24,7 +25,8 @@ public class Cliente implements Comparable<Cliente> {
 	 *            string que representa a localizacao do cliente (onde trabalha/
 	 *            estuda)
 	 */
-	public Cliente(String nome, String email, String localizacao) {
+	public Cliente(String cpf, String nome, String email, String localizacao) {
+		this.cpf = cpf;
 		this.nome = nome.trim();
 		this.localizacao = localizacao.trim();
 		this.email = email.trim();
@@ -62,6 +64,10 @@ public class Cliente implements Comparable<Cliente> {
 
 	public HashMap<String, ArrayList<Compra>> getListaGeralDeCOmpras() {
 		return this.listasDeCompraEmTodosOsFornecedore;
+	}
+	
+	public String getCpf() {
+		return this.cpf;
 	}
 
 	/**

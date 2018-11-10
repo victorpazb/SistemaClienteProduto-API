@@ -9,6 +9,7 @@ public class Compra implements Comparable<Compra> {
 	private String data;
 	private String identifcacaoProduto;
 	private double preco;
+	private String descricao;
 
 	/**
 	 * construtor da classe compra
@@ -24,7 +25,26 @@ public class Compra implements Comparable<Compra> {
 		this.preco = preco;
 
 	}
+	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	public String getDescricao() {
+		return this.descricao;
+	}
+		
+	/**
+	 * @return getter q retorna a String que representa a data da compra no formato DD/MM/AAAA
+	 */
+	public String getData() {
+		return this.data;
+	}
 
+	/**
+	 * 
+	 * @return retorna a String que descreve a compra
+	 */
 	public String getIdentificacaoDoProduto() {
 		return this.identifcacaoProduto;
 	}
