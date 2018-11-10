@@ -4,7 +4,7 @@ public class Facade {
 
 	public static void main(String[] args) {
 		args = new String[] { "Facade", "testesAceitacao/use_case_1.txt", "testesAceitacao/use_case_2.txt",
-				"testesAceitacao/use_case_3.txt", "testesAceitacao/use_case_4.txt", "testesAceitacao/use_case_5.txt" };
+				"testesAceitacao/use_case_3.txt", "testesAceitacao/use_case_4.txt", "testesAceitacao/use_case_5.txt", "testesAceitacao/use_case_6.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -103,6 +103,10 @@ public class Facade {
 	
 	public String exibeContasClientes(String cpf) {
 		return controle.exibeContasClientes(cpf);
+	}
+	
+	public void realizaPagamento(String cpf, String fornecedor) {
+		controle.realizaPagamento(cpf, fornecedor);
 	}
 
 }

@@ -466,7 +466,7 @@ public class Controller {
 				}
 			}
 		}
-		if(todosOsProdutos.equals("")) {
+		if (todosOsProdutos.equals("")) {
 			throw new NullPointerException("nao existem produtos cadastrados");
 		}
 
@@ -696,7 +696,11 @@ public class Controller {
 	 *         fornecedor informado
 	 */
 	public String getDebito(String cpf, String fornecedor) {
-
+		
+		if (cpf == null || cpf.trim().equals("")) {
+			throw new IllegalArgumentException("Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.");
+		}
+		
 		if (cpf.length() != 11) {
 			throw new IllegalArgumentException("Erro ao recuperar debito: cpf invalido.");
 		}
@@ -709,9 +713,11 @@ public class Controller {
 		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
 			throw new IllegalArgumentException("Erro ao recuperar debito: fornecedor nao existe.");
 		}
-		if (this.colecaoFornecedores.containsKey(fornecedor) && this.colecaoClientes.containsKey(cpf)
-				&& (!this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor))) {
-			throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
+		if (this.colecaoClientes.containsKey(cpf) && this.colecaoFornecedores.containsKey(fornecedor)) {
+			if ((!this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor))
+					|| this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().get(fornecedor).isEmpty()) {
+				throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
+			}
 		}
 
 		double debitoDoCliente = 0.0;
@@ -760,10 +766,18 @@ public class Controller {
 			throw new IllegalArgumentException("Erro ao exibir conta do cliente: fornecedor nao existe.");
 		}
 
-		if (this.colecaoFornecedores.containsKey(fornecedor) && this.colecaoClientes.containsKey(cpf)
+		if (this.colecaoClientes.containsKey(cpf) && this.colecaoFornecedores.containsKey(fornecedor)
 				&& (!this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor))) {
 			throw new IllegalArgumentException(
 					"Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		}
+
+		if (this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor)) {
+			if (this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().get(fornecedor).isEmpty()) {
+				throw new IllegalArgumentException(
+						"Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+			}
+
 		}
 
 		String listaComprasEmUmFornecedor = "Cliente: " + this.colecaoClientes.get(cpf).getNome() + " | "
@@ -814,6 +828,52 @@ public class Controller {
 
 		return representacaoTodasAsCompras;
 
+	}
+
+	/**
+	 * Metodo que zera as a lista de produtos comprados por um cliente em um
+	 * determinado fornecedor Mesmo apos a colecao de produtos ser zerada, o
+	 * fornecedor ainda permanece na lista do cliente, embora sem produtos
+	 * comprados. Seu debito se torna zero portanto
+	 * 
+	 * @param cpf
+	 * @param fornecedor
+	 */
+	public void realizaPagamento(String cpf, String fornecedor) {
+		if (cpf == null || cpf.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: cpf nao pode ser vazio ou nulo.");
+		}
+
+		if (cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: cpf invalido.");
+		}
+		if (!this.colecaoClientes.containsKey(cpf)) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: cliente nao existe.");
+		}
+		if (fornecedor == null || fornecedor.trim().equals("")) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: fornecedor nao existe.");
+		}
+		if (!this.colecaoFornecedores.containsKey(fornecedor)) {
+			throw new IllegalArgumentException("Erro no pagamento de conta: fornecedor nao existe.");
+		}
+
+		if (this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor)
+				&& this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().get(fornecedor).isEmpty()) {
+			throw new IllegalArgumentException(
+					"Erro no pagamento de conta: nao ha debito do cliente associado a este fornecedor.");
+		}
+		if (this.colecaoClientes.containsKey(cpf) && this.colecaoFornecedores.containsKey(fornecedor)
+				&& (!this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor))) {
+			throw new IllegalArgumentException(
+					"Erro no pagamento de conta: nao ha debito do cliente associado a este fornecedor.");
+		}
+
+		if (this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().containsKey(fornecedor)) {
+			this.colecaoClientes.get(cpf).getListaGeralDeCOmpras().get(fornecedor).clear();
+		}
 	}
 
 }

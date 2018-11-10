@@ -891,20 +891,74 @@ class testeController {
 		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContasClientes("123456789"));
 	}
-	
+
 	@Test
 	void testeExibeContasClientesClienteNaoExiste() {
 		controleTeste = new Controller();
 		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContasClientes("12345678910"));
 	}
-	
+
 	@Test
 	void testeExibeContasClientesClienteNaoTemCompras() {
 		controleTeste = new Controller();
 		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
 		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContasClientes("12345678910"));
 	}
+
+	@Test
+	void testeRealizaPagamento() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertEquals("30.00", controleTeste.getDebito("12345678910", "seu paulo"));
+		controleTeste.realizaPagamento("12345678910", "seu paulo");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.getDebito("12345678910", "seu paulo"));
+	}
+
+	@Test
+	void testeRealizaPagamentoCpfInvalido() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento("123410", "seu paulo"));
+	}
+
+	@Test
+	void testeRealizaPagamentoCpfNuloOuVazio() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento("   ", "seu paulo"));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento(null, "seu paulo"));
+	}
+
+	@Test
+	void testeRealizaPagamentoFornecedorNuloOuVazio() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento("12345678910", "     "));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento("12345678910", null));
+	}
 	
+	@Test
+	void testeRealizaPagamentoClienteNaoExiste() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento("12345678911", "seu paulo"));
+	}
+	
+	@Test
+	void testeRealizaPagamentoFornecedorNaoExiste() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento("12345678910", "seu paulo"));
+	}
+	
+	@Test
+	void testeRealizaPagamentoMasNaoTemDebito() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.realizaPagamento("12345678910", "seu paulo"));
+	}
 	
 
 }
