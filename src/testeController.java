@@ -353,6 +353,47 @@ class testeController {
 	}
 
 	@Test
+	void testeEditaProduto() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
+		controleTeste.editaProduto("carne", "carne de sol", "victor", 15);
+		assertEquals("carne - carne de sol - R$15,00", controleTeste.exibeProduto("carne", "carne de sol", "victor"));
+	}
+
+	@Test
+	void testeEditaProdutoPassandoFornecedorVazioOuNulo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
+		controleTeste.editaProduto("carne", "carne de sol", "victor", 15);
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProduto("carne", "carne de sol", "  "));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProduto("carne", "carne de sol", null));
+	}
+
+	@Test
+	void testeEditaProdutoPassandoNomeVazioOuNulo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
+		controleTeste.editaProduto("carne", "carne de sol", "victor", 15);
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("victor", "carne de sol", "victor"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.exibeProduto("victor", "carne de sol", "victor"));
+	}
+
+	@Test
+	void testeEditaProdutoPassandoDescricaoVaziaOuNula() {
+		controleTeste = new Controller();
+		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
+		controleTeste.adicionaProduto("victor", "carne", "carne de sol", 12.32);
+		controleTeste.editaProduto("carne", "carne de sol", "victor", 15);
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProduto("victor", "  ", "victor"));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeProduto("victor", null, "victor"));
+	}
+
+	@Test
 	void testeExibirProdutoNaoCadastrado() {
 		controleTeste = new Controller();
 		controleTeste.adicionaFornecedor("victor", "victor@paz.com", "12345");
@@ -618,5 +659,252 @@ class testeController {
 		assertThrows(NullPointerException.class, () -> controleTeste.exibeProdutos());
 
 	}
+
+	@Test
+	void testeAdicionaCompra() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		assertEquals("Cliente: victor | seu paulo | carne - 12-12-2018",
+				controleTeste.exibeContas("12345678910", "seu paulo"));
+	}
+
+	@Test
+	void testeAdicionaCompraCpfInvalido() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", "seu paulo", "12/12/2018", "carne", "carne de sol"));
+	}
+
+	@Test
+	void testeAdicionaCompraFornecedorNuloOuVazio() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", "   ", "12/12/2018", "carne", "carne de sol"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", null, "12/12/2018", "carne", "carne de sol"));
+	}
+
+	@Test
+	void testeAdicionaCompraDataNulaOuVazia() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", "seu paulo", "    ", "carne", "carne de sol"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", "seu paulo", null, "carne", "carne de sol"));
+	}
+
+	@Test
+	void testeAdicionaCompraDataInvalida() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", "seu paulo", "12/120/2018", "carne", "carne de sol"));
+
+	}
+
+	@Test
+	void testeAdicionaCompraNomeProdutoVazioOuNulo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", "seu paulo", "12/12/2018", "   ", "carne de sol"));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345", "seu paulo", "12/12/2018", null, "carne de sol"));
+	}
+
+	@Test
+	void testeAdicionaCompraDescricaoProdutoVazioOuNulo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "  "));
+		assertThrows(IllegalArgumentException.class,
+				() -> controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", null));
+	}
+
+	@Test
+	void testeGetDebito() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertEquals("30.00", controleTeste.getDebito("12345678910", "seu paulo"));
+
+	}
+
+	@Test
+	void testeGetDebitoCpfInvalido() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.getDebito("1235", "seu paulo"));
+	}
+
+	@Test
+	void testeGetDebitoClienteNaoExiste() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.getDebito("12345678911", "seu paulo"));
+	}
+
+	@Test
+	void testeGetDebitoFornecedorNaoExiste() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.getDebito("12345678911", "Seu Olavo"));
+	}
+
+	@Test
+	void testeExibeContas() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertEquals("Cliente: victor | seu paulo | carne - 12-12-2018 | file - 12-12-2018",
+				controleTeste.exibeContas("12345678910", "seu paulo"));
+
+	}
+
+	@Test
+	void testeExibeContasCpfInvalido() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContas("123410", "seu paulo"));
+
+	}
+
+	@Test
+	void testeExibeContasClienteNaoExiste() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContas("12345678911", "seu paulo"));
+
+	}
+
+	@Test
+	void testeExibeContasFornecedorVazioOuNulo() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContas("12345678911", "  "));
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContas("12345678911", null));
+
+	}
+
+	@Test
+	void testeExibeContasFornecedorNaoExiste() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContas("12345678911", "Seu Olavo"));
+
+	}
+
+	@Test
+	void testeExibeContasClienteNaoFezCompras() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContas("12345678911", "seu paulo"));
+
+	}
+
+	@Test
+	void testeExibeContasClientes() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		controleTeste.adicionaFornecedor("seu paulo", "ourixSilva@ccc.com", "1231231232");
+		controleTeste.adicionaFornecedor("seu olavo", "olavo@ufcg.com", "1234331232");
+		controleTeste.adicionaProduto("seu paulo", "carne", "carne de sol", 12);
+		controleTeste.adicionaProduto("seu paulo", "file", "file com macaxeira", 18);
+		controleTeste.adicionaProduto("seu olavo", "batata", "batata frita", 5);
+		controleTeste.adicionaProduto("seu olavo", "suco", "suco de laranja", 2);
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "carne", "carne de sol");
+		controleTeste.adicionaCompra("12345678910", "seu paulo", "12/12/2018", "file", "file com macaxeira");
+		controleTeste.adicionaCompra("12345678910", "seu olavo", "12/12/2018", "suco", "suco de laranja");
+		controleTeste.adicionaCompra("12345678910", "seu olavo", "12/12/2018", "batata", "batata frita");
+		assertEquals(
+				"Cliente: victor | seu olavo | suco - 12-12-2018 | batata - 12-12-2018 | seu paulo | carne - 12-12-2018 | file - 12-12-2018",
+				controleTeste.exibeContasClientes("12345678910"));
+	}
+
+	@Test
+	void testeExibeContasClientesCpfInvalido() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContasClientes("123456789"));
+	}
+	
+	@Test
+	void testeExibeContasClientesClienteNaoExiste() {
+		controleTeste = new Controller();
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContasClientes("12345678910"));
+	}
+	
+	@Test
+	void testeExibeContasClientesClienteNaoTemCompras() {
+		controleTeste = new Controller();
+		controleTeste.adicionaCliente("12345678910", "victor", "victor@vic.com", "lcc3");
+		assertThrows(IllegalArgumentException.class, () -> controleTeste.exibeContasClientes("12345678910"));
+	}
+	
+	
 
 }
