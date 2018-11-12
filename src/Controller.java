@@ -878,28 +878,46 @@ public class Controller {
 		}
 	}
 
-	public void ordenarPor(String criterio) {
+	/**
+	 * metodo que recebe um parametro criterio para saber qual o criterio para
+	 * ordenar a exibicao de compras, de modo q seja alfabeticamente crescente
+	 * 
+	 * @param criterio
+	 * @return retorna a lista de compras pelo criterio passado. o criterio usado
+	 *         deve vir primeiro na representacao.
+	 */
+	public String ordenaPor(String criterio) {
+
+		if (criterio.trim().equals("")) {
+			throw new IllegalArgumentException("Erro na listagem de compras: criterio nao pode ser vazio ou nulo.");
+		}
+
 		switch (criterio.toLowerCase()) {
-		
-		
+
 		case "cliente":
-		
-			break;
+			return listarCompras();
+
 		case "data":
-		
-			break;
+
+			return "";
 		case "fornecedor":
-			
-			break;
+
+			return "";
 		default:
-			
-			break;
+			throw new IllegalArgumentException("Erro na listagem de compras: criterio nao oferecido pelo sistema.");
+
 		}
 
 	}
 
+	/**
+	 * 
+	 * @return retorna lista de clientes ordenada alfabeticamente jutamente com a
+	 *         lista de compras no formato:" Cliente, fornecedor descricao compra,
+	 *         data" cada informacao dessa eh separada por "|";
+	 */
 	public String listarCompras() {
-
+		int controle = 0;
 		String listagem = "";
 		ArrayList<Cliente> clientesOrdenados = new ArrayList<>();
 		clientesOrdenados.addAll(this.colecaoClientes.values());
@@ -917,8 +935,16 @@ public class Controller {
 				Collections.sort(comprasOrdenadas);
 
 				for (Compra compra : comprasOrdenadas) {
-					listagem += cliente.getNome() + ", " + fornecedor + ", " + compra.getDescricao() + ", "
-							+ compra.getData() + " | ";
+
+					if (controle == 0) {
+
+						listagem += cliente.getNome() + ", " + fornecedor + ", " + compra.getDescricao() + ", "
+								+ compra.getData();
+					} else {
+						listagem += " | " + cliente.getNome() + ", " + fornecedor + ", " + compra.getDescricao() + ", "
+								+ compra.getData();
+					}
+					controle = 1;
 				}
 			}
 		}

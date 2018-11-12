@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -118,6 +119,16 @@ public class Cliente implements Comparable<Cliente> {
 	@Override
 	public int compareTo(Cliente outroCliente) {
 		return this.nome.compareTo(outroCliente.getNome());
+	}
+	
+	public static class CompareNome implements Comparator<Cliente>{
+
+		@Override
+		public int compare(Cliente arg0, Cliente arg1) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		
 	}
 
 }

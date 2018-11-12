@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 /**
  * classe que define uma compra
  * 
@@ -63,6 +65,7 @@ public class Compra implements Comparable<Compra> {
 	public int compareTo(Compra outraCompra) {
 		return this.identifcacaoProduto.compareTo((outraCompra.getIdentificacaoDoProduto()));
 	}
+	
 
 	/**
 	 * metodo que toString de compra que cria sua representacao textual

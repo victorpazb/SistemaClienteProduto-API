@@ -111,9 +111,13 @@ public class Facade {
 		controle.realizaPagamento(cpf, fornecedor);
 	}
 
-	public void ordenaPor(String criterio) {
-
+	public String ordenaPor(String criterio) {
+		if (criterio == null) {
+			throw new IllegalArgumentException("Erro na listagem de compras: criterio nao pode ser vazio ou nulo.");
+		}
+		return controle.ordenaPor(criterio);
 	}
+	
 
 	public String listarCompras() {
 		return controle.listarCompras();
